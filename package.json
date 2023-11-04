@@ -19,9 +19,7 @@
   "name": "synchub",
   "packageManager": "npm@10.2.0",
   "dependencies": {
-    "@nestjs/config": "^3.1.1",
-    "@nestjs/mapped-types": "^2.0.2",
-    "class-transformer": "^0.5.1",
-    "class-validator": "^0.14.0"
+    "@nextui-org/react": "^2.1.13",
+    "framer-motion": "^10.16.4"
   }
 }

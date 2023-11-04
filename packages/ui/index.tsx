@@ -1,2 +1,8 @@
-// component exports
-export { Card } from "./card";
+import './global.css'
+
+import './framer-motion'
+import './providers'
+import './components'
+
+export * from '@nextui-org/react'
+
