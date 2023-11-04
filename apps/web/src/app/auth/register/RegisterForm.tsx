@@ -4,12 +4,8 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid'
 
 const RegisterForm = () => {
   const [showPass, setShowPass] = useState(false)
+  const [showRepeatedPass, setShowRepeatedPass] = useState(false)
 
-  const handleShowPass = (event: any) => {
-    console.log(event)
-    setShowPass(!showPass)
-    console.log(showPass)
-  }
   return (
     <div className='flex flex-col w-full space-y-8'>
       <FormInput type='email' label='Email address' name='email' />
@@ -21,30 +17,30 @@ const RegisterForm = () => {
           showPass ? (
             <EyeSlashIcon
               className='w-6 text-gray-600 cursor-pointer'
-              onClick={handleShowPass}
+              onClick={() => setShowPass(!showPass)}
             />
           ) : (
             <EyeIcon
               className='w-6 text-gray-600 cursor-pointer'
-              onClick={handleShowPass}
+              onClick={() => setShowPass(!showPass)}
             />
           )
         }
       />
       <FormInput
-        type={showPass ? 'text' : 'password'}
+        type={showRepeatedPass ? 'text' : 'password'}
         label='Repeat Password'
         name='password'
         icon={
-          showPass ? (
+          showRepeatedPass ? (
             <EyeSlashIcon
               className='w-6 text-gray-600 cursor-pointer'
-              onClick={handleShowPass}
+              onClick={() => setShowRepeatedPass(!showRepeatedPass)}
             />
           ) : (
             <EyeIcon
               className='w-6 text-gray-600 cursor-pointer'
-              onClick={handleShowPass}
+              onClick={() => setShowRepeatedPass(!showRepeatedPass)}
             />
           )
         }

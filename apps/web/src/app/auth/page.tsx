@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { Player } from '@lottiefiles/react-lottie-player'
+import { motion } from 'framer-motion'
 import chatAnimation from '../../../assets/gifs/chatAnimation.json'
 import Logo from '../../../assets/images/Logo.png'
 import Login from './Login'
@@ -22,11 +23,18 @@ const Page = () => {
           <div className='flex flex-col items-start justify-start'>
             <Image width={240} height={40} src={Logo} alt='Synchub logo' />
           </div>
-          {showLogin ? (
-            <Login handleShowlogin={handleToggleLogin} />
-          ) : (
-            <Register handleShowlogin={handleToggleLogin} />
-          )}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            key={showLogin ? 'login' : 'register'}
+          >
+            {showLogin ? (
+              <Login handleShowlogin={handleToggleLogin} />
+            ) : (
+              <Register handleShowlogin={handleToggleLogin} />
+            )}
+          </motion.div>
         </div>
         <div className='bg-appColors-backgroundBlue '>
           <Player

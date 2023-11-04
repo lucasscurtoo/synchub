@@ -33,11 +33,11 @@ const socialMediaIcons = [
 const Register = ({ handleShowlogin }: registerProps) => {
   return (
     <div className='flex flex-col w-full'>
-      <h1 className='mb-8 text-3xl font-extrabold text-gray-900'>
-        Sign up into a new account!
+      <h1 className='mb-6 text-3xl font-extrabold text-gray-900'>
+        Welcome to Synchub!
       </h1>
 
-      <div className='flex flex-col w-full space-y-8'>
+      <div className='flex flex-col w-full space-y-6'>
         <div className='space-y-4'>
           <p className='text-sm font-medium text-gray-600'>Sign up with</p>
           <div className='flex justify-between'>
@@ -64,7 +64,7 @@ const Register = ({ handleShowlogin }: registerProps) => {
           type='submit'
           className='w-full py-3 font-medium text-white transition-all rounded-full bg-appColors-blue hover:bg-blue-800'
         >
-          Sign in
+          Sign Up!
         </button>
       </div>
     </div>
