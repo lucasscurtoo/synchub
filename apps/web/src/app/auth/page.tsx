@@ -7,7 +7,11 @@ import chatAnimation from '../../../assets/gifs/chatAnimation.json'
 import Logo from '../../../assets/images/Logo.png'
 import Login from './login/Login'
 import Register from './register/Register'
+<<<<<<< Updated upstream
 import { AuthPageContextProvider, useAuthPageContext } from './AuthContext'
+=======
+import { motion } from 'framer-motion'
+>>>>>>> Stashed changes
 
 const Page = () => {
   return (
@@ -31,6 +35,36 @@ const Page = () => {
               }}
             ></Player>
           </div>
+<<<<<<< Updated upstream
+=======
+          {showLogin ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Login handleShowlogin={handleToggleLogin} />
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Register handleShowlogin={handleToggleLogin} />
+            </motion.div>
+          )}
+        </div>
+        <div className='bg-appColors-backgroundBlue '>
+          <Player
+            autoplay
+            loop
+            src={chatAnimation}
+            style={{ height: '560px', width: '520px' }}
+          ></Player>
+>>>>>>> Stashed changes
         </div>
       </div>
     </AuthPageContextProvider>
