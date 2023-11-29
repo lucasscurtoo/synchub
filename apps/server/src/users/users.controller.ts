@@ -16,8 +16,15 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto) {
+    try {
+      const createdUser = await this.usersService.create(createUserDto);
+      // Si no hay errores, retornar el usuario creado como respuesta
+      return { user: createdUser };
+    } catch (error) {
+      // Manejar el error y retornar una respuesta adecuada
+      return { error: error.message || 'Error desconocido' };
+    }
   }
 
   @Get()

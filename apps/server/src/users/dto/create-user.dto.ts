@@ -13,4 +13,12 @@ export class CreateUserDto {
   @IsString()
   @MinLength(6)
   password: string;
+
+  @IsNotEmpty()
+  @IsString()
+  role: string;
+
+  // @IsNotEmpty()
+  // @IsString()
+  // organization: string;
 }
