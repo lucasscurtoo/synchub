@@ -26,6 +26,9 @@ export class User {
 
   @Prop({ type: mongoose.Types.ObjectId, ref: 'Organization', required: true })
   organization: Organization;
+
+  @Prop({ required: true })
+  key: string;
   static fullName: string;
 }
 

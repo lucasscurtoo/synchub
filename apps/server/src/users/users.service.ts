@@ -4,10 +4,13 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User, UserDocument } from './user.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+import { createCipheriv, randomBytes, scrypt } from 'crypto';
+import { promisify } from 'util';
 
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+
   async create(createUserDto: CreateUserDto): Promise<User | Error> {
     try {
       const usersByEmail = await this.userModel
@@ -26,10 +29,21 @@ export class UsersService {
 
       // validar que la organizacion a la que pertenezca exista y eso
 
-      const createdUser = new this.userModel(createUserDto);
-      const savedUser = await createdUser.save();
+      const iv = randomBytes(16);
+      const password = createUserDto.password;
+      const key = (await promisify(scrypt)(password, 'salt', 32)) as Buffer;
+      const cipher = createCipheriv('aes-256-ctr', key, iv);
 
-      return savedUser;
+      const encryptedPassword = Buffer.concat([
+        cipher.update(password),
+        cipher.final(),
+      ]);
+
+      const user = new this.userModel({
+        ...createUserDto,
+        password: encryptedPassword.toString('hex'),
+      });
+      return user.save();
     } catch (error) {
       console.error('Error:', error);
       return error;
