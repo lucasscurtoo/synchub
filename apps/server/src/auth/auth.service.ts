@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../users/user.schema';
@@ -6,6 +6,7 @@ import { LoginAuthDto } from './dto/login-auth-dto';
 import { CryptoService } from '../crypto/crypto.service';
 import { RegisterAuthDto } from './dto/register-auth.dto';
 import { randomBytes } from 'crypto';
+import { ApiResponse } from 'src/types';
 
 @Injectable()
 export class AuthService {
@@ -14,44 +15,66 @@ export class AuthService {
     private readonly cryptoService: CryptoService,
   ) {}
 
-  async login(loginAuthDto: LoginAuthDto): Promise<User | Error> {
+  async login(loginAuthDto: LoginAuthDto): Promise<ApiResponse> {
     const user = await this.userModel.findOne({ email: loginAuthDto.email });
 
     if (!user) {
-      throw new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
+      return {
+        status: HttpStatus.NOT_FOUND,
+        message: 'Usuario no encontrado',
+      };
     }
 
     const key = Buffer.from(user.key, 'hex'); // Convert the key back to a Buffer
-    const decrypted = await this.cryptoService.decrypt(user.password, key);
+    const iv = Buffer.from(user.iv, 'hex');
+    console.log(key);
+    const decrypted = await this.cryptoService.decrypt(user.password, key, iv);
+    console.log(decrypted);
 
     if (decrypted !== loginAuthDto.password) {
-      throw new HttpException('Contraseña incorrecta', HttpStatus.UNAUTHORIZED);
+      return {
+        status: HttpStatus.UNAUTHORIZED,
+        message: 'Contraseña incorrecta',
+      };
     }
 
-    const { ...userObject } = user.toObject();
-    return userObject;
+    const userWithoutPassword = { ...user.toObject(), password: undefined };
+
+    return {
+      status: HttpStatus.OK,
+      message: 'Login successful',
+      result: userWithoutPassword,
+    };
   }
 
-  async register(registerAuthDto: RegisterAuthDto): Promise<User | Error> {
+  async register(registerAuthDto: RegisterAuthDto): Promise<ApiResponse> {
     const userExists = await this.userModel.findOne({
       email: registerAuthDto.email,
     });
 
     if (userExists) {
-      throw new HttpException('El usuario ya existe', HttpStatus.BAD_REQUEST);
+      return {
+        status: HttpStatus.BAD_REQUEST,
+        message: 'El usuario ya existe',
+      };
     }
 
     const key = randomBytes(32); // Generate a random 32-byte key
-    const encryptedPassword = await this.cryptoService.encrypt(
-      registerAuthDto.password,
-      key,
-    );
+    const { encrypted: encryptedPassword, iv } =
+      await this.cryptoService.encrypt(registerAuthDto.password, key);
 
     const user = new this.userModel({
       ...registerAuthDto,
       password: encryptedPassword,
       key: key.toString('hex'),
+      iv, // Store the key as a hex string
     });
-    return user.save();
+    const savedUser = await user.save();
+
+    return {
+      status: HttpStatus.CREATED,
+      message: 'User registered successfully',
+      result: savedUser,
+    };
   }
 }

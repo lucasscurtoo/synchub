@@ -29,6 +29,9 @@ export class User {
 
   @Prop({ required: true })
   key: string;
+
+  @Prop({ required: true })
+  iv: string;
   static fullName: string;
 }
 
