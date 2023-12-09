@@ -6,7 +6,7 @@ import { Organization } from 'src/organization.schema';
 export type UserDocument = HydratedDocument<User>;
 @Schema()
 export class User {
-  @Prop({ required: true })
+  @Prop()
   fullName: string;
 
   @Prop({ required: true })
@@ -18,13 +18,13 @@ export class User {
   @Prop({ default: 'Online' })
   status: string;
 
-  @Prop({ required: true })
+  @Prop()
   role: string;
 
   @Prop({ default: false })
   mutedNotifications: boolean;
 
-  @Prop({ type: mongoose.Types.ObjectId, ref: 'Organization', required: true })
+  @Prop({ type: mongoose.Types.ObjectId, ref: 'Organization' })
   organization: Organization;
 
   @Prop({ required: true })

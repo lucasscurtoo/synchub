@@ -3,10 +3,11 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../users/user.schema';
 import { LoginAuthDto } from './dto/login-auth-dto';
-import { CryptoService } from '../crypto/crypto.service';
+import { CryptoService } from '../services/crypto.service';
 import { RegisterAuthDto } from './dto/register-auth.dto';
 import { randomBytes } from 'crypto';
 import { ApiResponse } from 'src/types';
+import { ErrorManager } from 'src/services/error.manager';
 
 @Injectable()
 export class AuthService {
@@ -19,10 +20,10 @@ export class AuthService {
     const user = await this.userModel.findOne({ email: loginAuthDto.email });
 
     if (!user) {
-      return {
+      ErrorManager.createSignatureError({
         status: HttpStatus.NOT_FOUND,
-        message: 'Usuario no encontrado',
-      };
+        message: 'User not found',
+      });
     }
 
     const key = Buffer.from(user.key, 'hex'); // Convert the key back to a Buffer
@@ -32,10 +33,10 @@ export class AuthService {
     console.log(decrypted);
 
     if (decrypted !== loginAuthDto.password) {
-      return {
+      ErrorManager.createSignatureError({
         status: HttpStatus.UNAUTHORIZED,
-        message: 'Contraseña incorrecta',
-      };
+        message: 'Wrong password',
+      });
     }
 
     const userWithoutPassword = { ...user.toObject(), password: undefined };
@@ -53,10 +54,10 @@ export class AuthService {
     });
 
     if (userExists) {
-      return {
+      ErrorManager.createSignatureError({
         status: HttpStatus.BAD_REQUEST,
-        message: 'El usuario ya existe',
-      };
+        message: 'The user already exists',
+      });
     }
 
     const key = randomBytes(32); // Generate a random 32-byte key

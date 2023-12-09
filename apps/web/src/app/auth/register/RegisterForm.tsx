@@ -5,6 +5,7 @@ import { useAuthPageContext } from '../AuthContext'
 import { Formik, Field, Form, FieldProps } from 'Formik'
 import type { FieldMetaProps } from 'Formik'
 import { signUpSchema } from '../Validations'
+import { useRegisterMutation } from '@/redux/api/userApi'
 
 interface FieldType {
   field: React.Component<FieldProps['field']>
@@ -14,7 +15,8 @@ interface FieldType {
 const RegisterForm = () => {
   const [showPass, setShowPass] = useState(false)
   const [showRepeatedPass, setShowRepeatedPass] = useState(false)
-  const { showLogin, setShowLogin } = useAuthPageContext()
+  const { setShowLogin } = useAuthPageContext()
+  const [register] = useRegisterMutation()
 
   return (
     <div className='flex flex-col w-full'>
@@ -27,6 +29,7 @@ const RegisterForm = () => {
         validationSchema={signUpSchema}
         onSubmit={(values) => {
           console.log(values)
+          register(values)
         }}
       >
         <Form className='space-y-4'>

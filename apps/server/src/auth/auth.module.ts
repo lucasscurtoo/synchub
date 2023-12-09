@@ -4,7 +4,7 @@ import { AuthController } from './auth.controller';
 import { UsersModule } from 'src/users/users.module';
 import { User, UserSchema } from 'src/users/user.schema';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CryptoService } from 'src/crypto/crypto.service';
+import { CryptoService } from 'src/services/crypto.service';
 
 @Module({
   imports: [
