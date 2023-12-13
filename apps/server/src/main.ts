@@ -4,7 +4,9 @@ import * as dotenv from 'dotenv';
 import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   dotenv.config();
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: console,
+  });
   app.enableCors();
   app.useGlobalPipes(
     new ValidationPipe({

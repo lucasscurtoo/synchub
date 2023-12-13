@@ -5,6 +5,7 @@ import { useAuthPageContext } from '../AuthContext'
 import { Formik, Field, Form, FieldProps } from 'Formik'
 import type { FieldMetaProps } from 'Formik'
 import { signInSchema } from '../Validations'
+import { signIn } from 'next-auth/react'
 
 interface FieldType {
   field: React.Component<FieldProps['field']>
@@ -23,8 +24,12 @@ const LoginForm = () => {
           password: '',
         }}
         validationSchema={signInSchema}
-        onSubmit={(values) => {
+        onSubmit={async (values) => {
           console.log(values)
+          await signIn('credentials', {
+            redirect: false,
+            values,
+          })
         }}
       >
         <Form>

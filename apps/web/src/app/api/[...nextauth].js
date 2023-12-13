@@ -1,9 +1,6 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
-import axios from 'axios'
-import { useRegisterMutation } from '@/redux/api/userApi'
-const [data, register] = useRegisterMutation()
-
+import { useLoginMutation } from '@/redux/api/userApi'
 export default NextAuth({
   providers: [
     Providers.Credentials({
@@ -13,27 +10,26 @@ export default NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       authorize: async (credentials) => {
+        console.log(credentials)
         try {
-          const user = await axios.post('https://tu-backend.com/api/login', {
-            username: credentials.username,
-            password: credentials.password,
-          })
-          register({
-            username: credentials.username,
-            password: credentials.password,
-          })
+          const response = await axios.post(
+            `${process.env.DATABASE_URL}/auth/login`,
+            {
+              username: credentials.username,
+              password: credentials.password,
+            }
+          )
+          const user = await response.data
 
-          console.log(data)
-
-          if (user.data) {
-            // Si el backend devuelve un usuario, se crea la sesión
-            return Promise.resolve(user.data)
+          if (user) {
+            // If the backend returns a user, you can create the session
+            return Promise.resolve(user)
           } else {
-            // Si no hay datos de usuario, el inicio de sesión falla
+            // If there is no user data, the login fails
             return Promise.resolve(null)
           }
         } catch (error) {
-          // Si hay un error en la solicitud, el inicio de sesión falla
+          // If there is an error in the request, the login fails
           return Promise.resolve(null)
         }
       },

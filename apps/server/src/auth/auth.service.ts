@@ -44,7 +44,7 @@ export class AuthService {
     return {
       status: HttpStatus.OK,
       message: 'Login successful',
-      result: userWithoutPassword,
+      data: userWithoutPassword,
     };
   }
 
@@ -75,7 +75,7 @@ export class AuthService {
     return {
       status: HttpStatus.CREATED,
       message: 'User registered successfully',
-      result: savedUser,
+      data: savedUser,
     };
   }
 }
