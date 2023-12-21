@@ -5,6 +5,7 @@ import Github from 'assets/images/icons/Github.png'
 import Twitter from 'assets/images/icons/Twitter.png'
 import LoginForm from './LoginForm'
 import { useAuthPageContext } from '../AuthContext'
+import { signIn } from 'next-auth/react'
 
 const socialMediaIcons = [
   {
@@ -12,18 +13,21 @@ const socialMediaIcons = [
     imgSrc: Google,
     provider: 'google',
     alt: 'Google icon',
+    auth: () => signIn(),
   },
   {
     name: 'github',
     imgSrc: Github,
     provider: 'github',
     alt: 'GitHub icon',
+    auth: () => signIn(),
   },
   {
     name: 'twitter',
     imgSrc: Twitter,
     provider: 'twitter',
     alt: 'Twitter icon',
+    auth: () => signIn(),
   },
 ]
 const Login = () => {
@@ -39,10 +43,11 @@ const Login = () => {
         <div className='space-y-4'>
           <p className='text-sm font-medium text-gray-600'>Sign in with</p>
           <div className='flex space-x-4'>
-            {socialMediaIcons.map(({ name, imgSrc, alt }) => (
+            {socialMediaIcons.map(({ name, imgSrc, alt, auth }) => (
               <div
                 key={name}
                 className='flex items-center justify-center py-2 transition-all rounded-md shadow-md cursor-pointer px-11 hover:ring-1 ring-inset ring-gray-400'
+                onClick={auth}
               >
                 <Image src={imgSrc} width={18} height={18} alt={alt} />
               </div>

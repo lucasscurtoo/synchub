@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react'
 import { FormInput } from 'ui/components/form-input'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid'
@@ -26,9 +27,10 @@ const LoginForm = () => {
         validationSchema={signInSchema}
         onSubmit={async (values) => {
           console.log(values)
-          await signIn('credentials', {
-            redirect: false,
-            values,
+          signIn('credentials', {
+            email: values.email,
+            password: values.password,
+            redirect: true,
           })
         }}
       >

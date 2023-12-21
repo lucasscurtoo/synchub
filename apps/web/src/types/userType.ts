@@ -1,10 +1,11 @@
 export interface userType {
+  id: string
   fullName: string
   email: string
   status: string
   role: string
   mutedNotifications: boolean
-  organiation: string // change for organizaiton type
+  organization: string
 }
 
 export type registerType = {
