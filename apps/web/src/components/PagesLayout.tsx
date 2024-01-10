@@ -9,7 +9,7 @@ const PagesLayout = ({ children }: { children: React.ReactNode }) => {
       <Sidebar />
       <div className='w-full'>
         <Header />
-        <div className='flex items-start'>
+        <div className='flex items-start h-full'>
           <ChatOverview />
           {children}
         </div>

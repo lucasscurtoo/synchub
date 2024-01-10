@@ -1,11 +1,11 @@
-import React, { useState, useMemo } from 'react'
-import { FormInput } from 'ui/components/form-input'
+import React, { useState } from 'react'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid'
 import { useAuthPageContext } from '../AuthContext'
 import { Formik, Field, Form, FieldProps } from 'Formik'
 import type { FieldMetaProps } from 'Formik'
 import { signUpSchema } from '../Validations'
 import { useRegisterMutation } from '@/redux/api/userApi'
+import { FormInput } from '@/components/form/FormInput'
 
 interface FieldType {
   field: React.Component<FieldProps['field']>

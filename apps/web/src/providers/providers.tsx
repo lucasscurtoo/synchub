@@ -4,7 +4,7 @@ import { store } from '@/redux/store'
 import { Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 import { Provider } from 'react-redux'
-import { AppUIProvider } from 'ui/providers/index'
+import { AppUIProvider } from './AppUIProvider'
 
 export function Providers({
   children,

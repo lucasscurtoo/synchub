@@ -1,12 +1,12 @@
 'use client'
 import React, { useState } from 'react'
-import { FormInput } from 'ui/components/form-input'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid'
 import { useAuthPageContext } from '../AuthContext'
 import { Formik, Field, Form, FieldProps } from 'Formik'
 import type { FieldMetaProps } from 'Formik'
 import { signInSchema } from '../Validations'
 import { signIn } from 'next-auth/react'
+import { FormInput } from '@/components/form/FormInput'
 
 interface FieldType {
   field: React.Component<FieldProps['field']>
