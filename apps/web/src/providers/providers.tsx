@@ -15,7 +15,7 @@ export function Providers({
 }) {
   return (
     <SessionProvider session={session}>
-      <AppUIProvider key={null} type={undefined} props={undefined}>
+      <AppUIProvider>
         <Provider store={store}>{children}</Provider>
       </AppUIProvider>
     </SessionProvider>
