@@ -16,9 +16,5 @@
     "turbo": "latest"
   },
   "name": "synchub",
-  "packageManager": "npm@10.2.0",
-  "dependencies": {
-    "@nextui-org/react": "^2.2.9",
-    "framer-motion": "^10.18.0"
-  }
+  "packageManager": "npm@10.2.0"
 }

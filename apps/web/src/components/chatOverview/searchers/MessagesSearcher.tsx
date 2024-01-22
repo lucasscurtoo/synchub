@@ -1,6 +1,6 @@
-import { Input } from '@nextui-org/react'
 import React from 'react'
 import { MagnifyingGlassCircleIcon } from '@heroicons/react/24/outline'
+import { Input } from '@nextui-org/input'
 
 const MessagesSearcher = () => {
   return (
