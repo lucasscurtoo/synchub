@@ -1,1 +1,3 @@
-export class Chat {}
+export class Chat {
+  participants: [{ participant: string }];
+}

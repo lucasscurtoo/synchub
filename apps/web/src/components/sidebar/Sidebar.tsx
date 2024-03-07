@@ -44,7 +44,7 @@ const Sidebar = () => {
   const pathname = usePathname()
 
   return (
-    <div className='flex flex-col w-1/4 h-full max-w-xs p-8 bg-appColors-backgroundBlue'>
+    <div className='flex flex-col w-1/6 h-full max-w-xs p-8 bg-appColors-backgroundBlue'>
       <div className='flex flex-col space-y-10'>
         <Image src={Logo} width={250} height={200} alt='Logo image' />
         <div className='space-y-6'>

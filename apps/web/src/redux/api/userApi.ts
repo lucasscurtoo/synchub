@@ -1,28 +1,24 @@
 import { registerType, userType } from '@/types/userType'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { apiService } from './api'
 
-export const userApi = createApi({
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_API_URL,
-  }),
-  tagTypes: ['User'],
+export const chatService = apiService.injectEndpoints({
   endpoints: (build) => ({
     register: build.mutation<userType, registerType>({
       query: (body) => ({
         url: `auth/register`,
         method: 'POST',
         body,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
       }),
       // Pick out data and prevent nested properties in a hook or selector
       transformResponse: (response: { data: userType }, meta, arg) =>
         response.data,
       // Pick out errors and prevent nested properties in a hook or selector
-      transformErrorResponse: (
-        response: { status: string | number },
-        meta,
-        arg
-      ) => response.status,
-      invalidatesTags: ['User'],
+      transformErrorResponse: (response: { status: string | number }) =>
+        response.status,
+      invalidatesTags: ['Users'],
       // onQueryStarted is useful for optimistic updates
       // The 2nd parameter is the destructured `MutationLifecycleApi`
 
@@ -33,17 +29,17 @@ export const userApi = createApi({
         url: `auth/login`,
         method: 'POST',
         body,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
       }),
       // Pick out data and prevent nested properties in a hook or selector
       transformResponse: (response: { data: userType }, meta, arg) =>
         response.data,
       // Pick out errors and prevent nested properties in a hook or selector
-      transformErrorResponse: (
-        response: { status: string | number },
-        meta,
-        arg
-      ) => response.status,
-      invalidatesTags: ['User'],
+      transformErrorResponse: (response: { status: string | number }) =>
+        response.status,
+      invalidatesTags: ['Users'],
       // onQueryStarted is useful for optimistic updates
       // The 2nd parameter is the destructured `MutationLifecycleApi`
 
@@ -52,4 +48,4 @@ export const userApi = createApi({
   }),
 })
 
-export const { useRegisterMutation, useLoginMutation } = userApi
+export const { useLoginMutation, useRegisterMutation } = chatService

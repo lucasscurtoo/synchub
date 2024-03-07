@@ -19,6 +19,7 @@ const config = {
           blue: '#3D64FD',
           lightBlue: '#DCE6FF',
           gray: '#6B7280',
+          textGray: '#636363',
           fadedGray: '#AFB8CF',
         },
       },
