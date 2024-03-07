@@ -6,6 +6,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { createCipheriv, randomBytes, scrypt } from 'crypto';
 import { promisify } from 'util';
+import { ErrorManager } from 'src/services/error.manager';
 
 @Injectable()
 export class UsersService {
@@ -54,8 +55,24 @@ export class UsersService {
     return `This action returns all users`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: string) {
+    console.log(id);
+    try {
+      const user = await this.userModel.findById({
+        _id: id,
+      });
+
+      return {
+        status: HttpStatus.OK,
+        message: 'User returned',
+        data: user,
+      };
+    } catch (error) {
+      return ErrorManager.createSignatureError({
+        status: HttpStatus.BAD_REQUEST,
+        message: 'Invalid id',
+      });
+    }
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

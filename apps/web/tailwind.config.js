@@ -1,4 +1,4 @@
-import { nextui } from '@nextui-org/react'
+import { nextui } from '@nextui-org/theme'
 
 const config = {
   content: [
@@ -8,8 +8,8 @@ const config = {
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './providers/**/*.{js,ts,jsx,tsx,mdx}',
+    '../../node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
     '../.././node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -19,6 +19,7 @@ const config = {
           blue: '#3D64FD',
           lightBlue: '#DCE6FF',
           gray: '#6B7280',
+          textGray: '#636363',
           fadedGray: '#AFB8CF',
         },
       },
@@ -31,6 +32,9 @@ const config = {
         '9xl': '4.5rem',
         '10xl': '5rem',
       },
+      borderWidth: {
+        '05': '0.5px',
+      },
       boxShadow: {
         appShadow: '0 4px 15px 0 rgba(0,0,0, 0.3)',
       },
@@ -40,6 +44,11 @@ const config = {
     },
   },
   darkMode: 'class',
-  plugins: [nextui()],
+  plugins: [
+    nextui({
+      addCommonColors: true,
+      defaultTheme: 'light',
+    }),
+  ],
 }
 export default config
