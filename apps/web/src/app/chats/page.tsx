@@ -10,12 +10,12 @@ const page = () => {
   )
   console.log(data)
   return (
-    <div className='flex items-center justify-center w-full h-full'>
+    <div className='flex items-center justify-center w-full h-full bg-appColors-backgroundBlue'>
       {data ? (
         <ChatInterface />
       ) : (
         <div className='flex flex-col items-center space-y-4'>
-          <h2 className='text-4xl font-medium text-gray-900'>
+          <h2 className='text-4xl font-medium text-appColors-text'>
             Select a chat to start!
           </h2>
           <p className='text-sm font-light text-center text-appColors-textGray'>

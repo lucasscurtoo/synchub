@@ -21,16 +21,25 @@ const config = {
           gray: '#6B7280',
           textGray: '#636363',
           fadedGray: '#AFB8CF',
+          text: '#374151',
+          red: '#F25D5A',
         },
       },
+      spacing: {
+        100: '28rem', // 448px
+        128: '32rem', // 512px
+        136: '36rem', // 576px
+        144: '40rem', // 640px
+        160: '44rem', // 704px
+      },
       borderRadius: {
-        '4xl': '2rem',
-        '5xl': '2.5rem',
-        '6xl': '3rem',
-        '7xl': '3.5rem',
-        '8xl': '4rem',
-        '9xl': '4.5rem',
-        '10xl': '5rem',
+        '4xl': '2rem', // 32px
+        '5xl': '2.5rem', // 40px
+        '6xl': '3rem', // 48px
+        '7xl': '3.5rem', // 56px
+        '8xl': '4rem', // 64px
+        '9xl': '4.5rem', // 72px
+        '10xl': '5rem', // 80px
       },
       borderWidth: {
         '05': '0.5px',

@@ -4,7 +4,7 @@ import { useAuthPageContext } from '../AuthContext'
 import { Formik, Field, Form, FieldProps } from 'Formik'
 import type { FieldMetaProps } from 'Formik'
 import { signUpSchema } from '../Validations'
-import { useRegisterMutation } from '@/redux/api/userApi'
+import { useRegisterMutation } from '@/redux/api/authApi'
 import { FormInput } from '@/components/form/FormInput'
 
 interface FieldType {
