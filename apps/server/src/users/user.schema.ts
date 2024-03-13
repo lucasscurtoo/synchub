@@ -15,14 +15,17 @@ export class User {
   @Prop({ required: true, unique: true })
   email: string;
 
-  @Prop({ default: 'Online' })
+  @Prop()
   status: string;
 
   @Prop()
-  role: string;
+  profesionalRole: string;
 
-  @Prop({ default: false })
-  mutedNotifications: boolean;
+  @Prop({ default: 'Active' })
+  state: string;
+
+  @Prop()
+  profilePicture: string;
 
   @Prop({ type: mongoose.Types.ObjectId, ref: 'Organization' })
   organization: Organization;

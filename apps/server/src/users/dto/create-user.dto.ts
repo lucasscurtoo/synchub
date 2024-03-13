@@ -14,11 +14,19 @@ export class CreateUserDto {
   @MinLength(6)
   password: string;
 
-  @IsNotEmpty()
   @IsString()
-  role: string;
+  status: string;
+
+  @IsString()
+  profesionalRole: string;
+
+  @IsString()
+  state: string;
 
   @IsNotEmpty()
   @IsString()
   organization: string;
+
+  @IsString()
+  profilePicture: string;
 }

@@ -1,7 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
+interface AppState {
+  section: string
+  myProfileModalState: boolean
+  spellCheck: boolean
+  appTheme: string
+}
+
+const initialState: AppState = {
   section: 'messages',
+  myProfileModalState: false,
+  spellCheck: false,
+  appTheme: 'OS',
 }
 
 export const appSlice = createSlice({
@@ -11,9 +21,23 @@ export const appSlice = createSlice({
     setAppSection: (state, action) => {
       state.section = action.payload
     },
+    toggleShowyProfileModal: (state) => {
+      state.myProfileModalState = !state.myProfileModalState
+    },
+    toggleSpellcheckOn: (state) => {
+      state.spellCheck = !state.spellCheck
+    },
+    setAppTheme: (state, action) => {
+      state.appTheme = action.payload
+    },
   },
 })
 
-export const { setAppSection } = appSlice.actions
+export const {
+  setAppSection,
+  toggleShowyProfileModal,
+  toggleSpellcheckOn,
+  setAppTheme,
+} = appSlice.actions
 
 export default appSlice.reducer

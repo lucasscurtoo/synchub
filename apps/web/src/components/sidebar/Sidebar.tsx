@@ -10,7 +10,7 @@ import { UserGroupIcon as ChannelSolidIcon } from '@heroicons/react/24/solid'
 import { UserGroupIcon as ChannelOutlineIcon } from '@heroicons/react/24/outline'
 import { usePathname } from 'next/navigation'
 import SidebarButton from './SidebarButton'
-import ConfigurationModal from './ConfigurationModal'
+import ConfigurationModal from '../user/settings/SettingsModal'
 
 export interface ButtonConfig {
   path: string
@@ -59,9 +59,6 @@ const Sidebar = () => {
             />
           ))}
         </div>
-      </div>
-      <div className='flex flex-col mt-auto'>
-        <ConfigurationModal />
       </div>
     </div>
   )

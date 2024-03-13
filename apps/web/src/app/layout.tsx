@@ -16,12 +16,12 @@ export default function RootLayout({
   session: Session
 }) {
   return (
-    <html lang='en'>
+    <html lang='en' className='antialiased font-inter'>
       <body>
         <Providers session={session}>
           <div>
             <AuthCheck />
-            <main className='flex w-screen h-screen font-inter light'>
+            <main className='flex w-screen h-screen overflow-visible light'>
               {children}
             </main>
           </div>
@@ -30,4 +30,3 @@ export default function RootLayout({
     </html>
   )
 }
-
