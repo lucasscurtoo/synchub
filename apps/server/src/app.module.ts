@@ -7,6 +7,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { ChatsModule } from './chats/chats.module';
 import { AppLoggerMiddleware } from './AppLoggerMiddleware';
+import { APP_FILTER } from '@nestjs/core';
+import { HttpExceptionFilter } from './HttpExceptionFilter';
 
 @Module({
   imports: [
@@ -19,7 +21,13 @@ import { AppLoggerMiddleware } from './AppLoggerMiddleware';
     ChatsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {

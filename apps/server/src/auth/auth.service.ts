@@ -4,10 +4,10 @@ import { Model } from 'mongoose';
 import { User, UserDocument } from '../users/user.schema';
 import { LoginAuthDto } from './dto/login-auth-dto';
 import { CryptoService } from '../services/crypto.service';
-import { RegisterAuthDto } from './dto/register-auth.dto';
 import { randomBytes } from 'crypto';
 import { ApiResponse } from 'src/types';
-import { ErrorManager } from 'src/services/error.manager';
+import { ErrorManager } from '../services/error.manager';
+import { RegisterAuthDto } from './dto/register-auth.dto';
 
 @Injectable()
 export class AuthService {

@@ -1,66 +1,44 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User, UserDocument } from './user.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { createCipheriv, randomBytes, scrypt } from 'crypto';
-import { promisify } from 'util';
-import { ErrorManager } from 'src/services/error.manager';
+import { ErrorManager } from '../services/error.manager';
+import { ApiResponse } from 'src/types';
 
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User | Error> {
+  async findAll(): Promise<ApiResponse> {
     try {
-      const usersByEmail = await this.userModel
-        .find({ email: createUserDto.email })
-        .exec();
+      const users = await this.userModel.find().sort({ fullName: 1 });
 
-      if (usersByEmail.length > 0) {
-        throw new HttpException(
-          {
-            status: HttpStatus.INTERNAL_SERVER_ERROR,
-            error: 'Repetead email, must be unique',
-          },
-          HttpStatus.INTERNAL_SERVER_ERROR,
-        );
-      }
-
-      // validar que la organizacion a la que pertenezca exista y eso
-
-      const iv = randomBytes(16);
-      const password = createUserDto.password;
-      const key = (await promisify(scrypt)(password, 'salt', 32)) as Buffer;
-      const cipher = createCipheriv('aes-256-ctr', key, iv);
-
-      const encryptedPassword = Buffer.concat([
-        cipher.update(password),
-        cipher.final(),
-      ]);
-
-      const user = new this.userModel({
-        ...createUserDto,
-        password: encryptedPassword.toString('hex'),
-      });
-      return user.save();
+      return {
+        status: HttpStatus.OK,
+        message: 'Users returned',
+        data: users,
+      };
     } catch (error) {
-      console.error('Error:', error);
-      return error;
+      throw ErrorManager.createSignatureError({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: 'Internal server error',
+      });
     }
   }
 
-  findAll() {
-    return `This action returns all users`;
-  }
-
-  async findOne(id: string) {
-    console.log(id);
+  async findOne(id: string): Promise<ApiResponse> {
     try {
       const user = await this.userModel.findById({
         _id: id,
       });
+
+      if (!user) {
+        throw ErrorManager.createSignatureError({
+          status: HttpStatus.NOT_FOUND,
+          message: 'Not user found',
+        });
+      }
 
       return {
         status: HttpStatus.OK,
@@ -68,18 +46,76 @@ export class UsersService {
         data: user,
       };
     } catch (error) {
-      return ErrorManager.createSignatureError({
-        status: HttpStatus.BAD_REQUEST,
-        message: 'Invalid id',
+      if (error.message === 'Not user found') {
+        throw ErrorManager.createSignatureError({
+          status: HttpStatus.NOT_FOUND,
+          message: error.message,
+        });
+      } else {
+        throw ErrorManager.createSignatureError({
+          status: HttpStatus.BAD_REQUEST,
+          message: 'Invalid id',
+        });
+      }
+    }
+  }
+
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<ApiResponse> {
+    try {
+      const user = await this.userModel.findById({
+        _id: id,
+      });
+
+      if (!user) {
+        throw ErrorManager.createSignatureError({
+          status: HttpStatus.NOT_FOUND,
+          message: 'Not user found',
+        });
+      }
+
+      const update = await this.userModel.findOneAndUpdate(
+        { _id: id },
+        updateUserDto,
+        { new: true },
+      );
+
+      return {
+        status: HttpStatus.OK,
+        message: 'User updated and returned',
+        data: update,
+      };
+    } catch (error) {
+      throw ErrorManager.createSignatureError({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: 'Cannot update user',
       });
     }
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+  async remove(id: string): Promise<ApiResponse> {
+    try {
+      const user = await this.userModel.findById({
+        _id: id,
+      });
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+      if (!user) {
+        throw ErrorManager.createSignatureError({
+          status: HttpStatus.NOT_FOUND,
+          message: 'User not found',
+        });
+      }
+      // make the delete from the database
+      await this.userModel.deleteOne({ _id: id });
+
+      return {
+        status: HttpStatus.OK,
+        message: 'User deleted',
+      };
+    } catch (error) {
+      throw ErrorManager.createSignatureError({
+        status: HttpStatus.BAD_REQUEST,
+        message: error,
+      });
+    }
   }
 }

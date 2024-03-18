@@ -1,17 +1,17 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 export class ErrorManager {
-  status: HttpStatus;
-  message: string;
+  public status: HttpStatus;
+  public message: string;
 
   constructor({
-    type,
+    statusCode,
     message,
   }: {
-    type: keyof typeof HttpStatus;
+    statusCode: keyof typeof HttpStatus;
     message: string;
   }) {
-    this.status = HttpStatus[type];
+    this.status = HttpStatus[statusCode];
     this.message = message;
   }
 
