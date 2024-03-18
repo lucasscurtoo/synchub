@@ -7,9 +7,9 @@ const initialState: userType = {
   _id: '',
   fullName: '',
   email: '',
-  role: '',
+  profesionalRole: '',
   status: '',
-  mutedNotifications: false,
+  state: '',
   organization: '',
   profilePicture: '',
 }
@@ -24,7 +24,13 @@ export const userSlice = createSlice({
       (state, action) => {
         return Object.assign(state, action.payload)
       }
-    )
+    ),
+      builder.addMatcher(
+        userService.endpoints.updateUser.matchFulfilled,
+        (state, action) => {
+          return Object.assign(state, action.payload)
+        }
+      )
   },
 })
 

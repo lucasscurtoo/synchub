@@ -1,15 +1,16 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage' // defaults to localStorage for webAssuming you have a types file with RootState and AppDispatch types
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 
 import userSlice from './reducers/userSlice'
 import appSlice from './reducers/appSlice'
 import { apiService } from './api/api'
 
 const persistConfig = {
-  key: 'root',
+  key: 'app',
   version: 1,
   storage,
+  whitelist: ['app'], // Only persists app reducer
 }
 
 const rootReducer = combineReducers({

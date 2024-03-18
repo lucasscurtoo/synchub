@@ -4,15 +4,17 @@ interface InputProps {
   label: string
   value: string
   description?: string
+  onChange?: (e: any) => void
 }
 
-const CustomInput = ({ label, value, description }: InputProps) => {
+const CustomInput = ({ label, value, description, onChange }: InputProps) => {
   return (
     <Input
       label={label}
       labelPlacement='outside'
       value={value}
       description={description}
+      onChange={onChange}
       classNames={{
         input: [
           'bg-transparent !text-appColors-textGray !text-base',

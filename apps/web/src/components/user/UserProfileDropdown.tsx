@@ -5,7 +5,6 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownSection,
-  Chip,
   useDisclosure,
 } from '@nextui-org/react'
 import { RootState } from '@/redux/store'
@@ -68,9 +67,14 @@ const UserProfileDropdown = () => {
           <DropdownSection classNames={{ group: 'space-y-2' }}>
             <DropdownItem isReadOnly key='profile' className='mb-2 opacity-100'>
               <div className='grid items-center grid-cols-2 gap-y-2 gap-x-3'>
-                <h3 className='text-base text-appColors-text font-'>
-                  {userData.fullName}
-                </h3>
+                <div className='flex flex-col space-y-0'>
+                  <h3 className='text-base capitalize text-appColors-text'>
+                    {userData.fullName}
+                  </h3>
+                  <p className='text-sm capitalize text-appColors-text'>
+                    {userData.profesionalRole}
+                  </p>
+                </div>
                 <Image
                   src={userData.profilePicture}
                   width={40}
@@ -79,11 +83,11 @@ const UserProfileDropdown = () => {
                   alt='Profile picture'
                 />
 
-                <p className='text-sm text-appColors-textGray'>
-                  {userData.role}
+                <p className='text-sm capitalize text-appColors-textGray'>
+                  {userData.status}
                 </p>
 
-                <StatusRender status={userData.status} />
+                <StatusRender status={userData.state} />
               </div>
             </DropdownItem>
             <DropdownItem

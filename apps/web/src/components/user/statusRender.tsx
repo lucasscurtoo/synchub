@@ -12,21 +12,14 @@ const StatusRender = ({ status }: StatusRenderProps) => {
     setKey((prevKey) => prevKey + 1)
   }, [status])
 
-  const colorsByStatus = {
-    Active: 'appColors-blue',
-    Offline: 'appColors-gray',
-  }
-
-  const color =
-    (colorsByStatus as Record<string, string>)[status] || 'appColors-gray'
   return (
     <Chip
       key={key}
       variant='dot'
+      color={status === 'Active' ? 'primary' : 'default'}
       className='items-center text-sm text-appColors-textGray'
       classNames={{
         base: `border-none w-fill px-0 dot-`,
-        dot: `!bg-${color}`,
       }}
     >
       {status ?? 'Offline'}

@@ -1,5 +1,5 @@
 'use client'
-import ChatInterface from '@/components/chat/ChatInterface'
+import ChatInterface from '@/components/messages/ChatInterface'
 import { useGetAllChatsQuery } from '@/redux/api/chatApi'
 import { PlusIcon } from '@heroicons/react/24/solid'
 import React from 'react'

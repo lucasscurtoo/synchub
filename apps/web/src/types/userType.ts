@@ -3,8 +3,8 @@ export interface userType {
   fullName: string
   email: string
   status: string
-  role: string
-  mutedNotifications: boolean
+  state: string
+  profesionalRole: string
   organization: string
   profilePicture: string
 }

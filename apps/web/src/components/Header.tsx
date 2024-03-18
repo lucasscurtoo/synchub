@@ -9,7 +9,7 @@ import { useGetUserByIdQuery } from '@/redux/api/userApi'
 const Header = () => {
   const pathname = usePathname()
   const dispatch = useDispatch()
-  const { data, isLoading } = useGetUserByIdQuery('65ea70eb46dd2e14beba2703')
+  const { data, isLoading } = useGetUserByIdQuery('65f47c4f431b47fa12f6a317')
   const formatedPathname = pathname.startsWith('/')
     ? pathname.substring(1)
     : pathname
@@ -17,7 +17,7 @@ const Header = () => {
 
   return (
     <div className='flex items-center justify-between w-full py-6 px-10 border-b-[0.5px] border-appColors-fadedGray/50 shadow-sm '>
-      <h1 className='text-4xl font-medium text-appColors-text capitalize'>
+      <h1 className='text-4xl font-medium capitalize text-appColors-text'>
         {formatedPathname}
       </h1>
       <UserProfileModal />
