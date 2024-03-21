@@ -104,7 +104,6 @@ export class UsersService {
           message: 'User not found',
         });
       }
-      // make the delete from the database
       await this.userModel.deleteOne({ _id: id });
 
       return {
