@@ -4,7 +4,9 @@ import { Checkbox } from '@nextui-org/react'
 import { useDispatch, useSelector } from 'react-redux'
 
 const ThemeSettings = () => {
-  const appTheme = useSelector((state: RootState) => state.app.appTheme)
+  const appTheme = useSelector(
+    (state: RootState) => state.persistedAppReducer.app.appTheme
+  )
   const dispatch = useDispatch()
 
   return (

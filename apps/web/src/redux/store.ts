@@ -14,17 +14,24 @@ const persistConfig = {
 }
 
 const rootReducer = combineReducers({
-  user: userSlice,
   app: appSlice,
-  apiService: apiService.reducer,
 })
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedAppReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: {
+    persistedAppReducer,
+    apiService: apiService.reducer,
+    user: userSlice,
+  },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiService.middleware),
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore these action types
+        ignoredActions: ['persist/PERSIST'],
+      },
+    }).concat(apiService.middleware),
 })
 
 export const persistor = persistStore(store)

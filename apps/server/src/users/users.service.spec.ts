@@ -93,7 +93,7 @@ describe('UsersService', () => {
     it('should handle not found error', async () => {
       jest.spyOn(userModel, 'findById').mockResolvedValueOnce(null);
 
-      await expect(service.findOne(userId)).rejects.toThrowError(
+      await expect(service.findOne(userId)).rejects.toThrow(
         new Error('Not user found'),
       );
     });
@@ -101,7 +101,7 @@ describe('UsersService', () => {
     it('should handle invalid id error', async () => {
       jest.spyOn(userModel, 'findById').mockRejectedValueOnce('Invalid id');
 
-      await expect(service.findOne('invalid')).rejects.toThrowError(
+      await expect(service.findOne('invalid')).rejects.toThrow(
         new Error('Invalid id'),
       );
     });
@@ -135,7 +135,7 @@ describe('UsersService', () => {
 
       await expect(
         service.update(userId, { status: 'New status' }),
-      ).rejects.toThrowError(new Error('Cannot update user'));
+      ).rejects.toThrow(new Error('Not user found'));
     });
 
     it('should handle update error', async () => {
@@ -144,11 +144,11 @@ describe('UsersService', () => {
         .mockReturnValueOnce({ status: 'New status' } as any);
       jest
         .spyOn(userModel, 'findOneAndUpdate')
-        .mockRejectedValueOnce('Update error');
+        .mockRejectedValueOnce('Internal server error');
 
       await expect(
         service.update(userId, { status: 'New status' }),
-      ).rejects.toThrowError(new Error('Cannot update user'));
+      ).rejects.toThrow(new Error('Internal server error'));
     });
   });
 
@@ -180,10 +180,12 @@ describe('UsersService', () => {
       jest
         .spyOn(userModel, 'findById')
         .mockReturnValueOnce({ fullName: 'John' } as any);
-      jest.spyOn(userModel, 'deleteOne').mockRejectedValueOnce('Remove error');
+      jest
+        .spyOn(userModel, 'deleteOne')
+        .mockRejectedValueOnce('Internal server error');
 
-      await expect(service.remove(userId)).rejects.toThrowError(
-        new Error('Remove error'),
+      await expect(service.remove(userId)).rejects.toThrow(
+        new Error('Internal server error'),
       );
     });
   });

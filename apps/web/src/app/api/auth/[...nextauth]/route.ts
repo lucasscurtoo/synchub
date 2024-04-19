@@ -1,6 +1,6 @@
 import NextAuth, { AuthOptions } from 'next-auth'
-
 import Credentials from 'next-auth/providers/credentials'
+import { encode } from 'next-auth/jwt'
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -26,7 +26,10 @@ export const authOptions: AuthOptions = {
           `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
           {
             method: 'POST',
-            body: JSON.stringify(credentials),
+            body: JSON.stringify({
+              email: credentials.email,
+              password: credentials.password,
+            }),
             headers: {
               'Content-Type': 'application/json',
             },
@@ -34,16 +37,12 @@ export const authOptions: AuthOptions = {
         )
 
         const user = await res.json()
-        if (!res.ok) {
-          throw new Error(user.message)
-        }
-        // If no error and we have user data, return it
-        if (res.ok && user) {
-          return user
-        }
 
-        // Return null if user data could not be retrieved
-        return null
+        if (user) {
+          return Promise.resolve(user.data)
+        } else {
+          return Promise.resolve(null)
+        }
       },
     }),
   ],
@@ -52,6 +51,38 @@ export const authOptions: AuthOptions = {
     signIn: '/auth',
     error: '/auth',
   },
+
+  logger: {
+    error(code, metadata) {
+      console.log(code, metadata)
+    },
+    warn(code) {
+      console.log(code)
+    },
+    debug(code, metadata) {
+      console.log(code, metadata)
+    },
+  },
+
+  callbacks: {
+    jwt: async ({ token, user }) => {
+      user && (token.user = user)
+      return token
+    },
+    session: async ({ session, token }) => {
+      const encoded = await encode({
+        token,
+        secret: process.env.NEXTAUTH_SECRET || '',
+      })
+      session.user = Object.assign({}, session.user, token.user)
+      session.token = Object.assign({}, session.token, { accessToken: encoded })
+      return session
+    },
+  },
+
+  session: { strategy: 'jwt', maxAge: 30 * 24 * 60 * 60 },
+
+  secret: process.env.NEXTAUTH_SECRET,
 }
 
 const handler = NextAuth(authOptions)

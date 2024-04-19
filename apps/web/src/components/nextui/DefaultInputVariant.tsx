@@ -1,11 +1,17 @@
 import { extendVariants, Input } from '@nextui-org/react'
 
-export const CustomGrayInput = extendVariants(Input, {
+export const DefaultInputVariant = extendVariants(Input, {
   variants: {
     color: {
-      gray: {
+      defaultVariant: {
+        input: [
+          'bg-transparent !text-appColors-textGray !text-base',
+          'group-data-[focus=true]:!text-appColors-text',
+          'placeholder:text-sm',
+          '!placeholder-appColors-textGray',
+        ],
+        innerWrapper: 'bg-transparent',
         inputWrapper: [
-          '!font-inter',
           'rounded-md',
           'shadow-xl',
           'bg-transparent',
@@ -16,23 +22,17 @@ export const CustomGrayInput = extendVariants(Input, {
           'ring-inset',
           '!ring-appColors-gray/30',
         ],
-        input: [
-          'bg-transparent !text-appColors-textGray !text-base',
-          'group-data-[focus=true]:!text-appColors-text',
-        ],
-        innerWrapper: 'bg-transparent',
-
         description: 'text-appColors-fadedGray text-sm',
         label: [
-          '!text-appColors-textGray text-lg',
+          '!text-appColors-text text-lg !font-normal',
           'group-data-[focus=true]:!text-appColors-text',
         ],
+        errorMessage: 'absolute',
       },
     },
   },
   defaultVariants: {
-    color: 'gray',
-    textSize: 'base',
+    color: 'defaultVariant',
     removeLabel: true,
   },
 })

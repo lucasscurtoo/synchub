@@ -6,7 +6,9 @@ import { Checkbox } from '@nextui-org/react'
 import { toggleSpellcheckOn } from '@/redux/reducers/appSlice'
 
 const LangSettings = () => {
-  const spellCheck = useSelector((state: RootState) => state.app.spellCheck)
+  const spellCheck = useSelector(
+    (state: RootState) => state.persistedAppReducer.app.spellCheck
+  )
   const Languages = [
     { label: 'English', value: 'English' },
     { label: 'Spanish', value: 'Spanish' },

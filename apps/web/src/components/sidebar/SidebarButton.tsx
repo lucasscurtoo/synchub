@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { ButtonConfig } from './Sidebar'
+import { useDispatch } from 'react-redux'
+import { setAppSection } from '@/redux/reducers/appSlice'
 
 interface SidebarButtonProps extends ButtonConfig {
   isActive: boolean
@@ -13,9 +15,14 @@ const SidebarButton = ({
   IconInactive,
 }: SidebarButtonProps) => {
   const Icon = isActive ? IconActive : IconInactive
+  const dispatch = useDispatch()
 
   return (
-    <Link href={path} passHref>
+    <Link
+      href={path}
+      passHref
+      onClick={() => dispatch(setAppSection(label.toLowerCase()))}
+    >
       <div
         className={`flex items-center p-3 space-x-4 rounded-2xl ${
           isActive ? 'bg-appColors-blue' : 'bg-transparent'

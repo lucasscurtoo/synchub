@@ -26,8 +26,7 @@ const LoginForm = () => {
         }}
         validationSchema={signInSchema}
         onSubmit={async (values) => {
-          console.log(values)
-          signIn('credentials', {
+          await signIn('credentials', {
             email: values.email,
             password: values.password,
             redirect: true,

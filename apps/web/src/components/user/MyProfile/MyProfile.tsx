@@ -1,5 +1,4 @@
 'use client'
-
 import { useEffect, useState } from 'react'
 import { RootState } from '@/redux/store'
 import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
@@ -10,10 +9,13 @@ import { toggleShowyProfileModal } from '@/redux/reducers/appSlice'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Formik, Form, Field } from 'Formik'
 import { useUpdateUserMutation } from '@/redux/api/userApi'
+import DeleteAccModal from './DeleteAccModal'
 
 const MyProfile = () => {
   const userData = useSelector((state: RootState) => state.user)
-  const { myProfileModalState } = useSelector((state: RootState) => state.app)
+  const { myProfileModalState } = useSelector(
+    (state: RootState) => state.persistedAppReducer.app
+  )
   const [updateUser] = useUpdateUserMutation()
   const [showSaveButton, setShowSaveButton] = useState(false)
   const [userValues, setUserValues] = useState(userData)
@@ -52,7 +54,7 @@ const MyProfile = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             exit={{ opacity: 0, x: 20 }}
-            className='z-50 bg-white h-full w-128 border-l-[0.5px]'
+            className='z-50 bg-white h-full w-128 border-l-[0.5px] flex flex-col'
             tabIndex={-1}
           >
             <div className='z-50 flex items-center justify-between p-5 border-b-[0.5px] text-appColors-text'>
@@ -104,6 +106,7 @@ const MyProfile = () => {
                 </div>
               </Form>
             </Formik>
+            <DeleteAccModal />
           </motion.div>
         </>
       )}

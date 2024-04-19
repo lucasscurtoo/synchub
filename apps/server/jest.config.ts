@@ -13,6 +13,7 @@ const config: Config = {
   testEnvironment: 'node',
   moduleNameMapper: {
     '^@app/(.*)$': '<rootDir>/$1',
+    '^src/(.*)$': '<rootDir>/$1',
   },
   detectOpenHandles: true,
 };
