@@ -1,9 +1,14 @@
 import { userType } from '@/types/userType'
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, current } from '@reduxjs/toolkit'
 import { userService } from '../api/userApi'
 // import type { PayloadAction } from '@reduxjs/toolkit'
 
-const initialState: userType = {
+interface userState extends userType {
+  isLoading: boolean
+  isUserFirstLoggin: boolean
+}
+
+const initialState: userState = {
   _id: '',
   fullName: '',
   email: '',
@@ -12,6 +17,8 @@ const initialState: userType = {
   state: '',
   organization: '',
   profilePicture: '',
+  isLoading: false,
+  isUserFirstLoggin: false,
 }
 
 export const userSlice = createSlice({
@@ -20,11 +27,27 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addMatcher(
-      userService.endpoints.getUserById.matchFulfilled,
-      (state, action) => {
-        return Object.assign(state, action.payload)
+      userService.endpoints.getUserById.matchPending,
+      (state) => {
+        state.isLoading = true
       }
     ),
+      builder.addMatcher(
+        userService.endpoints.getUserById.matchFulfilled,
+        (state, action) => {
+          state.isLoading = false
+          Object.assign(state, action.payload)
+          const currentState = current(state)
+
+          //find empty fields
+          const emptyFields = Object.values(currentState).filter(
+            (elem) => elem === ''
+          )
+          if (emptyFields) {
+            state.isUserFirstLoggin = true
+          }
+        }
+      ),
       builder.addMatcher(
         userService.endpoints.updateUser.matchFulfilled,
         (state, action) => {

@@ -10,7 +10,6 @@ import { UserGroupIcon as ChannelSolidIcon } from '@heroicons/react/24/solid'
 import { UserGroupIcon as ChannelOutlineIcon } from '@heroicons/react/24/outline'
 import { usePathname } from 'next/navigation'
 import SidebarButton from './SidebarButton'
-import ConfigurationModal from '../user/settings/SettingsModal'
 
 export interface ButtonConfig {
   path: string

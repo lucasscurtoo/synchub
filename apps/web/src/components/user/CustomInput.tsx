@@ -1,43 +1,50 @@
-import { Input } from '@nextui-org/react'
+import { ReactElement } from 'react'
+import type { FieldMetaProps, FieldProps } from 'Formik'
+import { DefaultInputVariant } from '../nextui/DefaultInputVariant'
 
 interface InputProps {
   label: string
-  value: string
+  value?: string
   description?: string
+  placeholder?: string
   onChange?: (e: any) => void
+  icon?: ReactElement
+  field?: React.Component<FieldProps['field']>
+  meta?: FieldMetaProps<FieldProps>
+  name: string
+  type: string
+  isRequired?: boolean
 }
 
-const CustomInput = ({ label, value, description, onChange }: InputProps) => {
+const CustomInput = ({
+  label,
+  value,
+  description,
+  placeholder,
+  onChange,
+  icon,
+  field,
+  meta,
+  name,
+  type,
+  isRequired,
+}: InputProps) => {
   return (
-    <Input
+    <DefaultInputVariant
+      name={name}
       label={label}
       labelPlacement='outside'
+      placeholder={placeholder}
       value={value}
       description={description}
       onChange={onChange}
-      classNames={{
-        input: [
-          'bg-transparent !text-appColors-textGray !text-base',
-          'group-data-[focus=true]:!text-appColors-text',
-        ],
-        innerWrapper: 'bg-transparent',
-        inputWrapper: [
-          'rounded-md',
-          'shadow-xl',
-          'bg-transparent',
-          'hover:bg-transparent',
-          'group-data-[hover=true]:bg-transparent',
-          'group-data-[focus=true]:bg-transparent',
-          'ring-1',
-          'ring-inset',
-          '!ring-appColors-gray/30',
-        ],
-        description: 'text-appColors-fadedGray text-sm',
-        label: [
-          '!text-appColors-textGray text-lg !font-normal',
-          'group-data-[focus=true]:!text-appColors-text',
-        ],
-      }}
+      endContent={icon}
+      isRequired={isRequired}
+      color='defaultVariant'
+      errorMessage={meta?.error && meta.touched ? meta.error : ''}
+      isInvalid={Boolean(meta?.touched && meta.error)}
+      type={type}
+      {...field}
     />
   )
 }

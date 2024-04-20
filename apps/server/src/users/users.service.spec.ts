@@ -3,6 +3,7 @@ import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UsersService } from './users.service';
 import { UserDocument } from './user.schema';
+import { faker } from '@faker-js/faker';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -33,18 +34,17 @@ describe('UsersService', () => {
     it('should return all users', async () => {
       const users = [
         {
-          _id: '65f47c4f431b47fa12f6a317',
-          fullName: 'Amy Watts',
-          password: '8631dc054cbef6e97d',
-          email: 'amywatts24@gmail.com',
+          _id: faker.string.uuid(),
+          fullName: faker.person.fullName(),
+          password: faker.internet.password(),
+          email: faker.internet.email(),
           status: 'Developing',
           profesionalRole: 'FullStack Developer',
           state: 'Active',
-          profilePicture:
-            'https://images.unsplash.com/photo-1614460132343-62aa9fa8d6f6?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-          organization: 'lucasOrg',
-          key: '59fb95e0c31ab695f14bc42887dc130dcee47f68be774a513516ceba86f140e5',
-          iv: '379ccb9aef87362d8d1f58e3815b3d2e',
+          profilePicture: faker.image.url(),
+          organization: faker.company.name(),
+          key: faker.string.alphanumeric(64),
+          iv: faker.string.alphanumeric(32),
           __v: 0,
         },
       ];
@@ -93,7 +93,7 @@ describe('UsersService', () => {
     it('should handle not found error', async () => {
       jest.spyOn(userModel, 'findById').mockResolvedValueOnce(null);
 
-      await expect(service.findOne(userId)).rejects.toThrowError(
+      await expect(service.findOne(userId)).rejects.toThrow(
         new Error('Not user found'),
       );
     });
@@ -101,7 +101,7 @@ describe('UsersService', () => {
     it('should handle invalid id error', async () => {
       jest.spyOn(userModel, 'findById').mockRejectedValueOnce('Invalid id');
 
-      await expect(service.findOne('invalid')).rejects.toThrowError(
+      await expect(service.findOne('invalid')).rejects.toThrow(
         new Error('Invalid id'),
       );
     });
@@ -135,7 +135,7 @@ describe('UsersService', () => {
 
       await expect(
         service.update(userId, { status: 'New status' }),
-      ).rejects.toThrowError(new Error('Cannot update user'));
+      ).rejects.toThrow(new Error('Not user found'));
     });
 
     it('should handle update error', async () => {
@@ -144,11 +144,11 @@ describe('UsersService', () => {
         .mockReturnValueOnce({ status: 'New status' } as any);
       jest
         .spyOn(userModel, 'findOneAndUpdate')
-        .mockRejectedValueOnce('Update error');
+        .mockRejectedValueOnce('Internal server error');
 
       await expect(
         service.update(userId, { status: 'New status' }),
-      ).rejects.toThrowError(new Error('Cannot update user'));
+      ).rejects.toThrow(new Error('Internal server error'));
     });
   });
 
@@ -180,10 +180,12 @@ describe('UsersService', () => {
       jest
         .spyOn(userModel, 'findById')
         .mockReturnValueOnce({ fullName: 'John' } as any);
-      jest.spyOn(userModel, 'deleteOne').mockRejectedValueOnce('Remove error');
+      jest
+        .spyOn(userModel, 'deleteOne')
+        .mockRejectedValueOnce('Internal server error');
 
-      await expect(service.remove(userId)).rejects.toThrowError(
-        new Error('Remove error'),
+      await expect(service.remove(userId)).rejects.toThrow(
+        new Error('Internal server error'),
       );
     });
   });

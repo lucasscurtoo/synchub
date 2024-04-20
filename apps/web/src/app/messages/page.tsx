@@ -1,7 +1,7 @@
 'use client'
 import ChatInterface from '@/components/messages/ChatInterface'
+import StartChatModal from '@/components/messages/StartChatModal'
 import { useGetAllChatsQuery } from '@/redux/api/chatApi'
-import { PlusIcon } from '@heroicons/react/24/solid'
 import React from 'react'
 
 const page = () => {
@@ -11,7 +11,7 @@ const page = () => {
   console.log(data)
   return (
     <div className='flex items-center justify-center w-full h-full bg-appColors-backgroundBlue'>
-      {data ? (
+      {data?.data ? (
         <ChatInterface />
       ) : (
         <div className='flex flex-col items-center space-y-4'>
@@ -22,11 +22,7 @@ const page = () => {
             Select a chat and start messaging with <br /> friends, partners or
             anyone!
           </p>
-          {/* hacer el modal de start new chat  */}
-          <div className='flex items-center px-4 py-2 space-x-2 text-white rounded-lg cursor-pointer bg-appColors-blue'>
-            <PlusIcon className='w-8' />
-            <p className='text-sm font-light'>Start new chat</p>
-          </div>
+          <StartChatModal />
         </div>
       )}
     </div>

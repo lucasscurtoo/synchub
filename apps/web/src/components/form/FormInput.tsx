@@ -6,7 +6,6 @@ interface FormInputProps {
   name: string
   label: string
   icon?: JSX.Element
-  value?: string
   isInvalid?: boolean
   field: React.Component<FieldProps['field']>
   meta?: FieldMetaProps<FieldProps>

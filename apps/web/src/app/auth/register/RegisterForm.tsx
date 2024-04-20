@@ -6,6 +6,7 @@ import type { FieldMetaProps } from 'Formik'
 import { signUpSchema } from '../Validations'
 import { useRegisterMutation } from '@/redux/api/authApi'
 import { FormInput } from '@/components/form/FormInput'
+import { signIn } from 'next-auth/react'
 
 interface FieldType {
   field: React.Component<FieldProps['field']>
@@ -27,9 +28,17 @@ const RegisterForm = () => {
           repeatedPass: '',
         }}
         validationSchema={signUpSchema}
-        onSubmit={(values) => {
+        onSubmit={async (values): Promise<void> => {
           console.log(values)
-          register(values)
+          const data = await register(values).unwrap()
+          console.log(data)
+          if (data?.status === 201) {
+            await signIn('credentials', {
+              email: values.email,
+              password: values.password,
+              redirect: true,
+            })
+          }
         }}
       >
         <Form className='space-y-4'>

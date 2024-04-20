@@ -7,7 +7,7 @@ export const userService = apiService.injectEndpoints({
       query: (id) => ({
         url: `users/${id}`,
       }),
-      transformResponse: (response: responseType, meta, arg) => response.data,
+      transformResponse: (response: any, meta, arg) => response.data,
       transformErrorResponse: (response: responseType) => response.status,
     }),
     updateUser: builder.mutation<any, any>({
@@ -19,7 +19,19 @@ export const userService = apiService.injectEndpoints({
       transformResponse: (response: responseType, meta, arg) => response.data,
       transformErrorResponse: (response: responseType) => response.status,
     }),
+    deleteUser: builder.mutation<any, any>({
+      query: (id) => ({
+        url: `users/${id}`,
+        method: 'DELETE',
+      }),
+      transformResponse: (response: responseType, meta, arg) => response.data,
+      transformErrorResponse: (response: responseType) => response.status,
+    }),
   }),
 })
 
-export const { useGetUserByIdQuery, useUpdateUserMutation } = userService
+export const {
+  useLazyGetUserByIdQuery,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
+} = userService

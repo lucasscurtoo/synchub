@@ -21,11 +21,14 @@ export class ErrorManager {
   }: {
     status: HttpStatus;
     message: string;
-  }) {
+  }): HttpException {
     if (status && message) {
-      throw new HttpException(message, status);
+      return new HttpException(message, status);
     } else {
-      throw new HttpException(message, HttpStatus.INTERNAL_SERVER_ERROR);
+      return new HttpException(
+        message || 'Internal server error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }

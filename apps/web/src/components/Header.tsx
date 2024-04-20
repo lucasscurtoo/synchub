@@ -4,12 +4,10 @@ import { usePathname } from 'next/navigation'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import UserProfileModal from './user/UserProfileDropdown'
-import { useGetUserByIdQuery } from '@/redux/api/userApi'
 
 const Header = () => {
   const pathname = usePathname()
   const dispatch = useDispatch()
-  const { data, isLoading } = useGetUserByIdQuery('65f47c4f431b47fa12f6a317')
   const formatedPathname = pathname.startsWith('/')
     ? pathname.substring(1)
     : pathname

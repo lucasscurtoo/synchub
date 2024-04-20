@@ -1,7 +1,7 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User, UserDocument } from './user.schema';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { ErrorManager } from '../services/error.manager';
 import { ApiResponse } from 'src/types';
@@ -20,15 +20,25 @@ export class UsersService {
         data: users,
       };
     } catch (error) {
-      throw ErrorManager.createSignatureError({
-        status: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: 'Internal server error',
-      });
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw ErrorManager.createSignatureError({
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: 'Internal server error',
+        });
+      }
     }
   }
 
   async findOne(id: string): Promise<ApiResponse> {
     try {
+      if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+        throw ErrorManager.createSignatureError({
+          status: HttpStatus.BAD_REQUEST,
+          message: 'Invalid id',
+        });
+      }
       const user = await this.userModel.findById({
         _id: id,
       });
@@ -46,15 +56,12 @@ export class UsersService {
         data: user,
       };
     } catch (error) {
-      if (error.message === 'Not user found') {
-        throw ErrorManager.createSignatureError({
-          status: HttpStatus.NOT_FOUND,
-          message: error.message,
-        });
+      if (error instanceof HttpException) {
+        throw error;
       } else {
         throw ErrorManager.createSignatureError({
-          status: HttpStatus.BAD_REQUEST,
-          message: 'Invalid id',
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: 'Internal server error',
         });
       }
     }
@@ -85,10 +92,14 @@ export class UsersService {
         data: update,
       };
     } catch (error) {
-      throw ErrorManager.createSignatureError({
-        status: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: 'Cannot update user',
-      });
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw ErrorManager.createSignatureError({
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: 'Internal server error',
+        });
+      }
     }
   }
 
@@ -104,7 +115,6 @@ export class UsersService {
           message: 'User not found',
         });
       }
-      // make the delete from the database
       await this.userModel.deleteOne({ _id: id });
 
       return {
@@ -112,10 +122,14 @@ export class UsersService {
         message: 'User deleted',
       };
     } catch (error) {
-      throw ErrorManager.createSignatureError({
-        status: HttpStatus.BAD_REQUEST,
-        message: error,
-      });
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw ErrorManager.createSignatureError({
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: 'Internal server error',
+        });
+      }
     }
   }
 }

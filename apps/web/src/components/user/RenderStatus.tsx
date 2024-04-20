@@ -5,7 +5,7 @@ interface StatusRenderProps {
   status: string
 }
 
-const StatusRender = ({ status }: StatusRenderProps) => {
+const RenderStatus = ({ status }: StatusRenderProps) => {
   const [key, setKey] = useState(0)
 
   useEffect(() => {
@@ -27,4 +27,4 @@ const StatusRender = ({ status }: StatusRenderProps) => {
   )
 }
 
-export default StatusRender
+export default RenderStatus

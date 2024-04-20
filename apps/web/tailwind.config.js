@@ -23,6 +23,11 @@ const config = {
           fadedGray: '#AFB8CF',
           text: '#374151',
           red: '#F25D5A',
+          secondLightBlue: '#B6C1E9',
+          successGreen: '#21BD61',
+        },
+        nextuiColors: {
+          danger: '#f31260',
         },
       },
       spacing: {
@@ -54,6 +59,7 @@ const config = {
   },
   darkMode: 'class',
   plugins: [
+    require('tailwind-scrollbar'),
     nextui({
       addCommonColors: true,
       defaultTheme: 'light',

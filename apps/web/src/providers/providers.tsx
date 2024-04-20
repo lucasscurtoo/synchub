@@ -15,14 +15,12 @@ export function Providers({
   session: Session
 }) {
   return (
+    // <PersistGate loading={null} persistor={persistor}>
     <SessionProvider session={session}>
       <AppUIProvider>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            {children}
-          </PersistGate>
-        </Provider>
+        <Provider store={store}>{children}</Provider>
       </AppUIProvider>
     </SessionProvider>
+    // </PersistGate>
   )
 }
