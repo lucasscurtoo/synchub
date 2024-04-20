@@ -42,7 +42,6 @@ describe('UsersService', () => {
           profesionalRole: 'FullStack Developer',
           state: 'Active',
           profilePicture: faker.image.url(),
-          organization: faker.company.name(),
           key: faker.string.alphanumeric(64),
           iv: faker.string.alphanumeric(32),
           __v: 0,

@@ -15,7 +15,6 @@ const initialState: userState = {
   profesionalRole: '',
   status: '',
   state: '',
-  organization: '',
   profilePicture: '',
   isLoading: false,
   isUserFirstLoggin: false,
@@ -60,3 +59,4 @@ export const userSlice = createSlice({
 export const {} = userSlice.actions
 
 export default userSlice.reducer
+

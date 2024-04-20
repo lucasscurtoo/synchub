@@ -20,7 +20,6 @@ const fakeUsers = [
     status: 'Developing 💻',
     state: 'Active',
     profesionalRole: 'FullstackDev',
-    organization: 'lucasOrg',
     profilePicture:
       'https://images.unsplash.com/photo-1614460132343-62aa9fa8d6f6?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
@@ -31,7 +30,6 @@ const fakeUsers = [
     status: 'Working on new features',
     state: 'Active',
     profesionalRole: 'Frontend Developer',
-    organization: 'Tech Company',
     profilePicture: 'https://randomuser.me/api/portraits/men/1.jpg',
   },
   {
@@ -41,7 +39,6 @@ const fakeUsers = [
     status: 'Out of office',
     state: 'Inactive',
     profesionalRole: 'UX Designer',
-    organization: 'Design Studio',
     profilePicture: 'https://randomuser.me/api/portraits/women/2.jpg',
   },
   {
@@ -51,7 +48,6 @@ const fakeUsers = [
     status: 'On vacation 🏖️',
     state: 'Active',
     profesionalRole: 'Backend Developer',
-    organization: 'Software Company',
     profilePicture: 'https://randomuser.me/api/portraits/men/3.jpg',
   },
 ]
@@ -141,3 +137,4 @@ const StartChatModal = ({ users }: { users?: userType }) => {
   )
 }
 export default StartChatModal
+

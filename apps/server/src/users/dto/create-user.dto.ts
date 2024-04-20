@@ -23,10 +23,6 @@ export class CreateUserDto {
   @IsString()
   state: string;
 
-  @IsNotEmpty()
-  @IsString()
-  organization: string;
-
   @IsString()
   profilePicture: string;
 }

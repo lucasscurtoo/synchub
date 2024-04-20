@@ -13,5 +13,4 @@ export interface UserType {
   profesionalRole: string;
   state: string;
   profilePicture: string;
-  organization: string;
 }

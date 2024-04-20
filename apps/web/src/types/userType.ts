@@ -5,7 +5,6 @@ export interface userType {
   status: string
   state: string
   profesionalRole: string
-  organization: string
   profilePicture: string
 }
 
