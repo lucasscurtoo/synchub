@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const useFileUpload = () => {
+const useImageUpload = () => {
   const [file, setFile] = useState<File | null>(null)
   const [error, setError] = useState<string | null>(null)
 
@@ -30,4 +30,5 @@ const useFileUpload = () => {
   return { file, error, handleFileUpload, handleDrop, handleDragOver }
 }
 
-export default useFileUpload
+export default useImageUpload
+

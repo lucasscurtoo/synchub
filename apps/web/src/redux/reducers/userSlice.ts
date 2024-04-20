@@ -38,11 +38,11 @@ export const userSlice = createSlice({
           Object.assign(state, action.payload)
           const currentState = current(state)
 
-          //find empty fields
           const emptyFields = Object.values(currentState).filter(
             (elem) => elem === ''
           )
-          if (emptyFields) {
+
+          if (emptyFields.length > 0) {
             state.isUserFirstLoggin = true
           }
         }

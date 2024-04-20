@@ -6,7 +6,7 @@ import {
 } from '@heroicons/react/24/solid'
 import React, { useRef } from 'react'
 import { motion } from 'framer-motion'
-import useFileUpload from '@/hooks/useFileUpload'
+import useFileUpload from '@/hooks/useImageUpload'
 
 const UserPhotoUploader = () => {
   const { file, handleFileUpload, handleDrop, handleDragOver } = useFileUpload()
@@ -76,3 +76,4 @@ const UserPhotoUploader = () => {
 }
 
 export default UserPhotoUploader
+
