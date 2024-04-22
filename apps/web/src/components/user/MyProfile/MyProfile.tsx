@@ -79,6 +79,8 @@ const MyProfile = () => {
                     alt='Profile picture'
                   />
                   <CustomInput
+                    name='fullName'
+                    type='text'
                     label='Full Name'
                     value={userValues?.fullName}
                     onChange={(e) =>
@@ -86,6 +88,17 @@ const MyProfile = () => {
                     }
                   />
                   <CustomInput
+                    name='profesionalRole'
+                    type='text'
+                    label='Profesional Role'
+                    value={userValues?.profesionalRole}
+                    onChange={(e) =>
+                      changeInputsValues('profesionalRole', e.target.value)
+                    }
+                  />
+                  <CustomInput
+                    name='status'
+                    type='text'
                     label='Status'
                     value={userValues?.status}
                     onChange={(e) =>
@@ -93,6 +106,7 @@ const MyProfile = () => {
                     }
                     description='This status will be seen by your colleagues'
                   />
+
                   {showSaveButton && (
                     <Field
                       as='button'
@@ -115,3 +129,4 @@ const MyProfile = () => {
 }
 
 export default MyProfile
+

@@ -15,6 +15,7 @@ import { AppLoggerMiddleware } from './middlewares/AppLoggerMiddleware';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './HttpExceptionFilter';
 import { JwtMiddleware } from './middlewares/JwtMiddleware';
+import { CloudinaryService } from './cloudinary/Config';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { JwtMiddleware } from './middlewares/JwtMiddleware';
   controllers: [AppController],
   providers: [
     AppService,
+    CloudinaryService,
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,

@@ -1,16 +1,25 @@
+import React, { useEffect, useRef } from 'react'
+import useImageUpload from '@/hooks/useImageUpload'
 import { formatFileSize, truncateFileName } from '@/lib/utils'
+import { motion } from 'framer-motion'
 import {
   CheckCircleIcon,
   DocumentArrowUpIcon,
   PhotoIcon,
 } from '@heroicons/react/24/solid'
-import React, { useRef } from 'react'
-import { motion } from 'framer-motion'
-import useFileUpload from '@/hooks/useImageUpload'
+import { useField } from 'Formik'
 
 const UserPhotoUploader = () => {
-  const { file, handleFileUpload, handleDrop, handleDragOver } = useFileUpload()
+  const { file, handleFileUpload, handleDrop, handleDragOver } =
+    useImageUpload()
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const [field, meta, helpers] = useField('profilePicture')
+
+  useEffect(() => {
+    if (file) {
+      helpers.setValue(file)
+    }
+  }, [file])
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -51,6 +60,9 @@ const UserPhotoUploader = () => {
       <p className='my-2 text-sm font-normal text-appColors-textGray'>
         Only .jpg and .png files. 500Kb max file size.
       </p>
+      {meta?.error && !file && (
+        <p className='text-sm text-nextuiColors-danger'>{meta.error}</p>
+      )}
       {file && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}

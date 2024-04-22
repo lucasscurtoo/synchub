@@ -69,9 +69,7 @@ export class UsersService {
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<ApiResponse> {
     try {
-      const user = await this.userModel.findById({
-        _id: id,
-      });
+      const user = await this.userModel.findById({ _id: id });
 
       if (!user) {
         throw ErrorManager.createSignatureError({
@@ -80,7 +78,7 @@ export class UsersService {
         });
       }
 
-      const update = await this.userModel.findOneAndUpdate(
+      const updatedUser = await this.userModel.findOneAndUpdate(
         { _id: id },
         updateUserDto,
         { new: true },
@@ -89,7 +87,7 @@ export class UsersService {
       return {
         status: HttpStatus.OK,
         message: 'User updated and returned',
-        data: update,
+        data: updatedUser,
       };
     } catch (error) {
       if (error instanceof HttpException) {

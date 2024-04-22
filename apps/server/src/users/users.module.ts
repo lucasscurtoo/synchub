@@ -15,6 +15,6 @@ import { CryptoService } from 'src/services/crypto.service';
   exports: [
     UsersService,
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-  ], // Export the UserModel
+  ],
 })
 export class UsersModule {}

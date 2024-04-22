@@ -5,24 +5,40 @@ import { Tooltip } from '@nextui-org/react'
 import { InformationCircleIcon } from '@heroicons/react/24/solid'
 import UserPhotoUploader from './UserPhotoUploader'
 import { FieldType } from '@/types/common'
+import { useUpdateUserMutation } from '@/redux/api/userApi'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
 
 const userDetailsSchema = Yup.object({
   fullName: Yup.string().required('Full name is required'),
   profesionalRole: Yup.string().required('Profesional role is required'),
   status: Yup.string().required('Status is required'),
+  profilePicture: Yup.mixed().required('Profile picture is required'),
 })
 
 const UserDetailsForm = ({ onClose }: { onClose: () => void }) => {
+  const [updateUser] = useUpdateUserMutation()
+  const { _id } = useSelector((state: RootState) => state.user)
+
   return (
     <Formik
       initialValues={{
         fullName: '',
         profesionalRole: '',
         status: '',
+        profilePicture: null,
       }}
       validationSchema={userDetailsSchema}
       onSubmit={(values) => {
-        console.log(values)
+        const { profilePicture, ...otherValues } = values
+        if (profilePicture !== null) {
+          const formData = new FormData()
+          formData.append('profilePicture', profilePicture)
+          formData.append('fullName', otherValues.fullName)
+          formData.append('profesionalRole', otherValues.profesionalRole)
+          formData.append('status', otherValues.status)
+          updateUser({ id: _id, body: formData })
+        }
       }}
     >
       <Form>
@@ -32,7 +48,7 @@ const UserDetailsForm = ({ onClose }: { onClose: () => void }) => {
               {({ field, meta }: FieldType) => (
                 <CustomInput
                   label='Full Name'
-                  placeholder='e. g. JhonDhot'
+                  placeholder='e. g. Jhon Dhot'
                   name='fullName'
                   type='text'
                   field={field}
@@ -126,3 +142,4 @@ const UserDetailsForm = ({ onClose }: { onClose: () => void }) => {
   )
 }
 export default UserDetailsForm
+
