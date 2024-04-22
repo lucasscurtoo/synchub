@@ -1,7 +1,6 @@
 import { userType } from '@/types/userType'
 import { createSlice, current } from '@reduxjs/toolkit'
 import { userService } from '../api/userApi'
-// import type { PayloadAction } from '@reduxjs/toolkit'
 
 interface userState extends userType {
   isLoading: boolean

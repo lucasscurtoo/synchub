@@ -8,8 +8,12 @@ const useImageUpload = () => {
 
   const handleFileUpload = (file: File) => {
     if (validTypes.includes(file.type)) {
-      setFile(file)
-      setError(null)
+      if (file.size < 5000000) {
+        setFile(null)
+        setError('Invalid file size, please provide a file smaller than 5mb.')
+        setFile(file)
+        setError(null)
+      }
     } else {
       setFile(null)
       setError('Invalid file type. Only PNG and JPG files are allowed.')
