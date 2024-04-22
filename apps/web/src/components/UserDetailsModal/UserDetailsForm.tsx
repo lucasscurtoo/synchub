@@ -38,6 +38,8 @@ const UserDetailsForm = ({ onClose }: { onClose: () => void }) => {
           formData.append('profesionalRole', otherValues.profesionalRole)
           formData.append('status', otherValues.status)
           updateUser({ id: _id, body: formData })
+
+          onClose()
         }
       }}
     >

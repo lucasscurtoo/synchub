@@ -75,6 +75,7 @@ const MyProfile = () => {
                     src={userValues?.profilePicture}
                     width={150}
                     height={150}
+                    blurDataURL={userValues?.profilePicture}
                     className='object-cover rounded-6xl aspect-square'
                     alt='Profile picture'
                   />

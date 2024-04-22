@@ -15,6 +15,7 @@ import StatusRender from './RenderStatus'
 import { toggleShowyProfileModal } from '@/redux/reducers/appSlice'
 import ConfigurationModal from './settings/SettingsModal'
 import { signOut } from 'next-auth/react'
+import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline'
 
 const UserProfileDropdown = () => {
   const userData = useSelector((state: RootState) => state.user)
@@ -39,9 +40,12 @@ const UserProfileDropdown = () => {
                 isLoaded={!userData.isLoading && !userData.isUserFirstLoggin}
                 className='mt-2 rounded-xl'
               >
-                <p className='text-sm font-normal text-appColors-gray'>
-                  My settings
-                </p>
+                <div className='flex items-center gap-3'>
+                  <p className='text-sm font-normal text-appColors-gray'>
+                    {userData && 'My settings'}
+                  </p>
+                  <AdjustmentsHorizontalIcon className='w-6 text-appColors-gray' />
+                </div>
               </Skeleton>
             </div>
             <Skeleton
@@ -52,6 +56,7 @@ const UserProfileDropdown = () => {
                 src={userData.profilePicture}
                 width={50}
                 height={50}
+                blurDataURL={userData.profilePicture}
                 className='object-cover rounded-xl aspect-square'
                 alt='Profile picture'
               />
@@ -99,8 +104,9 @@ const UserProfileDropdown = () => {
                   </div>
                   <Image
                     src={userData.profilePicture}
-                    width={40}
-                    height={40}
+                    width={50}
+                    height={50}
+                    blurDataURL={userData.profilePicture}
                     className='object-cover ml-3 rounded-xl aspect-square'
                     alt='Profile picture'
                   />
@@ -148,3 +154,4 @@ const UserProfileDropdown = () => {
 }
 
 export default UserProfileDropdown
+

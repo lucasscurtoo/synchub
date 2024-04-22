@@ -50,6 +50,7 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: '/auth',
     error: '/auth',
+    signOut: '/auth',
   },
 
   logger: {
@@ -87,3 +88,4 @@ export const authOptions: AuthOptions = {
 
 const handler = NextAuth(authOptions)
 export { handler as GET, handler as POST }
+

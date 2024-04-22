@@ -18,6 +18,7 @@ export const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
+    reset: () => initialState,
     setAppSection: (state, action) => {
       state.section = action.payload
     },
@@ -38,6 +39,7 @@ export const {
   toggleShowyProfileModal,
   toggleSpellcheckOn,
   setAppTheme,
+  reset: resetAppSlice,
 } = appSlice.actions
 
 export default appSlice.reducer

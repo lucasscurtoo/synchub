@@ -1,4 +1,5 @@
 import { useDeleteUserMutation } from '@/redux/api/userApi'
+import { resetAppSlice } from '@/redux/reducers/appSlice'
 import { RootState } from '@/redux/store'
 import { TrashIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import {
@@ -8,24 +9,24 @@ import {
   Spinner,
   useDisclosure,
 } from '@nextui-org/react'
+import { signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const DeleteAccModal = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const [deleteUser, { isLoading, isError, isSuccess }] =
     useDeleteUserMutation()
   const userData = useSelector((state: RootState) => state.user)
-  const router = useRouter()
+  const dispatch = useDispatch()
 
   const handleDeleteAccount = async () => {
     try {
       await deleteUser(userData._id)
       console.log(isSuccess, isError)
+      dispatch(resetAppSlice())
 
-      router.push('/auth')
-      // dispatch(logout())
-      //delete all redux states
+      signOut()
     } catch (error) {
       console.log(error)
     }
@@ -85,3 +86,4 @@ const DeleteAccModal = () => {
   )
 }
 export default DeleteAccModal
+
