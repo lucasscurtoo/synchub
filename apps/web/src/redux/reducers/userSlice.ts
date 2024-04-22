@@ -50,6 +50,15 @@ export const userSlice = createSlice({
       builder.addMatcher(
         userService.endpoints.updateUser.matchFulfilled,
         (state, action) => {
+          const currentState = current(state)
+
+          const emptyFields = Object.values(currentState).filter(
+            (elem) => elem === ''
+          )
+
+          if (emptyFields.length > 0) {
+            state.isUserFirstLoggin = false
+          }
           return Object.assign(state, action.payload)
         }
       )
