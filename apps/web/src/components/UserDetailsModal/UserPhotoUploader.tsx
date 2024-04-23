@@ -58,7 +58,7 @@ const UserPhotoUploader = () => {
         </button>
       </div>
       <p className='my-2 text-sm font-normal text-appColors-textGray'>
-        Only .jpg and .png files. 500Kb max file size.
+        Only .jpg and .png files. 5mb max file size.
       </p>
       {meta?.error && !file && (
         <p className='text-sm text-nextuiColors-danger'>{meta.error}</p>

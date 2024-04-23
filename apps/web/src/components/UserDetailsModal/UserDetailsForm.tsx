@@ -1,6 +1,5 @@
 import { Formik, Field, Form } from 'Formik'
 import CustomInput from '../user/CustomInput'
-import * as Yup from 'yup'
 import { Tooltip } from '@nextui-org/react'
 import { InformationCircleIcon } from '@heroicons/react/24/solid'
 import UserPhotoUploader from './UserPhotoUploader'
@@ -8,13 +7,7 @@ import { FieldType } from '@/types/common'
 import { useUpdateUserMutation } from '@/redux/api/userApi'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
-
-const userDetailsSchema = Yup.object({
-  fullName: Yup.string().required('Full name is required'),
-  profesionalRole: Yup.string().required('Profesional role is required'),
-  status: Yup.string().required('Status is required'),
-  profilePicture: Yup.mixed().required('Profile picture is required'),
-})
+import { userDetailsSchema } from '../user/validations'
 
 const UserDetailsForm = ({ onClose }: { onClose: () => void }) => {
   const [updateUser] = useUpdateUserMutation()
@@ -38,7 +31,6 @@ const UserDetailsForm = ({ onClose }: { onClose: () => void }) => {
           formData.append('profesionalRole', otherValues.profesionalRole)
           formData.append('status', otherValues.status)
           updateUser({ id: _id, body: formData })
-
           onClose()
         }
       }}

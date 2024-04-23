@@ -10,7 +10,6 @@ import {
   useDisclosure,
 } from '@nextui-org/react'
 import { signOut } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
 
 const DeleteAccModal = () => {
