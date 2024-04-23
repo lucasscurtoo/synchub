@@ -5,6 +5,10 @@ import mongoose, { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { ErrorManager } from '../services/error.manager';
 import { ApiResponse } from 'src/types';
+import { v2 as cloudinary } from 'cloudinary';
+import { unlinkSync, writeFileSync } from 'fs';
+import { tmpdir } from 'os';
+import { join } from 'path';
 
 @Injectable()
 export class UsersService {
@@ -67,15 +71,51 @@ export class UsersService {
     }
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<ApiResponse> {
+  async update(
+    id: string,
+    file: Express.Multer.File,
+    updateUserDto: UpdateUserDto,
+  ): Promise<ApiResponse> {
     try {
       const user = await this.userModel.findById({ _id: id });
 
       if (!user) {
         throw ErrorManager.createSignatureError({
           status: HttpStatus.NOT_FOUND,
-          message: 'Not user found',
+          message: 'No user found',
         });
+      }
+
+      if (file) {
+        const validTypes = ['image/png', 'image/jpeg'];
+        if (!validTypes.includes(file.mimetype)) {
+          throw ErrorManager.createSignatureError({
+            status: HttpStatus.BAD_REQUEST,
+            message: 'Only images files are allowed, provide png or jpeg file',
+          });
+        }
+
+        if (file.size < 5000000) {
+          // Save the uploaded file to a temporary file
+          // so that we can upload it to Cloudinary
+          const tempFilePath = join(tmpdir(), file.originalname);
+          writeFileSync(tempFilePath, file.buffer);
+
+          // Upload the file to Cloudinary
+          const result = await cloudinary.uploader.upload(tempFilePath, {
+            public_id: file.filename,
+            folder: 'profile-pictures',
+          });
+
+          updateUserDto.profilePicture = result.url;
+          // Delete the temporary file
+          unlinkSync(tempFilePath);
+        } else {
+          throw ErrorManager.createSignatureError({
+            status: HttpStatus.BAD_REQUEST,
+            message: 'File size is too large',
+          });
+        }
       }
 
       const updatedUser = await this.userModel.findOneAndUpdate(
