@@ -29,11 +29,9 @@ const RegisterForm = () => {
         }}
         validationSchema={signUpSchema}
         onSubmit={async (values): Promise<void> => {
-          console.log(values)
           const data = await register(values).unwrap()
-          console.log(data)
           if (data?.status === 201) {
-            await signIn('credentials', {
+            signIn('credentials', {
               email: values.email,
               password: values.password,
               redirect: true,
@@ -124,3 +122,4 @@ const RegisterForm = () => {
 }
 
 export default RegisterForm
+

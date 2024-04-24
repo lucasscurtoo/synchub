@@ -36,8 +36,8 @@ const Page = () => {
     </AuthPageContextProvider>
   )
 }
-// this is made like this, cause if we load the hook before the context it returns an error.
-// cause its loading the hook to use the context without the context loaded.
+// This is made like this, cause if we load the hook before the context it returns an error.
+// because its loading the hook to use the context without the context loaded.
 const AuthContent = () => {
   const { showLogin } = useAuthPageContext()
   return (
