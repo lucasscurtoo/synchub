@@ -7,6 +7,8 @@ import type { FieldMetaProps } from 'Formik'
 import { signInSchema } from '../Validations'
 import { signIn } from 'next-auth/react'
 import { FormInput } from '@/components/form/FormInput'
+import { useDispatch } from 'react-redux'
+import { setAppNotification } from '@/redux/reducers/appSlice'
 
 interface FieldType {
   field: React.Component<FieldProps['field']>
@@ -16,6 +18,7 @@ interface FieldType {
 const LoginForm = () => {
   const [showPass, setShowPass] = useState(false)
   const { showLogin, setShowLogin } = useAuthPageContext()
+  const dispatch = useDispatch()
 
   return (
     <div className='flex flex-col w-full space-y-8'>
@@ -26,11 +29,20 @@ const LoginForm = () => {
         }}
         validationSchema={signInSchema}
         onSubmit={async (values) => {
-          await signIn('credentials', {
+          const res = await signIn('credentials', {
             email: values.email,
             password: values.password,
-            redirect: true,
+            redirect: false,
           })
+
+          if (res?.ok) {
+            signIn('credentials', {
+              email: values.email,
+              password: values.password,
+            })
+          } else {
+            dispatch(setAppNotification({ error: true, message: res?.error }))
+          }
         }}
       >
         <Form>
@@ -95,3 +107,4 @@ const LoginForm = () => {
 }
 
 export default LoginForm
+

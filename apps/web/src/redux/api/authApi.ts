@@ -28,3 +28,4 @@ export const authService = apiService.injectEndpoints({
 })
 
 export const { useRegisterMutation } = authService
+
