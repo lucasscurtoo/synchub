@@ -1,8 +1,6 @@
 import NextAuth, { AuthOptions } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import { encode } from 'next-auth/jwt'
-import appSlice, { setAppNotification } from '@/redux/reducers/appSlice'
-import { store } from '@/redux/store'
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -40,16 +38,16 @@ export const authOptions: AuthOptions = {
 
         const user = await res.json()
 
-        if (res.status !== 200) {
+        // throw error to show a toast
+        if (!res.ok) {
           throw new Error(user.message)
         }
-        // checking if the password was correct
 
         if (res.ok && user) {
-          return user
+          return user.data
         }
-        // Return null if user data could not be retrieved
 
+        // Return null if user data could not be retrieved
         return null
       },
     }),

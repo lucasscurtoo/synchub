@@ -14,7 +14,11 @@ const signUpSchema = Yup.object().shape({
 
 const signInSchema = Yup.object().shape({
   email: Yup.string().email('Invalid Email').required('Email is Required'),
-  password: Yup.string().required('Password is Required'),
+  password: Yup.string()
+    .min(8, 'Password must be at least 8 characters long')
+    .matches(/[a-z]/, 'Must contain lowercase letter')
+    .matches(/[A-Z]/, 'Must contain uppercase letter')
+    .required('Password is required'),
 })
 
 //export the schemas for use in other files

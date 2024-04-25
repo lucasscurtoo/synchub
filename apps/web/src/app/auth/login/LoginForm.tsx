@@ -9,6 +9,7 @@ import { signIn } from 'next-auth/react'
 import { FormInput } from '@/components/form/FormInput'
 import { useDispatch } from 'react-redux'
 import { setAppNotification } from '@/redux/reducers/appSlice'
+import { useRouter } from 'next/navigation'
 
 interface FieldType {
   field: React.Component<FieldProps['field']>
@@ -19,6 +20,7 @@ const LoginForm = () => {
   const [showPass, setShowPass] = useState(false)
   const { showLogin, setShowLogin } = useAuthPageContext()
   const dispatch = useDispatch()
+  const router = useRouter()
 
   return (
     <div className='flex flex-col w-full space-y-8'>
@@ -36,10 +38,7 @@ const LoginForm = () => {
           })
 
           if (res?.ok) {
-            signIn('credentials', {
-              email: values.email,
-              password: values.password,
-            })
+            router.push('/')
           } else {
             dispatch(setAppNotification({ error: true, message: res?.error }))
           }
