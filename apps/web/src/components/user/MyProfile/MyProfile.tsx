@@ -1,7 +1,11 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useRef, useState } from 'react'
 import { RootState } from '@/redux/store'
-import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
+import {
+  XMarkIcon,
+  CheckCircleIcon,
+  PhotoIcon,
+} from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import { useDispatch, useSelector } from 'react-redux'
 import CustomInput from '../CustomInput'
@@ -10,6 +14,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Formik, Form, Field } from 'Formik'
 import { useUpdateUserMutation } from '@/redux/api/userApi'
 import DeleteAccModal from './DeleteAccModal'
+import { FieldType } from '@/types/common'
+import { userDetailsSchema } from '../validations'
 
 const MyProfile = () => {
   const userData = useSelector((state: RootState) => state.user)
@@ -17,29 +23,16 @@ const MyProfile = () => {
     (state: RootState) => state.persistedAppReducer.app
   )
   const [updateUser] = useUpdateUserMutation()
-  const [showSaveButton, setShowSaveButton] = useState(false)
-  const [userValues, setUserValues] = useState(userData)
   const dispatch = useDispatch()
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const toggleModal = () => {
     dispatch(toggleShowyProfileModal())
-    setUserValues(userData)
-    setShowSaveButton(false)
   }
 
-  const changeInputsValues = (inputToChange: string, newValue: string) => {
-    setShowSaveButton(true)
-    setUserValues((prevState) => ({
-      ...prevState,
-      [inputToChange]: newValue.charAt(0).toUpperCase() + newValue.slice(1),
-    }))
+  const handleButtonClick = () => {
+    fileInputRef.current?.click()
   }
-
-  useEffect(() => {
-    if (userData) {
-      setUserValues(userData)
-    }
-  }, [userData])
 
   return (
     <AnimatePresence>
@@ -62,64 +55,117 @@ const MyProfile = () => {
               <XMarkIcon className='w-8 cursor-pointer' onClick={toggleModal} />
             </div>
             <Formik
-              initialValues={userValues}
+              initialValues={userData}
+              validationSchema={userDetailsSchema}
               onSubmit={(values) => {
-                updateUser({ id: userData._id, body: values })
-                setShowSaveButton(false)
+                const { profilePicture, ...otherValues } = values
+                if (profilePicture !== null) {
+                  const formData = new FormData()
+                  formData.append('profilePicture', profilePicture)
+                  formData.append('fullName', otherValues.fullName)
+                  formData.append(
+                    'profesionalRole',
+                    otherValues.profesionalRole
+                  )
+                  formData.append('status', otherValues.status)
+                  updateUser({ id: userData._id, body: formData })
+                }
               }}
               enableReinitialize
             >
-              <Form>
-                <div className='flex flex-col items-center p-5 space-y-16'>
-                  <Image
-                    src={userValues?.profilePicture}
-                    width={150}
-                    height={150}
-                    blurDataURL={userValues?.profilePicture}
-                    className='object-cover rounded-6xl aspect-square'
-                    alt='Profile picture'
-                  />
-                  <CustomInput
-                    name='fullName'
-                    type='text'
-                    label='Full Name'
-                    value={userValues?.fullName}
-                    onChange={(e) =>
-                      changeInputsValues('fullName', e.target.value)
-                    }
-                  />
-                  <CustomInput
-                    name='profesionalRole'
-                    type='text'
-                    label='Profesional Role'
-                    value={userValues?.profesionalRole}
-                    onChange={(e) =>
-                      changeInputsValues('profesionalRole', e.target.value)
-                    }
-                  />
-                  <CustomInput
-                    name='status'
-                    type='text'
-                    label='Status'
-                    value={userValues?.status}
-                    onChange={(e) =>
-                      changeInputsValues('status', e.target.value)
-                    }
-                    description='This status will be seen by your colleagues'
-                  />
+              {({ dirty }) => (
+                <Form>
+                  <div className='flex flex-col items-center p-5 space-y-16'>
+                    <Field name='profilePicture'>
+                      {({ field, form }: any) => {
+                        const [preview, setPreview] = useState('')
 
-                  {showSaveButton && (
-                    <Field
-                      as='button'
-                      type='submit'
-                      className='flex items-center px-8 py-3 space-x-4 transition-all delay-75 cursor-pointer text-appColors-text hover:text-appColors-blue hover:bg-appColors-backgroundBlue rounded-xl'
-                    >
-                      <h4 className='text-lg'>Save changes</h4>
-                      <CheckCircleIcon className='w-6' />
+                        const handleFileChange = (event: any) => {
+                          if (event.currentTarget.files[0]) {
+                            form.setFieldValue(
+                              'profilePicture',
+                              event.currentTarget.files[0]
+                            )
+                            setPreview(
+                              URL.createObjectURL(event.currentTarget.files[0])
+                            )
+                          }
+                        }
+
+                        return (
+                          <div
+                            onClick={handleButtonClick}
+                            className='relative transition-all w-fit group'
+                          >
+                            <div className='absolute top-0 bottom-0 left-0 right-0 z-20 flex items-center justify-center m-auto transition-all rounded-6xl group-hover:cursor-pointer group-hover:bg-black/20 '>
+                              <PhotoIcon className='hidden w-16 text-white transition-all group-hover:block' />
+                            </div>
+                            <input
+                              type='file'
+                              className='hidden'
+                              onChange={handleFileChange}
+                              ref={fileInputRef}
+                            />
+                            <Image
+                              src={preview || field?.value}
+                              width={150}
+                              height={150}
+                              blurDataURL={userData?.profilePicture}
+                              className='object-cover transition-all rounded-6xl aspect-square group-hover:cursor-pointer'
+                              alt='Profile picture'
+                            />
+                          </div>
+                        )
+                      }}
                     </Field>
-                  )}
-                </div>
-              </Form>
+                    <Field name='fullName'>
+                      {({ field, meta }: FieldType) => (
+                        <CustomInput
+                          name='fullName'
+                          type='text'
+                          label='Full Name'
+                          field={field}
+                          meta={meta}
+                        />
+                      )}
+                    </Field>
+                    <Field name='profesionalRole'>
+                      {({ field, meta }: FieldType) => (
+                        <CustomInput
+                          name='profesionalRole'
+                          type='text'
+                          label='Profesional Role'
+                          field={field}
+                          meta={meta}
+                        />
+                      )}
+                    </Field>
+                    <Field name='status'>
+                      {({ field, meta }: FieldType) => (
+                        <CustomInput
+                          name='status'
+                          type='text'
+                          label='Status'
+                          field={field}
+                          meta={meta}
+                          description='This status will be seen by your colleagues'
+                        />
+                      )}
+                    </Field>
+
+                    {dirty && (
+                      <Field
+                        as='button'
+                        type='submit'
+                        className='flex items-center px-8 py-3 space-x-4 transition-all delay-75 cursor-pointer text-appColors-text hover:text-appColors-blue hover:bg-appColors-backgroundBlue rounded-xl'
+                      >
+                        <h4 className='text-lg'>Save changes</h4>
+                        <CheckCircleIcon className='w-6' />
+                      </Field>
+                    )}
+                  </div>
+                </Form>
+              )}
             </Formik>
             <DeleteAccModal />
           </motion.div>

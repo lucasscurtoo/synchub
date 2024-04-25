@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { chatService } from '../api/chatApi'
 import { userService } from '../api/userApi'
 import { authService } from '../api/authApi'
@@ -44,18 +44,25 @@ export const appSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // Handle all errors from the backend
     builder.addMatcher(
-      chatService.endpoints.getAllChats.matchFulfilled,
-      (state, action) => {
-        console.log('aaa')
-        state.appNotification = { error: true, message: 'AJJA' }
-      }
-    )
-    builder.addMatcher(
-      authService.endpoints.register.matchRejected,
+      isAnyOf(
+        userService.endpoints.updateUser.matchRejected,
+        authService.endpoints.register.matchRejected
+      ),
       (state, action) => {
         state.appNotification = {
           error: true,
+          message: (action.payload?.data as { message: string })?.message,
+        }
+      }
+    )
+    // Handle all success messages from the backend
+    builder.addMatcher(
+      isAnyOf(userService.endpoints.updateUser.matchFulfilled),
+      (state, action) => {
+        state.appNotification = {
+          error: false,
           message: (action.payload?.data as { message: string })?.message,
         }
       }
