@@ -16,6 +16,7 @@ import { useUpdateUserMutation } from '@/redux/api/userApi'
 import DeleteAccModal from './DeleteAccModal'
 import { FieldType } from '@/types/common'
 import { userDetailsSchema } from '../validations'
+import { Spinner } from '@nextui-org/react'
 
 const MyProfile = () => {
   const userData = useSelector((state: RootState) => state.user)
@@ -163,6 +164,7 @@ const MyProfile = () => {
                         <CheckCircleIcon className='w-6' />
                       </Field>
                     )}
+                    {userData.isLoading && <Spinner size='lg' />}
                   </div>
                 </Form>
               )}

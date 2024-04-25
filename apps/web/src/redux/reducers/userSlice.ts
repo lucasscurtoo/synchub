@@ -1,5 +1,5 @@
 import { userType } from '@/types/userType'
-import { createSlice, current } from '@reduxjs/toolkit'
+import { createSlice, current, isAnyOf } from '@reduxjs/toolkit'
 import { userService } from '../api/userApi'
 
 interface userState extends userType {
@@ -25,7 +25,10 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addMatcher(
-      userService.endpoints.getUserById.matchPending,
+      isAnyOf(
+        userService.endpoints.getUserById.matchPending,
+        userService.endpoints.updateUser.matchPending
+      ),
       (state) => {
         state.isLoading = true
       }
@@ -58,6 +61,7 @@ export const userSlice = createSlice({
           if (emptyFields.length > 0) {
             state.isUserFirstLoggin = false
           }
+          state.isLoading = false
           return Object.assign(state, action.payload)
         }
       )
