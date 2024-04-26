@@ -3,7 +3,6 @@ import './globals.css'
 import type { Session } from 'next-auth'
 import AuthCheck from './auth/AuthCheck'
 import { Providers } from '@/providers/providers'
-import CustomToast from '@/components/toast/CustomToast'
 import ShowToast from '@/components/toast/ShowToast'
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -33,3 +32,4 @@ export default function RootLayout({
     </html>
   )
 }
+

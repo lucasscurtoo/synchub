@@ -12,8 +12,6 @@ const ShowToast = () => {
   )
   const dispatch = useDispatch()
 
-  console.log('render')
-
   useEffect(() => {
     if (appNotification.message !== '') {
       setShowToast(true)
@@ -36,3 +34,4 @@ const ShowToast = () => {
 }
 
 export default ShowToast
+

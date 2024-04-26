@@ -6,6 +6,7 @@ import SynchubLoading from '@/components/SynchubLoading'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import { useLazyGetUserByIdQuery } from '@/redux/api/userApi'
+import i18n from '@/i18n/i18n.config'
 
 const AuthCheck = () => {
   const { data: session, status } = useSession()
@@ -13,8 +14,8 @@ const AuthCheck = () => {
   const [useGetUser] = useLazyGetUserByIdQuery()
 
   const userData = useSelector((state: RootState) => state.user)
-  const section = useSelector(
-    (state: RootState) => state.persistedAppReducer.app.section
+  const { language, section } = useSelector(
+    (state: RootState) => state.persistedAppReducer.app
   )
   useEffect(() => {
     if (!session) {
@@ -24,6 +25,7 @@ const AuthCheck = () => {
       if (userData._id == '') {
         useGetUser(session.user.id)
       }
+      i18n.changeLanguage(language)
       router.push(section)
     }
   }, [status, router])
@@ -35,3 +37,4 @@ const AuthCheck = () => {
 }
 
 export default AuthCheck
+

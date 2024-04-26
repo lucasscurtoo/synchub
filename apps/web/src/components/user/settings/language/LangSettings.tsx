@@ -3,19 +3,24 @@ import CustomSelect from '@/components/nextui/CustomSelect'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import { Checkbox } from '@nextui-org/react'
-import { toggleSpellcheckOn } from '@/redux/reducers/appSlice'
+import { setAppLanguage, toggleSpellcheckOn } from '@/redux/reducers/appSlice'
+import { ChangeEvent, ChangeEventHandler } from 'react'
+import i18n from '@/i18n/i18n.config'
 
 const LangSettings = () => {
-  const spellCheck = useSelector(
-    (state: RootState) => state.persistedAppReducer.app.spellCheck
+  const { language, spellCheck } = useSelector(
+    (state: RootState) => state.persistedAppReducer.app
   )
   const Languages = [
-    { label: 'English', value: 'English' },
-    { label: 'Spanish', value: 'Spanish' },
+    { label: 'English', value: 'en' },
+    { label: 'Spanish', value: 'es' },
   ]
   const dispatch = useDispatch()
 
-  // hacer que el default language sea el del sistema
+  const handleLanguageChange = (e: any) => {
+    dispatch(setAppLanguage(e.target.value))
+    i18n.changeLanguage(e.target.value)
+  }
 
   return (
     <AnimatePresence>
@@ -28,7 +33,9 @@ const LangSettings = () => {
         <CustomSelect
           label='Language'
           isMultiple={false}
-          values={Languages}
+          value={language}
+          options={Languages}
+          onChange={handleLanguageChange}
           placeholder='Select a language'
           description='Choose the language you’d like to use with the app.'
         />
@@ -44,8 +51,10 @@ const LangSettings = () => {
           </Checkbox>
           <CustomSelect
             isMultiple={true}
-            values={Languages}
+            options={Languages}
+            value={language}
             isDisabled={!spellCheck}
+            onChange={handleLanguageChange}
             placeholder='Select the spellcheck'
             description='Choose the language you’d like to use to spellcheck.'
           />
@@ -55,3 +64,4 @@ const LangSettings = () => {
   )
 }
 export default LangSettings
+
