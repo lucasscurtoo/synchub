@@ -23,7 +23,7 @@ const MyProfile = () => {
   const { myProfileModalState } = useSelector(
     (state: RootState) => state.persistedAppReducer.app
   )
-  const [updateUser] = useUpdateUserMutation()
+  const [updateUser, { isLoading }] = useUpdateUserMutation()
   const dispatch = useDispatch()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -154,7 +154,9 @@ const MyProfile = () => {
                       )}
                     </Field>
 
-                    {dirty && (
+                    {isLoading && <Spinner className='' size='lg' />}
+
+                    {dirty && !isLoading && (
                       <Field
                         as='button'
                         type='submit'
@@ -164,7 +166,6 @@ const MyProfile = () => {
                         <CheckCircleIcon className='w-6' />
                       </Field>
                     )}
-                    {userData.isLoading && <Spinner size='lg' />}
                   </div>
                 </Form>
               )}

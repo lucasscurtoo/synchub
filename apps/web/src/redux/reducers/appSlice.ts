@@ -63,7 +63,7 @@ export const appSlice = createSlice({
       (state, action) => {
         state.appNotification = {
           error: false,
-          message: (action.payload?.data as { message: string })?.message,
+          message: action.payload?.message,
         }
       }
     )

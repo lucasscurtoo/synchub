@@ -25,10 +25,8 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addMatcher(
-      isAnyOf(
-        userService.endpoints.getUserById.matchPending,
-        userService.endpoints.updateUser.matchPending
-      ),
+      userService.endpoints.getUserById.matchPending,
+
       (state) => {
         state.isLoading = true
       }
@@ -37,7 +35,7 @@ export const userSlice = createSlice({
         userService.endpoints.getUserById.matchFulfilled,
         (state, action) => {
           state.isLoading = false
-          Object.assign(state, action.payload)
+          Object.assign(state, action.payload.data)
           const currentState = current(state)
 
           const emptyFields = Object.values(currentState).filter(
@@ -61,8 +59,7 @@ export const userSlice = createSlice({
           if (emptyFields.length > 0) {
             state.isUserFirstLoggin = false
           }
-          state.isLoading = false
-          return Object.assign(state, action.payload)
+          return Object.assign(state, action.payload.data)
         }
       )
   },
