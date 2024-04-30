@@ -7,6 +7,7 @@ interface AppState {
   section: string
   myProfileModalState: boolean
   spellCheck: boolean
+  language: string
   appTheme: string
   appNotification: { error: boolean; message: string }
 }
@@ -15,7 +16,8 @@ const initialState: AppState = {
   section: 'messages',
   myProfileModalState: false,
   spellCheck: false,
-  appTheme: 'OS',
+  language: 'es',
+  appTheme: 'System',
   appNotification: { error: false, message: '' },
 }
 
@@ -32,6 +34,9 @@ export const appSlice = createSlice({
     },
     toggleSpellcheckOn: (state) => {
       state.spellCheck = !state.spellCheck
+    },
+    setAppLanguage: (state, action) => {
+      state.language = action.payload
     },
     setAppTheme: (state, action) => {
       state.appTheme = action.payload
@@ -74,6 +79,7 @@ export const {
   setAppSection,
   toggleShowyProfileModal,
   toggleSpellcheckOn,
+  setAppLanguage,
   setAppTheme,
   reset: resetAppSlice,
   setAppNotification,

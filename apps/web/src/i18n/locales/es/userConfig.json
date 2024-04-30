@@ -1,0 +1,17 @@
+{
+  "Mute all notifications": "Mutear todas las notificaciones",
+  "Mute all notifications, this setting will be on all devices": "Mutear todas las notificaciones, esta configuración se aplicará en todos los dispositivos",
+  "Spanish": "Español",
+  "English": "Inglés",
+  "Select a language": "Selecciona un idioma",
+  "Language": "Idioma",
+  "Choose the language you’d like to use with the app.": "Selecciona el lenguaje que te gustaria usar en la app",
+  "Spellcheck": "Autocorrector",
+  "Enable spellcheck": "Activar autocorrector",
+  "Choose the language you’d like to use to spellcheck.": "Selecciona el lenguaje que te gustaria usar para el autocorrector",
+  "Theme": "Apariencia",
+  "Choose the app theme you’d like to use.": "Selecciona la apariencia que te gustaria usar en la app",
+  "System": "Sistema",
+  "Light": "Claro",
+  "Dark": "Oscuro"
+}

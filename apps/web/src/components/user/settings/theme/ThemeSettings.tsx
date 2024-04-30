@@ -1,6 +1,7 @@
 import { setAppTheme } from '@/redux/reducers/appSlice'
 import { RootState } from '@/redux/store'
 import { Checkbox } from '@nextui-org/react'
+import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
 const ThemeSettings = () => {
@@ -8,34 +9,36 @@ const ThemeSettings = () => {
     (state: RootState) => state.persistedAppReducer.app.appTheme
   )
   const dispatch = useDispatch()
+  const { t } = useTranslation()
 
   return (
     <div className='flex flex-col space-y-2'>
-      <h4 className='text-appColors-text'>Theme</h4>
+      <h4 className='text-appColors-text'>{t('Theme')}</h4>
       <p className='text-sm font-light truncate text-appColors-gray'>
-        Choose the app theme you’d like.
+        {t('Choose the app theme you’d like to use.')}
       </p>
       <div className='flex flex-col pt-5 space-y-4'>
         <Checkbox
-          onValueChange={() => dispatch(setAppTheme('OS'))}
-          isSelected={appTheme === 'OS'}
+          onValueChange={() => dispatch(setAppTheme('System'))}
+          isSelected={appTheme === 'System'}
         >
-          <h4 className='text-appColors-text'>OS theme</h4>
+          <h4 className='text-appColors-text'>{t('System')}</h4>
         </Checkbox>
         <Checkbox
           onValueChange={() => dispatch(setAppTheme('Light'))}
           isSelected={appTheme === 'Light'}
         >
-          <h4 className='text-appColors-text'>Light theme</h4>
+          <h4 className='text-appColors-text'>{t('Light')}</h4>
         </Checkbox>
         <Checkbox
           onValueChange={() => dispatch(setAppTheme('Dark'))}
           isSelected={appTheme === 'Dark'}
         >
-          <h4 className='text-appColors-text'>Dark theme</h4>
+          <h4 className='text-appColors-text'>{t('Dark')}</h4>
         </Checkbox>
       </div>
     </div>
   )
 }
 export default ThemeSettings
+

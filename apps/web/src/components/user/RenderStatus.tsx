@@ -1,5 +1,6 @@
 import { Chip } from '@nextui-org/react'
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface StatusRenderProps {
   status: string
@@ -7,6 +8,7 @@ interface StatusRenderProps {
 
 const RenderStatus = ({ status }: StatusRenderProps) => {
   const [key, setKey] = useState(0)
+  const { t } = useTranslation()
 
   useEffect(() => {
     setKey((prevKey) => prevKey + 1)
@@ -22,9 +24,10 @@ const RenderStatus = ({ status }: StatusRenderProps) => {
         base: `border-none w-fill px-0 dot-`,
       }}
     >
-      {status ?? 'Offline'}
+      {t(status) ?? t('Offline')}
     </Chip>
   )
 }
 
 export default RenderStatus
+

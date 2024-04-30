@@ -23,3 +23,4 @@ const PagesLayout = ({ children }: { children: React.ReactNode }) => {
 }
 
 export default PagesLayout
+

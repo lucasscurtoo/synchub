@@ -11,10 +11,12 @@ import {
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import UserDetailsForm from './UserDetailsForm'
+import { useTranslation } from 'react-i18next'
 
 const UserDetailsModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { isUserFirstLoggin } = useSelector((state: RootState) => state.user)
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (isUserFirstLoggin) {
@@ -35,10 +37,10 @@ const UserDetailsModal = () => {
           <div className='w-160'>
             <ModalHeader className='flex flex-col gap-1'>
               <h3 className='text-2xl font-semibold text-appColors-text'>
-                User details
+                {t('User details')}
               </h3>
               <p className='text-base font-normal text-appColors-textGray'>
-                Update your personal details and photo here
+                {t('Update your personal details and photo here')}
               </p>
             </ModalHeader>
             <ModalBody className='mt-2'>
@@ -52,3 +54,4 @@ const UserDetailsModal = () => {
   )
 }
 export default UserDetailsModal
+

@@ -1,4 +1,5 @@
 import { Chip, Select, SelectItem } from '@nextui-org/react'
+import { ChangeEventHandler } from 'react'
 
 interface SelectProps {
   label?: string
@@ -6,7 +7,9 @@ interface SelectProps {
   description?: string
   placeholder?: string
   isDisabled?: boolean
-  values: { label: string; value: string }[]
+  value: string
+  options: { label: string; value: string }[]
+  onChange: ChangeEventHandler<HTMLSelectElement>
 }
 
 const CustomSelect = ({
@@ -15,18 +18,23 @@ const CustomSelect = ({
   description,
   placeholder,
   isDisabled,
-  values,
+  value,
+  options,
+  onChange,
 }: SelectProps) => {
   return (
     <Select
-      items={values}
+      items={options}
       label={label}
       variant='bordered'
       isMultiline={true}
       selectionMode={isMultiple ? 'multiple' : 'single'}
       placeholder={placeholder}
+      selectedKeys={[value]}
+      defaultSelectedKeys={[value]}
       labelPlacement='outside'
       isDisabled={isDisabled}
+      onChange={onChange}
       description={description}
       renderValue={(items) => (
         <div className='flex flex-wrap gap-2'>
@@ -66,8 +74,8 @@ const CustomSelect = ({
         label: ['!text-appColors-text text-lg !font-normal'],
       }}
     >
-      {values.map((item) => (
-        <SelectItem key={item.value} textValue={item.label}>
+      {options.map((item) => (
+        <SelectItem key={item.value} value={item.value}>
           {item.label}
         </SelectItem>
       ))}
@@ -75,3 +83,4 @@ const CustomSelect = ({
   )
 }
 export default CustomSelect
+

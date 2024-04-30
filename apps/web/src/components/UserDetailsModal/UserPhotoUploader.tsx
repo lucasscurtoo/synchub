@@ -8,12 +8,14 @@ import {
   PhotoIcon,
 } from '@heroicons/react/24/solid'
 import { useField } from 'Formik'
+import { useTranslation } from 'react-i18next'
 
 const UserPhotoUploader = () => {
   const { file, handleFileUpload, handleDrop, handleDragOver } =
     useImageUpload()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [field, meta, helpers] = useField('profilePicture')
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (file) {
@@ -47,18 +49,18 @@ const UserPhotoUploader = () => {
         <div className='flex flex-col items-center gap-y-4'>
           <DocumentArrowUpIcon className='w-12 text-appColors-blue' />
           <p className='text-lg text-appColors-textGray'>
-            Drag & drop your files here or
+            {t('Drag & drop your files here or')}
           </p>
         </div>
         <button
           className='px-8 py-3 font-medium transition-all rounded-2xl bg-appColors-secondLightBlue text-appColors-text hover:bg-appColors-blue hover:text-white'
           onClick={handleButtonClick}
         >
-          Choose File
+          {t('Choose File')}
         </button>
       </div>
-      <p className='my-2 text-sm font-normal text-appColors-textGray'>
-        Only .jpg and .png files. 5mb max file size.
+      <p className='my-2 text-sm font-normal max-w-72 text-appColors-textGray'>
+        {t('Only .jpg and .png files. 5mb max file size.')}
       </p>
       {meta?.error && !file && (
         <p className='text-sm text-nextuiColors-danger'>{meta.error}</p>

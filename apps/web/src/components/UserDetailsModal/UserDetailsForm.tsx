@@ -8,10 +8,12 @@ import { useUpdateUserMutation } from '@/redux/api/userApi'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import { userDetailsSchema } from '../user/validations'
+import { useTranslation } from 'react-i18next'
 
 const UserDetailsForm = ({ onClose }: { onClose: () => void }) => {
   const [updateUser] = useUpdateUserMutation()
   const { _id } = useSelector((state: RootState) => state.user)
+  const { t } = useTranslation()
 
   return (
     <Formik
@@ -41,8 +43,8 @@ const UserDetailsForm = ({ onClose }: { onClose: () => void }) => {
             <Field name='fullName'>
               {({ field, meta }: FieldType) => (
                 <CustomInput
-                  label='Full Name'
-                  placeholder='e. g. Jhon Dhot'
+                  label={t('Full Name')}
+                  placeholder={t('e. g. Jhon Dhot')}
                   name='fullName'
                   type='text'
                   field={field}
@@ -63,8 +65,8 @@ const UserDetailsForm = ({ onClose }: { onClose: () => void }) => {
             <Field name='profesionalRole'>
               {({ field, meta }: FieldType) => (
                 <CustomInput
-                  label='Profesional Role'
-                  placeholder='e. g. FullStack Developer'
+                  label={t('Profesional Role')}
+                  placeholder={t('e. g. FullStack Developer')}
                   name='profesionalRole'
                   type='text'
                   field={field}
@@ -85,8 +87,8 @@ const UserDetailsForm = ({ onClose }: { onClose: () => void }) => {
             <Field name='status'>
               {({ field, meta }: FieldType) => (
                 <CustomInput
-                  label='Status'
-                  placeholder='e. g. Developing💻'
+                  label={t('Status')}
+                  placeholder={t('e. g. Developing💻')}
                   name='status'
                   type='text'
                   field={field}
@@ -107,11 +109,11 @@ const UserDetailsForm = ({ onClose }: { onClose: () => void }) => {
           <div className='flex flex-col justify-start gap-6'>
             <div className='flex flex-col gap-1'>
               <h3 className='text-lg font-medium text-appColors-text'>
-                Upload your photo
+                {t('Upload your photo')}
                 <span className='text-base text-nextuiColors-danger'> *</span>
               </h3>
               <p className='text-sm font-normal text-appColors-textGray'>
-                This photo will be seen by your colleagues
+                {t('This photo will be seen by your colleagues')}
               </p>
             </div>
             <UserPhotoUploader />
@@ -122,13 +124,13 @@ const UserDetailsForm = ({ onClose }: { onClose: () => void }) => {
             onClick={onClose}
             className='px-10 py-2 font-medium border rounded-full text-appColors-textGray border-appColors-textGray'
           >
-            Cancel
+            {t('Cancel')}
           </button>
           <button
             type='submit'
             className='px-10 py-2 font-medium rounded-full text-appColors-backgroundBlue bg-appColors-blue'
           >
-            Continue
+            {t('Continue')}
           </button>
         </div>
       </Form>
