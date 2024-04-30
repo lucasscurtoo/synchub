@@ -10,6 +10,7 @@ import { UserGroupIcon as ChannelSolidIcon } from '@heroicons/react/24/solid'
 import { UserGroupIcon as ChannelOutlineIcon } from '@heroicons/react/24/outline'
 import { usePathname } from 'next/navigation'
 import SidebarButton from './SidebarButton'
+import { useTranslation } from 'react-i18next'
 
 export interface ButtonConfig {
   path: string
@@ -41,6 +42,7 @@ const buttonConfig = [
 
 const Sidebar = () => {
   const pathname = usePathname()
+  const { t } = useTranslation()
 
   return (
     <div className='flex flex-col w-1/6 h-full max-w-xs p-8 bg-appColors-backgroundBlue'>
@@ -51,7 +53,7 @@ const Sidebar = () => {
             <SidebarButton
               key={button.path}
               isActive={pathname === button.path}
-              label={button.label}
+              label={t(button.label)}
               path={button.path}
               IconActive={button.IconActive}
               IconInactive={button.IconInactive}
@@ -64,3 +66,4 @@ const Sidebar = () => {
 }
 
 export default Sidebar
+

@@ -1,8 +1,9 @@
 import { Checkbox } from '@nextui-org/react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 
 const NotiSettings = () => {
-  // fijarme si hace falta la carpeta de notifications o pongo todos los componentes en 1 sola carpeta en vez de hacer una carpeta por seccion
+  const { t } = useTranslation()
   return (
     <AnimatePresence>
       <motion.div
@@ -13,10 +14,10 @@ const NotiSettings = () => {
       >
         <Checkbox>
           <h3 className='text-lg text-appColors-text'>
-            Mute all notifications
+            {t('Mute all notifications')}
           </h3>
-          <p className='absolute text-sm font-light truncate text-appColors-gray'>
-            Mute all notifications, this setting will be on all devices
+          <p className='absolute text-sm font-light w-96 text-clip text-appColors-gray'>
+            {t('Mute all notifications, this setting will be on all devices')}
           </p>
         </Checkbox>
       </motion.div>

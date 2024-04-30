@@ -16,12 +16,13 @@ import { toggleShowyProfileModal } from '@/redux/reducers/appSlice'
 import ConfigurationModal from './settings/SettingsModal'
 import { signOut } from 'next-auth/react'
 import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline'
+import { useTranslation } from 'react-i18next'
 
 const UserProfileDropdown = () => {
   const userData = useSelector((state: RootState) => state.user)
   const dispatch = useDispatch()
   const configModal = useDisclosure()
-
+  const { t } = useTranslation()
   return (
     <>
       <Dropdown>
@@ -42,7 +43,7 @@ const UserProfileDropdown = () => {
               >
                 <div className='flex items-center gap-3'>
                   <p className='text-sm font-normal text-appColors-gray'>
-                    {userData && 'My settings'}
+                    {userData && t('My settings')}
                   </p>
                   <AdjustmentsHorizontalIcon className='w-6 text-appColors-gray' />
                 </div>
@@ -123,10 +124,10 @@ const UserProfileDropdown = () => {
                 onClick={() => dispatch(toggleShowyProfileModal())}
                 className='text-appColors-textGray'
               >
-                View & edit profile info
+                {t('View & edit profile info')}
               </DropdownItem>
               <DropdownItem key='settings' className='text-appColors-textGray '>
-                Settings
+                {t('Settings')}
               </DropdownItem>
               <DropdownItem
                 key='logout'
@@ -142,7 +143,7 @@ const UserProfileDropdown = () => {
                   ],
                 }}
               >
-                Log out
+                {t('Log out')}
               </DropdownItem>
             </DropdownSection>
           </DropdownMenu>

@@ -25,6 +25,7 @@ const AuthCheck = () => {
       if (userData._id == '') {
         useGetUser(session.user.id)
       }
+      // Set the language and redirect to the section
       i18n.changeLanguage(language)
       router.push(section)
     }

@@ -31,6 +31,7 @@ const CustomSelect = ({
       selectionMode={isMultiple ? 'multiple' : 'single'}
       placeholder={placeholder}
       selectedKeys={[value]}
+      defaultSelectedKeys={[value]}
       labelPlacement='outside'
       isDisabled={isDisabled}
       onChange={onChange}

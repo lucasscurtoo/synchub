@@ -17,6 +17,7 @@ import DeleteAccModal from './DeleteAccModal'
 import { FieldType } from '@/types/common'
 import { userDetailsSchema } from '../validations'
 import { Spinner } from '@nextui-org/react'
+import { useTranslation } from 'react-i18next'
 
 const MyProfile = () => {
   const userData = useSelector((state: RootState) => state.user)
@@ -25,6 +26,7 @@ const MyProfile = () => {
   )
   const [updateUser, { isLoading }] = useUpdateUserMutation()
   const dispatch = useDispatch()
+  const { t } = useTranslation()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const toggleModal = () => {
@@ -52,7 +54,7 @@ const MyProfile = () => {
             tabIndex={-1}
           >
             <div className='z-50 flex items-center justify-between p-5 border-b-[0.5px] text-appColors-text'>
-              <h4 className='text-lg'>My profile</h4>
+              <h4 className='text-lg'>{t('My profile')}</h4>
               <XMarkIcon className='w-8 cursor-pointer' onClick={toggleModal} />
             </div>
             <Formik
@@ -124,7 +126,7 @@ const MyProfile = () => {
                         <CustomInput
                           name='fullName'
                           type='text'
-                          label='Full Name'
+                          label={t('Full Name')}
                           field={field}
                           meta={meta}
                         />
@@ -135,7 +137,7 @@ const MyProfile = () => {
                         <CustomInput
                           name='profesionalRole'
                           type='text'
-                          label='Profesional Role'
+                          label={t('Profesional Role')}
                           field={field}
                           meta={meta}
                         />
@@ -146,10 +148,12 @@ const MyProfile = () => {
                         <CustomInput
                           name='status'
                           type='text'
-                          label='Status'
+                          label={t('Status')}
                           field={field}
                           meta={meta}
-                          description='This status will be seen by your colleagues'
+                          description={t(
+                            'This status will be seen by your colleagues'
+                          )}
                         />
                       )}
                     </Field>
@@ -162,7 +166,7 @@ const MyProfile = () => {
                         type='submit'
                         className='flex items-center px-8 py-3 space-x-4 transition-all delay-75 cursor-pointer text-appColors-text hover:text-appColors-blue hover:bg-appColors-backgroundBlue rounded-xl'
                       >
-                        <h4 className='text-lg'>Save changes</h4>
+                        <h4 className='text-lg'>{t('Save changes')}</h4>
                         <CheckCircleIcon className='w-6' />
                       </Field>
                     )}
