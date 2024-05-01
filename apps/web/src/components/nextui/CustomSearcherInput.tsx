@@ -8,9 +8,9 @@ export const CustomSearcherInput = extendVariants(Input, {
         inputWrapper: [
           'shadow-none',
           'w-full',
-          'bg-appColors-backgroundBlue',
-          'group-data-[hover=true]:bg-appColors-backgroundBlue',
-          'group-data-[focus=true]:bg-appColors-backgroundBlue',
+          'bg-appColors-blueWhite',
+          'group-data-[hover=true]:bg-appColors-blueWhite',
+          'group-data-[focus=true]:bg-appColors-blueWhite',
           'h-8',
         ],
       },
@@ -22,3 +22,4 @@ export const CustomSearcherInput = extendVariants(Input, {
     removeLabel: true,
   },
 })
+

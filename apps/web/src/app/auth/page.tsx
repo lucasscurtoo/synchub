@@ -12,7 +12,7 @@ import { AuthPageContextProvider, useAuthPageContext } from './AuthContext'
 const Page = () => {
   return (
     <AuthPageContextProvider>
-      <div className='flex items-center justify-center w-full h-full overflow-hidden bg-appColors-backgroundBlue'>
+      <div className='flex items-center justify-center w-full h-full overflow-hidden bg-appColors-blueWhite'>
         <div className='flex items-center overflow-hidden rounded-6xl shadow-appShadow w-fit'>
           <div className='h-full p-8 space-y-4 bg-white border-r-[0.1px] border-opacity-30 border-appColors-fadedGray rounded-l-6xl'>
             <div className='flex flex-col items-start justify-start'>
@@ -20,7 +20,7 @@ const Page = () => {
             </div>
             <AuthContent />
           </div>
-          <div className=' bg-appColors-backgroundBlue'>
+          <div className=' bg-appColors-blueWhite'>
             <Player
               autoplay
               loop
@@ -53,3 +53,4 @@ const AuthContent = () => {
 }
 
 export default Page
+

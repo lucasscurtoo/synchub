@@ -114,7 +114,7 @@ const UserDetailsForm = ({ onClose }: { onClose: () => void }) => {
           </div>
           <div className='flex flex-col justify-start gap-6'>
             <div className='flex flex-col gap-1'>
-              <h3 className='text-lg font-medium text-appColors-text'>
+              <h3 className='text-lg font-medium text-appColors-primaryText'>
                 {t('Upload your photo')}
                 <span className='text-base text-nextuiColors-danger'> *</span>
               </h3>
@@ -134,7 +134,7 @@ const UserDetailsForm = ({ onClose }: { onClose: () => void }) => {
           </button>
           <button
             type='submit'
-            className='px-10 py-2 font-medium rounded-full text-appColors-backgroundBlue bg-appColors-blue'
+            className='px-10 py-2 font-medium rounded-full text-appColors-blueWhite bg-appColors-primary'
           >
             {t('Continue')}
           </button>

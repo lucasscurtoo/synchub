@@ -102,7 +102,7 @@ const RegisterForm = () => {
           <div className='flex items-center space-x-10'>
             <p className='text-sm text-gray-600'>Already have an account?</p>
             <p
-              className='text-base cursor-pointer text-appColors-blue'
+              className='text-base cursor-pointer text-appColors-primary'
               onClick={() => setShowLogin(true)}
             >
               Sign in!
@@ -111,7 +111,7 @@ const RegisterForm = () => {
 
           <button
             type='submit'
-            className='w-full py-3 font-medium text-white transition-all rounded-full bg-appColors-blue hover:bg-blue-800'
+            className='w-full py-3 font-medium text-white transition-all rounded-full bg-appColors-primary hover:bg-blue-800'
           >
             Sign Up!
           </button>

@@ -14,7 +14,9 @@ const ChatOverview = () => {
   return (
     <div className='flex flex-col items-center h-full bg-white w-fit border-r-05 border-appColors-fadedGray/50 grow'>
       <div className='flex items-center justify-center w-full p-6 space-x-4 border-b-05 border-appColors-fadedGray/50'>
-        <h3 className='text-lg text-appColors-text shrink-0'>All {section}</h3>
+        <h3 className='text-lg text-appColors-primaryText shrink-0'>
+          All {section}
+        </h3>
         <MessagesSearcher />
       </div>
       <div className='w-full p-4 border-b-05 border-appColors-fadedGray/50'>
@@ -26,3 +28,4 @@ const ChatOverview = () => {
 }
 
 export default ChatOverview
+

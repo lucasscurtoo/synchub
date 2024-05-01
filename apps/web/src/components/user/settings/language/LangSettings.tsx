@@ -43,7 +43,7 @@ const LangSettings = () => {
           description={t('Choose the language you’d like to use with the app.')}
         />
         <div className='flex flex-col space-y-0'>
-          <h4 className='text-appColors-text'>{t('Spellcheck')}</h4>
+          <h4 className='text-appColors-primaryText'>{t('Spellcheck')}</h4>
           <Checkbox
             onValueChange={() => dispatch(toggleSpellcheckOn())}
             isSelected={spellCheck}

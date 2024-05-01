@@ -62,7 +62,7 @@ const SettingsModal = ({ disclosure }: any) => {
                     onClick={() => setSettingsSection(section.key)}
                     className={`flex cursor-pointer items-center space-x-3 transform transition-all delay-100 ${
                       settingsSection === section.key
-                        ? 'text-appColors-blue'
+                        ? 'text-appColors-primary'
                         : 'text-appColors-textGray'
                     }`}
                   >
@@ -83,3 +83,4 @@ const SettingsModal = ({ disclosure }: any) => {
 }
 
 export default SettingsModal
+

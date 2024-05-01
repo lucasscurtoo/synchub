@@ -25,17 +25,17 @@ const SidebarButton = ({
     >
       <div
         className={`flex items-center p-3 space-x-4 rounded-2xl ${
-          isActive ? 'bg-appColors-blue' : 'bg-transparent'
+          isActive ? 'bg-appColors-primary' : 'bg-transparent'
         }`}
       >
         <Icon
           className={`w-8 ${
-            isActive ? 'text-appColors-backgroundBlue' : 'text-appColors-blue'
+            isActive ? 'text-appColors-blueWhite' : 'text-appColors-primary'
           }`}
         />
         <h3
           className={`text-lg ${
-            isActive ? 'text-appColors-backgroundBlue' : 'text-appColors-gray'
+            isActive ? 'text-appColors-blueWhite' : 'text-appColors-gray'
           }`}
         >
           {label}
@@ -46,3 +46,4 @@ const SidebarButton = ({
 }
 
 export default SidebarButton
+

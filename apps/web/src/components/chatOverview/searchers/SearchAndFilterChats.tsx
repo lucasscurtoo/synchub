@@ -39,7 +39,7 @@ const SearchAndFilterChats = ({
       value={searchTerm}
       startContent={
         <div className='p-1 mr-2 rounded-md'>
-          <MagnifyingGlassIcon className='w-5 text-appColors-blue' />
+          <MagnifyingGlassIcon className='w-5 text-appColors-primary' />
         </div>
       }
     />
@@ -47,3 +47,4 @@ const SearchAndFilterChats = ({
 }
 
 export default SearchAndFilterChats
+

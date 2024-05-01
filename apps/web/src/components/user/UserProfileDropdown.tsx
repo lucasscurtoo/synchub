@@ -96,10 +96,10 @@ const UserProfileDropdown = () => {
               >
                 <div className='grid items-center grid-cols-2 gap-y-2 gap-x-3'>
                   <div className='flex flex-col space-y-0'>
-                    <h3 className='text-base capitalize text-appColors-text'>
+                    <h3 className='text-base capitalize text-appColors-primaryText'>
                       {userData.fullName}
                     </h3>
-                    <p className='text-sm capitalize text-appColors-text'>
+                    <p className='text-sm capitalize text-appColors-primaryText'>
                       {userData.profesionalRole}
                     </p>
                   </div>
@@ -134,11 +134,11 @@ const UserProfileDropdown = () => {
                 onClick={() => signOut()}
                 classNames={{
                   base: [
-                    'text-appColors-red',
-                    'data-[hover=true]:text-appColors-red',
-                    'data-[hover=true]:bg-appColors-red/30',
-                    'dark:data-[hover=true]:bg-appColors-red/30',
-                    'data-[selectable=true]:focus:bg-appColors-red/30',
+                    'text-appColors-danger',
+                    'data-[hover=true]:text-appColors-danger',
+                    'data-[hover=true]:bg-appColors-danger/30',
+                    'dark:data-[hover=true]:bg-appColors-danger/30',
+                    'data-[selectable=true]:focus:bg-appColors-danger/30',
                     'data-[pressed=true]:opacity-70',
                   ],
                 }}

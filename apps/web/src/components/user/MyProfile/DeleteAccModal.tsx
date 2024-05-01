@@ -36,7 +36,7 @@ const DeleteAccModal = () => {
   return (
     <>
       <div className='mx-auto mt-auto mb-10 w-fit' onClick={onOpen}>
-        <button className='flex items-center justify-center px-8 py-3 space-x-4 transition-all delay-75 cursor-pointer w-fit text-appColors-red hover:bg-appColors-red/20 rounded-xl'>
+        <button className='flex items-center justify-center px-8 py-3 space-x-4 transition-all delay-75 cursor-pointer w-fit text-appColors-danger hover:bg-appColors-danger/20 rounded-xl'>
           <TrashIcon className='w-6' />
           <h4 className='text-lg'>{t('Delete account')}</h4>
         </button>
@@ -64,14 +64,14 @@ const DeleteAccModal = () => {
                 ) : (
                   <div className='grid grid-cols-2 gap-4'>
                     <button
-                      className='flex items-center justify-center gap-2 py-3 transition-all delay-100 border-2 rounded-full aspect-auto px-7 group hover:bg-appColors-blue border-appColors-blue text-appColors-blue hover:text-white'
+                      className='flex items-center justify-center gap-2 py-3 transition-all delay-100 border-2 rounded-full aspect-auto px-7 group hover:bg-appColors-primary border-appColors-primary text-appColors-primary hover:text-white'
                       onClick={onClose}
                     >
                       <XMarkIcon className='w-6' />
                       <p className='text-lg'>{t('Cancel')}</p>
                     </button>
                     <button
-                      className='flex items-center justify-center gap-2 py-3 transition-all delay-100 border-2 rounded-full px-7 group hover:bg-appColors-red border-appColors-red text-appColors-red hover:text-white'
+                      className='flex items-center justify-center gap-2 py-3 transition-all delay-100 border-2 rounded-full px-7 group hover:bg-appColors-danger border-appColors-danger text-appColors-danger hover:text-white'
                       onClick={handleDeleteAccount}
                     >
                       <TrashIcon className='w-6' />

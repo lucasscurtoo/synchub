@@ -53,7 +53,7 @@ const MyProfile = () => {
             className='z-50 bg-white h-full w-128 border-l-[0.5px] flex flex-col'
             tabIndex={-1}
           >
-            <div className='z-50 flex items-center justify-between p-5 border-b-[0.5px] text-appColors-text'>
+            <div className='z-50 flex items-center justify-between p-5 border-b-[0.5px] text-appColors-primaryText'>
               <h4 className='text-lg'>{t('My profile')}</h4>
               <XMarkIcon className='w-8 cursor-pointer' onClick={toggleModal} />
             </div>
@@ -164,7 +164,7 @@ const MyProfile = () => {
                       <Field
                         as='button'
                         type='submit'
-                        className='flex items-center px-8 py-3 space-x-4 transition-all delay-75 cursor-pointer text-appColors-text hover:text-appColors-blue hover:bg-appColors-backgroundBlue rounded-xl'
+                        className='flex items-center px-8 py-3 space-x-4 transition-all delay-75 cursor-pointer text-appColors-primaryText hover:text-appColors-primary hover:bg-appColors-blueWhite rounded-xl'
                       >
                         <h4 className='text-lg'>{t('Save changes')}</h4>
                         <CheckCircleIcon className='w-6' />

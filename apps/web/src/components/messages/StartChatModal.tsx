@@ -66,7 +66,7 @@ const Row = ({
     <div
       style={style}
       key={index}
-      className='flex items-center w-full !h-fit p-2 space-x-4 rounded-lg bg-appColors-backgroundBlue'
+      className='flex items-center w-full !h-fit p-2 space-x-4 rounded-lg bg-appColors-blueWhite'
     >
       <Image
         src={user.profilePicture}
@@ -77,7 +77,7 @@ const Row = ({
       />
       <div className='flex items-center justify-between w-full space-x-6 whitespace-nowrap'>
         <div className='flex flex-col'>
-          <h4 className='font-medium text-md text-appColors-text'>
+          <h4 className='font-medium text-md text-appColors-primaryText'>
             {user.fullName}
           </h4>
           <RenderStatus status={user.state} />
@@ -85,7 +85,7 @@ const Row = ({
         <p className='text-sm font-light text-appColors-textGray'>
           {user.profesionalRole}
         </p>
-        <div className='p-2 ml-auto transition-all delay-100 rounded-full cursor-pointer text-appColors-blue hover:bg-appColors-fadedGray/30'>
+        <div className='p-2 ml-auto transition-all delay-100 rounded-full cursor-pointer text-appColors-primary hover:bg-appColors-fadedGray/30'>
           <ChatBubbleOvalLeftIcon className='w-6' />
         </div>
       </div>
@@ -101,7 +101,7 @@ const StartChatModal = ({ users }: { users?: userType }) => {
     <>
       <div
         onClick={onOpen}
-        className='flex items-center px-4 py-2 space-x-2 text-white rounded-lg cursor-pointer bg-appColors-blue'
+        className='flex items-center px-4 py-2 space-x-2 text-white rounded-lg cursor-pointer bg-appColors-primary'
       >
         <PlusIcon className='w-8' />
         <p className='text-sm font-light'>Start new chat</p>

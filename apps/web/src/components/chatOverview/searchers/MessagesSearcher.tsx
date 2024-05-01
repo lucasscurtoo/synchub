@@ -23,8 +23,8 @@ const MessagesSearcher = () => {
         ],
       }}
       startContent={
-        <div className='p-1 mr-2 rounded-md bg-appColors-blue'>
-          <MagnifyingGlassIcon className='w-5 text-appColors-backgroundBlue' />
+        <div className='p-1 mr-2 rounded-md bg-appColors-primary'>
+          <MagnifyingGlassIcon className='w-5 text-appColors-blueWhite' />
         </div>
       }
       ref={inputRef}
@@ -33,3 +33,4 @@ const MessagesSearcher = () => {
 }
 
 export default MessagesSearcher
+

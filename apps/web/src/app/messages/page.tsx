@@ -13,12 +13,12 @@ const page = () => {
 
   const { t } = useTranslation()
   return (
-    <div className='flex items-center justify-center w-full h-full bg-appColors-backgroundBlue'>
+    <div className='flex items-center justify-center w-full h-full bg-appColors-blueWhite'>
       {data?.data ? (
         <ChatInterface />
       ) : (
         <div className='flex flex-col items-center space-y-4'>
-          <h2 className='text-4xl font-medium text-appColors-text'>
+          <h2 className='text-4xl font-medium text-appColors-primaryText'>
             {t('Select a chat to start!')}
           </h2>
           <p className='text-sm font-light text-center text-appColors-textGray'>
