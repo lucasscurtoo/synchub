@@ -19,5 +19,9 @@
   "Only .jpg and .png files. 5mb max file size.": "Solo archivos .jpg y .png. Tamaño máximo de archivo 5mb.",
   "e. g. Jhon Dhot": "Ej. Jhon Dhot",
   "e. g. FullStack Developer": "Ej. Desarrollador FullStack",
-  "e. g. Developing💻": "Ej. Desarollando💻"
+  "e. g. Developing💻": "Ej. Desarollando💻",
+  "Provide your full name, separated by a space.": "Proporciona tu nombre completo, separado por un espacio.",
+  "This is your profesional role, career or job.": "Este es tu rol profesional, carrera o trabajo.",
+  "This is your current status, mood or activity, or anything you want to share.": "Este es tu estado actual, humor o actividad, o cualquier cosa que quieras compartir."
 }
+

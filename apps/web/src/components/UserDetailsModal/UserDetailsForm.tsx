@@ -54,7 +54,9 @@ const UserDetailsForm = ({ onClose }: { onClose: () => void }) => {
                     <Tooltip
                       placement='right'
                       showArrow={true}
-                      content='Status (cambiar)'
+                      content={t(
+                        'Provide your full name, separated by a space.'
+                      )}
                     >
                       <InformationCircleIcon className='w-6 text-appColors-textGray' />
                     </Tooltip>
@@ -76,7 +78,9 @@ const UserDetailsForm = ({ onClose }: { onClose: () => void }) => {
                     <Tooltip
                       placement='right'
                       showArrow={true}
-                      content='Status (cambiar)'
+                      content={t(
+                        'This is your profesional role, career or job.'
+                      )}
                     >
                       <InformationCircleIcon className='w-6 text-appColors-textGray' />
                     </Tooltip>
@@ -97,7 +101,9 @@ const UserDetailsForm = ({ onClose }: { onClose: () => void }) => {
                     <Tooltip
                       placement='right'
                       showArrow={true}
-                      content='Status (cambiar)'
+                      content={t(
+                        'This is your current status, mood or activity, or anything you want to share.'
+                      )}
                     >
                       <InformationCircleIcon className='w-6 text-appColors-textGray' />
                     </Tooltip>
