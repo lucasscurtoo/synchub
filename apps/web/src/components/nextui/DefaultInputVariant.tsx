@@ -6,7 +6,7 @@ export const DefaultInputVariant = extendVariants(Input, {
       defaultVariant: {
         input: [
           'bg-transparent !text-appColors-textGray !text-base',
-          'group-data-[focus=true]:!text-appColors-text',
+          'group-data-[focus=true]:!text-appColors-primaryText',
           'placeholder:text-sm',
           '!placeholder-appColors-textGray',
         ],
@@ -24,8 +24,8 @@ export const DefaultInputVariant = extendVariants(Input, {
         ],
         description: 'text-appColors-fadedGray text-sm',
         label: [
-          '!text-appColors-text text-lg !font-normal',
-          'group-data-[focus=true]:!text-appColors-text',
+          '!text-appColors-primaryText text-lg !font-normal',
+          'group-data-[focus=true]:!text-appColors-primaryText',
         ],
         errorMessage: 'absolute',
       },
@@ -36,3 +36,4 @@ export const DefaultInputVariant = extendVariants(Input, {
     removeLabel: true,
   },
 })
+

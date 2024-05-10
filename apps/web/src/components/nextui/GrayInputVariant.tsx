@@ -18,7 +18,7 @@ export const GrayInputVariant = extendVariants(Input, {
         ],
         input: [
           'bg-transparent !text-appColors-textGray !text-base',
-          'group-data-[focus=true]:!text-appColors-text',
+          'group-data-[focus=true]:!text-appColors-primaryText',
           '!placeholder-appColors-textGray',
           'placeholder:text-sm',
         ],
@@ -27,7 +27,7 @@ export const GrayInputVariant = extendVariants(Input, {
         description: 'text-appColors-fadedGray text-sm',
         label: [
           '!text-appColors-textGray text-lg',
-          'group-data-[focus=true]:!text-appColors-text',
+          'group-data-[focus=true]:!text-appColors-primaryText',
         ],
       },
     },
@@ -38,3 +38,4 @@ export const GrayInputVariant = extendVariants(Input, {
     removeLabel: true,
   },
 })
+

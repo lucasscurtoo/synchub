@@ -13,7 +13,7 @@ const NotiSettings = () => {
         className='flex'
       >
         <Checkbox>
-          <h3 className='text-lg text-appColors-text'>
+          <h3 className='text-lg text-appColors-primaryText'>
             {t('Mute all notifications')}
           </h3>
           <p className='absolute text-sm font-light w-96 text-clip text-appColors-gray'>
@@ -25,3 +25,4 @@ const NotiSettings = () => {
   )
 }
 export default NotiSettings
+

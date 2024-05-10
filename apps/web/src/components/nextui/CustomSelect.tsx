@@ -40,7 +40,7 @@ const CustomSelect = ({
         <div className='flex flex-wrap gap-2'>
           {items.map((item) =>
             isMultiple ? (
-              <Chip className='bg-appColors-lightBlue' key={item.key}>
+              <Chip className='bg-appColors-babyBlue' key={item.key}>
                 {item.textValue}
               </Chip>
             ) : (
@@ -52,16 +52,16 @@ const CustomSelect = ({
       listboxProps={{
         itemClasses: {
           base: [
-            '!bg-appColors-backgroundBlue',
-            'data-[hover=true]:!bg-appColors-lightBlue',
+            '!bg-appColors-blueWhite',
+            'data-[hover=true]:!bg-appColors-babyBlue',
           ],
         },
       }}
       classNames={{
-        value: '!text-appColors-text ',
+        value: '!text-appColors-primaryText ',
         listbox: '!text-appColors-textGray',
         trigger: [
-          '!text-appColors-blue',
+          '!text-appColors-primary',
           '!border-none',
           'rounded-md',
           'shadow-lg',
@@ -71,7 +71,7 @@ const CustomSelect = ({
           '!ring-appColors-gray/30',
         ],
         description: 'text-appColors-gray text-sm font-light',
-        label: ['!text-appColors-text text-lg !font-normal'],
+        label: ['!text-appColors-primaryText text-lg !font-normal'],
       }}
     >
       {options.map((item) => (

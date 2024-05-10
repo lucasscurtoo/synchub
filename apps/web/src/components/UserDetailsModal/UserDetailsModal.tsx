@@ -36,7 +36,7 @@ const UserDetailsModal = () => {
         {(onClose) => (
           <div className='w-160'>
             <ModalHeader className='flex flex-col gap-1'>
-              <h3 className='text-2xl font-semibold text-appColors-text'>
+              <h3 className='text-2xl font-semibold text-appColors-primaryText'>
                 {t('User details')}
               </h3>
               <p className='text-base font-normal text-appColors-textGray'>

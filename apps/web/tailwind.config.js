@@ -15,16 +15,21 @@ const config = {
     extend: {
       colors: {
         appColors: {
-          backgroundBlue: '#F8F9FD',
-          blue: '#3D64FD',
-          lightBlue: '#DCE6FF',
+          blueWhite: '#F8F9FD',
+          babyBlue: '#DCE6FF',
+          primary: '#3D64FD',
+          disabledPrimary: 'rgba(61, 100, 253, 0.5)',
+          danger: '#F25D5A',
+          disabledDanger: 'rgba(242, 93, 90, 0.5)',
+          highlighter: 'rgba(252, 191, 73, 0.8)',
           gray: '#6B7280',
-          textGray: '#636363',
+          darkLightBlue: '#B6C1E9',
+          success: '#21BD61',
+          disabledSuccess: 'rgba(33, 189, 97, 0.5)',
+          black: '#1A1A1B',
           fadedGray: '#AFB8CF',
-          text: '#374151',
-          red: '#F25D5A',
-          secondLightBlue: '#B6C1E9',
-          successGreen: '#21BD61',
+          textGray: '#636363',
+          primaryText: '#374151',
         },
         nextuiColors: {
           danger: '#f31260',
@@ -67,3 +72,4 @@ const config = {
   ],
 }
 export default config
+

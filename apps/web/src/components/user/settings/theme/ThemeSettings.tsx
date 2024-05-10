@@ -13,7 +13,7 @@ const ThemeSettings = () => {
 
   return (
     <div className='flex flex-col space-y-2'>
-      <h4 className='text-appColors-text'>{t('Theme')}</h4>
+      <h4 className='text-appColors-primaryText'>{t('Theme')}</h4>
       <p className='text-sm font-light truncate text-appColors-gray'>
         {t('Choose the app theme you’d like to use.')}
       </p>
@@ -22,19 +22,19 @@ const ThemeSettings = () => {
           onValueChange={() => dispatch(setAppTheme('System'))}
           isSelected={appTheme === 'System'}
         >
-          <h4 className='text-appColors-text'>{t('System')}</h4>
+          <h4 className='text-appColors-primaryText'>{t('System')}</h4>
         </Checkbox>
         <Checkbox
           onValueChange={() => dispatch(setAppTheme('Light'))}
           isSelected={appTheme === 'Light'}
         >
-          <h4 className='text-appColors-text'>{t('Light')}</h4>
+          <h4 className='text-appColors-primaryText'>{t('Light')}</h4>
         </Checkbox>
         <Checkbox
           onValueChange={() => dispatch(setAppTheme('Dark'))}
           isSelected={appTheme === 'Dark'}
         >
-          <h4 className='text-appColors-text'>{t('Dark')}</h4>
+          <h4 className='text-appColors-primaryText'>{t('Dark')}</h4>
         </Checkbox>
       </div>
     </div>

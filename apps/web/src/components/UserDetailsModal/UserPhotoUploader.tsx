@@ -36,7 +36,7 @@ const UserPhotoUploader = () => {
   return (
     <div className='flex flex-col w-full'>
       <div
-        className='flex flex-col items-center justify-center border-2 bg-appColors-lightBlue w-80 h-52 border-appColors-blue rounded-2xl gap-y-8'
+        className='flex flex-col items-center justify-center border-2 bg-appColors-babyBlue w-80 h-52 border-appColors-primary rounded-2xl gap-y-8'
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
@@ -47,13 +47,13 @@ const UserPhotoUploader = () => {
           ref={fileInputRef}
         />
         <div className='flex flex-col items-center gap-y-4'>
-          <DocumentArrowUpIcon className='w-12 text-appColors-blue' />
+          <DocumentArrowUpIcon className='w-12 text-appColors-primary' />
           <p className='text-lg text-appColors-textGray'>
             {t('Drag & drop your files here or')}
           </p>
         </div>
         <button
-          className='px-8 py-3 font-medium transition-all rounded-2xl bg-appColors-secondLightBlue text-appColors-text hover:bg-appColors-blue hover:text-white'
+          className='px-8 py-3 font-medium transition-all rounded-2xl bg-appColors-darkLightBlue text-appColors-primaryText hover:bg-appColors-primary hover:text-white'
           onClick={handleButtonClick}
         >
           {t('Choose File')}
@@ -73,16 +73,16 @@ const UserPhotoUploader = () => {
           key={file.name}
           className='flex items-center gap-x-3'
         >
-          <PhotoIcon className='w-11 text-appColors-blue' />
+          <PhotoIcon className='w-11 text-appColors-primary' />
           <div className='flex flex-col'>
-            <p className='text-sm break-all text-clip max-w-56 text-appColors-text'>
+            <p className='text-sm break-all text-clip max-w-56 text-appColors-primaryText'>
               {truncateFileName(file.name, 28)}
             </p>
             <p className='text-xs font-normal text-appColors-textGray'>
               {formatFileSize(file.size)}
             </p>
           </div>
-          <CheckCircleIcon className='w-6 ml-auto text-appColors-successGreen' />
+          <CheckCircleIcon className='w-6 ml-auto text-appColors-success' />
         </motion.div>
       )}
     </div>

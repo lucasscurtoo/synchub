@@ -12,7 +12,7 @@ const PagesLayout = ({ children }: { children: React.ReactNode }) => {
       <div className='flex flex-col w-full h-full'>
         <UserDetailsModal />
         <Header />
-        <div className='flex items-start flex-grow h-fit bg-appColors-backgroundBlue'>
+        <div className='flex items-start flex-grow h-fit bg-appColors-blueWhite'>
           <ChatOverview />
           {children}
           <MyProfile />
