@@ -21,6 +21,7 @@ const config = {
           disabledPrimary: 'rgba(61, 100, 253, 0.5)',
           danger: '#F25D5A',
           disabledDanger: 'rgba(242, 93, 90, 0.5)',
+          highlighter: 'rgba(252, 191, 73, 0.8)',
           gray: '#6B7280',
           darkLightBlue: '#B6C1E9',
           success: '#21BD61',
