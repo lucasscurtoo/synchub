@@ -59,7 +59,7 @@ const UserPhotoUploader = () => {
           {t('Choose File')}
         </button>
       </div>
-      <p className='my-2 text-sm font-normal max-w-72 text-appColors-textGray'>
+      <p className='my-2 text-sm font-normal max-w-72 text-appColors-textGray dark:text-appColors-lightGraySecondary'>
         {t('Only .jpg and .png files. 5mb max file size.')}
       </p>
       {meta?.error && !file && (
@@ -75,10 +75,10 @@ const UserPhotoUploader = () => {
         >
           <PhotoIcon className='w-11 text-appColors-primary' />
           <div className='flex flex-col'>
-            <p className='text-sm break-all text-clip max-w-56 text-appColors-primaryText'>
+            <p className='text-sm break-all text-clip max-w-56 text-appColors-primaryText dark:text-appColors-blueWhite'>
               {truncateFileName(file.name, 28)}
             </p>
-            <p className='text-xs font-normal text-appColors-textGray'>
+            <p className='text-xs font-normal text-appColors-textGray dark:text-appColors-lightGrayPrimary'>
               {formatFileSize(file.size)}
             </p>
           </div>

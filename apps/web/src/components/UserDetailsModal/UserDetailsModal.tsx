@@ -31,15 +31,18 @@ const UserDetailsModal = () => {
       onClose={onClose}
       hideCloseButton
       className='!max-w-3xl'
+      classNames={{
+        base: 'dark:bg-appColors-primaryDarkGray',
+      }}
     >
       <ModalContent className='p-4'>
         {(onClose) => (
           <div className='w-160'>
             <ModalHeader className='flex flex-col gap-1'>
-              <h3 className='text-2xl font-semibold text-appColors-primaryText'>
+              <h3 className='text-2xl font-semibold text-appColors-primaryText dark:text-appColors-blueWhite'>
                 {t('User details')}
               </h3>
-              <p className='text-base font-normal text-appColors-textGray'>
+              <p className='text-base font-normal text-appColors-textGray dark:text-appColors-lightGrayPrimary'>
                 {t('Update your personal details and photo here')}
               </p>
             </ModalHeader>

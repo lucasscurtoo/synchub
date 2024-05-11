@@ -17,7 +17,7 @@ const initialState: AppState = {
   myProfileModalState: false,
   spellCheck: false,
   language: 'es',
-  appTheme: 'System',
+  appTheme: 'system',
   appNotification: { error: false, message: '' },
 }
 

@@ -23,6 +23,7 @@ export default function RootLayout({
           <div>
             <AuthCheck />
             <ShowToast />
+
             <main className='flex w-screen h-screen overflow-visible light'>
               {children}
             </main>

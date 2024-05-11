@@ -16,8 +16,8 @@ const Header = () => {
   dispatch(setAppSection(formatedPathname))
 
   return (
-    <div className='flex items-center justify-between w-full py-6 px-10 border-b-[0.5px] border-appColors-fadedGray/50 shadow-sm '>
-      <h1 className='text-4xl font-medium capitalize text-appColors-primaryText'>
+    <div className=' bg-appColors-blueWhite dark:bg-appColors-primaryDarkGray flex items-center justify-between w-full py-6 px-10 border-b-[0.5px] border-appColors-fadedGray/50 shadow-sm '>
+      <h1 className='text-4xl font-medium capitalize text-appColors-primaryText dark:text-appColors-blueWhite'>
         {t(formatedPathname)}
       </h1>
       <UserProfileModal />

@@ -13,10 +13,10 @@ const NotiSettings = () => {
         className='flex'
       >
         <Checkbox>
-          <h3 className='text-lg text-appColors-primaryText'>
+          <h3 className='text-lg text-appColors-primaryText dark:text-appColors-blueWhite'>
             {t('Mute all notifications')}
           </h3>
-          <p className='absolute text-sm font-light w-96 text-clip text-appColors-gray'>
+          <p className='absolute text-sm font-light w-96 text-clip text-appColors-gray dark:text-appColors-lightGrayPrimary'>
             {t('Mute all notifications, this setting will be on all devices')}
           </p>
         </Checkbox>

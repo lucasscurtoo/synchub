@@ -1,7 +1,8 @@
 'use client'
 import Image from 'next/image'
 import React from 'react'
-import Logo from '../../../assets/images/LogoBlack.svg'
+import LogoBlack from '../../../assets/images/LogoBlack.svg'
+import LogoWhite from '../../../assets/images/LogoWhite.svg'
 import { ChatBubbleOvalLeftEllipsisIcon as MessageSolidIcon } from '@heroicons/react/24/solid'
 import { ChatBubbleOvalLeftEllipsisIcon as MessageOutlineIcon } from '@heroicons/react/24/outline'
 import { UsersIcon as GroupSolidIcon } from '@heroicons/react/24/solid'
@@ -11,6 +12,7 @@ import { UserGroupIcon as ChannelOutlineIcon } from '@heroicons/react/24/outline
 import { usePathname } from 'next/navigation'
 import SidebarButton from './SidebarButton'
 import { useTranslation } from 'react-i18next'
+import { useTheme } from 'next-themes'
 
 export interface ButtonConfig {
   path: string
@@ -43,11 +45,18 @@ const buttonConfig = [
 const Sidebar = () => {
   const pathname = usePathname()
   const { t } = useTranslation()
+  const { theme } = useTheme()
 
   return (
-    <div className='flex flex-col w-1/6 h-full max-w-xs p-8 bg-appColors-blueWhite'>
+    <div className='flex flex-col w-1/6 h-full max-w-xs p-8 bg-appColors-blueWhite dark:bg-appColors-secondaryDarkGray'>
       <div className='flex flex-col space-y-10'>
-        <Image src={Logo} width={250} height={200} alt='Logo image' />
+        <Image
+          src={theme === 'light' ? LogoBlack : LogoWhite}
+          width={218}
+          height={35}
+          className='max-w-[218px] max-h-[35px]'
+          alt='Logo image'
+        />
         <div className='space-y-6'>
           {buttonConfig.map((button) => (
             <SidebarButton

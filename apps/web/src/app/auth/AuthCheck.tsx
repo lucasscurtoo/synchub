@@ -7,14 +7,15 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import { useLazyGetUserByIdQuery } from '@/redux/api/userApi'
 import i18n from '@/i18n/i18n.config'
+import { useTheme } from 'next-themes'
 
 const AuthCheck = () => {
   const { data: session, status } = useSession()
   const router = useRouter()
   const [useGetUser] = useLazyGetUserByIdQuery()
-
+  const { setTheme, theme } = useTheme()
   const userData = useSelector((state: RootState) => state.user)
-  const { language, section } = useSelector(
+  const { language, section, appTheme } = useSelector(
     (state: RootState) => state.persistedAppReducer.app
   )
   useEffect(() => {
@@ -26,6 +27,7 @@ const AuthCheck = () => {
         useGetUser(session.user.id)
       }
       // Set the language and redirect to the section
+      setTheme(appTheme)
       i18n.changeLanguage(language)
       router.push(section)
     }

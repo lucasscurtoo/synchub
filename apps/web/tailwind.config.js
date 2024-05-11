@@ -1,6 +1,7 @@
 import { nextui } from '@nextui-org/theme'
 
 const config = {
+  darkMode: 'class',
   content: [
     './**/*.{js,ts,jsx,tsx,mdx}',
     './src/**/*.{js,ts,jsx,tsx,mdx}',
@@ -17,6 +18,8 @@ const config = {
         appColors: {
           blueWhite: '#F8F9FD',
           babyBlue: '#DCE6FF',
+          primaryDarkGray: '#1C1C1C',
+          secondaryDarkGray: '#292929',
           primary: '#3D64FD',
           disabledPrimary: 'rgba(61, 100, 253, 0.5)',
           danger: '#F25D5A',
@@ -30,6 +33,8 @@ const config = {
           fadedGray: '#AFB8CF',
           textGray: '#636363',
           primaryText: '#374151',
+          lightGrayPrimary: '#E7E7E7',
+          lightGraySecondary: '#C8C8C8',
         },
         nextuiColors: {
           danger: '#f31260',

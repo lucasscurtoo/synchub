@@ -36,7 +36,7 @@ const CustomToast = ({
       <ToastContainer
         progressClassName='toastProgress'
         bodyClassName='toastBody'
-        className='bg-white'
+        className='bg-transparent'
         position='top-center'
         autoClose={3000}
       />
@@ -45,3 +45,4 @@ const CustomToast = ({
 }
 
 export default CustomToast
+
