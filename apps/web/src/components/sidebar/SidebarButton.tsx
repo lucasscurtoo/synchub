@@ -35,7 +35,9 @@ const SidebarButton = ({
         />
         <h3
           className={`text-lg ${
-            isActive ? 'text-appColors-blueWhite' : 'text-appColors-gray'
+            isActive
+              ? 'text-appColors-blueWhite'
+              : 'text-appColors-gray dark:text-appColors-lightGraySecondary'
           }`}
         >
           {label}

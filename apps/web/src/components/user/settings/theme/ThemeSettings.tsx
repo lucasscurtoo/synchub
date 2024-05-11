@@ -1,43 +1,64 @@
 import { setAppTheme } from '@/redux/reducers/appSlice'
 import { RootState } from '@/redux/store'
 import { Checkbox } from '@nextui-org/react'
+import { useTheme } from 'next-themes'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
+import { motion } from 'framer-motion'
 
 const ThemeSettings = () => {
   const appTheme = useSelector(
     (state: RootState) => state.persistedAppReducer.app.appTheme
   )
+  const { setTheme } = useTheme()
   const dispatch = useDispatch()
   const { t } = useTranslation()
 
+  const handleChangeTheme = (theme: string) => {
+    dispatch(setAppTheme(theme))
+    setTheme(theme)
+  }
+
   return (
-    <div className='flex flex-col space-y-2'>
-      <h4 className='text-appColors-primaryText'>{t('Theme')}</h4>
-      <p className='text-sm font-light truncate text-appColors-gray'>
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5 }}
+      className='flex flex-col space-y-2'
+    >
+      <h4 className='text-appColors-primaryText dark:text-appColors-blueWhite'>
+        {t('Theme')}
+      </h4>
+      <p className='text-sm font-light truncate text-appColors-gray dark:text-appColors-lightGrayPrimary'>
         {t('Choose the app theme you’d like to use.')}
       </p>
       <div className='flex flex-col pt-5 space-y-4'>
         <Checkbox
-          onValueChange={() => dispatch(setAppTheme('System'))}
-          isSelected={appTheme === 'System'}
+          onValueChange={() => handleChangeTheme('system')}
+          isSelected={appTheme === 'system'}
         >
-          <h4 className='text-appColors-primaryText'>{t('System')}</h4>
+          <h4 className='text-appColors-primaryText dark:text-appColors-lightGrayPrimary'>
+            {t('System')}
+          </h4>
         </Checkbox>
         <Checkbox
-          onValueChange={() => dispatch(setAppTheme('Light'))}
-          isSelected={appTheme === 'Light'}
+          onValueChange={() => handleChangeTheme('light')}
+          isSelected={appTheme === 'light'}
         >
-          <h4 className='text-appColors-primaryText'>{t('Light')}</h4>
+          <h4 className='text-appColors-primaryText dark:text-appColors-lightGrayPrimary'>
+            {t('Light')}
+          </h4>
         </Checkbox>
         <Checkbox
-          onValueChange={() => dispatch(setAppTheme('Dark'))}
-          isSelected={appTheme === 'Dark'}
+          onValueChange={() => handleChangeTheme('dark')}
+          isSelected={appTheme === 'dark'}
         >
-          <h4 className='text-appColors-primaryText'>{t('Dark')}</h4>
+          <h4 className='text-appColors-primaryText dark:text-appColors-lightGrayPrimary'>
+            {t('Dark')}
+          </h4>
         </Checkbox>
       </div>
-    </div>
+    </motion.div>
   )
 }
 export default ThemeSettings

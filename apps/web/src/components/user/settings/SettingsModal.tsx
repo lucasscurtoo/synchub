@@ -53,7 +53,7 @@ const SettingsModal = ({ disclosure }: any) => {
     >
       <ModalContent>
         {(onClose) => (
-          <ModalBody className='p-0'>
+          <ModalBody className='p-0 dark:bg-appColors-secondaryDarkGray'>
             <div className='flex w-full h-full'>
               <div className='flex flex-col p-8 space-y-8 border-r-[0.5px] w-fit h-full'>
                 {settingsSections.map((section) => (
@@ -63,7 +63,7 @@ const SettingsModal = ({ disclosure }: any) => {
                     className={`flex cursor-pointer items-center space-x-3 transform transition-all delay-100 ${
                       settingsSection === section.key
                         ? 'text-appColors-primary'
-                        : 'text-appColors-textGray'
+                        : 'text-appColors-textGray dark:text-appColors-lightGrayPrimary'
                     }`}
                   >
                     <section.icon className='w-6' />

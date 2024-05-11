@@ -1,11 +1,11 @@
 'use client'
 
-import { persistor, store } from '@/redux/store'
+import { RootState, store } from '@/redux/store'
 import { Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
-import { Provider } from 'react-redux'
+import { Provider, useSelector } from 'react-redux'
 import { AppUIProvider } from './AppUIProvider'
-import { PersistGate } from 'redux-persist/integration/react'
+import { ThemeProvider } from 'next-themes'
 
 export function Providers({
   children,
@@ -18,9 +18,19 @@ export function Providers({
     // <PersistGate loading={null} persistor={persistor}>
     <SessionProvider session={session}>
       <AppUIProvider>
-        <Provider store={store}>{children}</Provider>
+        <Provider store={store}>
+          <ThemeProvider
+            defaultTheme='system'
+            enableSystem
+            attribute='class'
+            themes={['light', 'dark']}
+          >
+            {children}
+          </ThemeProvider>
+        </Provider>
       </AppUIProvider>
     </SessionProvider>
     // </PersistGate>
   )
 }
+

@@ -10,12 +10,15 @@ const MessagesSearcher = () => {
       type='text'
       placeholder='Search a message'
       classNames={{
-        input: ['bg-transparent'],
+        input:
+          'bg-transparent dark:placeholder:text-appColors-lightGrayPrimary',
         inputWrapper: [
           'bg-white',
+          'dark:bg-appColors-secondaryDarkGray',
           'hover:bg-white',
           'group-data-[hover=true]:bg-white',
           'group-data-[focus=true]:bg-white',
+
           'shadow-md',
           'h-0',
           'py-4',

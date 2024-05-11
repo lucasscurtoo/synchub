@@ -66,7 +66,7 @@ const Row = ({
     <div
       style={style}
       key={index}
-      className='flex items-center w-full !h-fit p-2 space-x-4 rounded-lg bg-appColors-blueWhite'
+      className='flex items-center w-full !h-fit p-2 space-x-4 rounded-lg bg-appColors-blueWhite dark:bg-appColors-secondaryDarkGray'
     >
       <Image
         src={user.profilePicture}
@@ -77,12 +77,12 @@ const Row = ({
       />
       <div className='flex items-center justify-between w-full space-x-6 whitespace-nowrap'>
         <div className='flex flex-col'>
-          <h4 className='font-medium text-md text-appColors-primaryText'>
+          <h4 className='font-medium text-md text-appColors-primaryText dark:text-appColors-blueWhite'>
             {user.fullName}
           </h4>
           <RenderStatus status={user.state} />
         </div>
-        <p className='text-sm font-light text-appColors-textGray'>
+        <p className='text-sm font-light text-appColors-textGray dark:text-appColors-lightGrayPrimary'>
           {user.profesionalRole}
         </p>
         <div className='p-2 ml-auto transition-all delay-100 rounded-full cursor-pointer text-appColors-primary hover:bg-appColors-fadedGray/30'>
@@ -106,10 +106,17 @@ const StartChatModal = ({ users }: { users?: userType }) => {
         <PlusIcon className='w-8' />
         <p className='text-sm font-light'>Start new chat</p>
       </div>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} className='max-h-136'>
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        className='max-h-136'
+        classNames={{
+          base: 'dark:bg-appColors-primaryDarkGray',
+        }}
+      >
         <ModalContent className='py-8'>
           <>
-            <ModalBody className='flex flex-col space-y-4'>
+            <ModalBody className='flex flex-col space-y-4 '>
               <SearchAndFilterChats
                 searchProperty='fullName'
                 styles={{ inputWrapper: '!h-16' }}

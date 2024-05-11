@@ -19,7 +19,7 @@ const RenderStatus = ({ status }: StatusRenderProps) => {
       key={key}
       variant='dot'
       color={status === 'Active' ? 'primary' : 'default'}
-      className='items-center text-sm text-appColors-textGray'
+      className='items-center text-sm text-appColors-textGray dark:text-appColors-lightGraySecondary'
       classNames={{
         base: `border-none w-fill px-0 dot-`,
       }}
