@@ -7,6 +7,16 @@ export const userService = apiService.injectEndpoints({
         url: `users/${id}`,
       }),
     }),
+    getChatPartner: builder.query({
+      query: (id) => ({
+        url: `users/${id}`,
+      }),
+    }),
+    getAllUsers: builder.query({
+      query: () => ({
+        url: 'users/',
+      }),
+    }),
     updateUser: builder.mutation({
       query: ({ id, body }) => ({
         url: `users/${id}`,
@@ -25,6 +35,9 @@ export const userService = apiService.injectEndpoints({
 
 export const {
   useLazyGetUserByIdQuery,
+  useGetUserByIdQuery,
+  useLazyGetChatPartnerQuery,
+  useGetAllUsersQuery,
   useUpdateUserMutation,
   useDeleteUserMutation,
 } = userService

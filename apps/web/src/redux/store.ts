@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage' // defaults to localStorage for 
 import userSlice from './reducers/userSlice'
 import appSlice from './reducers/appSlice'
 import { apiService } from './api/api'
+import chatSlice from './reducers/chatSlice'
 
 const persistConfig = {
   key: 'app',
@@ -24,6 +25,7 @@ export const store = configureStore({
     persistedAppReducer,
     apiService: apiService.reducer,
     user: userSlice,
+    chat: chatSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

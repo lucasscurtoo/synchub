@@ -26,7 +26,7 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addMatcher(
       userService.endpoints.getUserById.matchPending,
-
+      //hacer otro endpoint o no se pero aca va mal cuando traigo el usuario del nuevo chat, eso o pasarle el usuario de alguna forma
       (state) => {
         state.isLoading = true
       }

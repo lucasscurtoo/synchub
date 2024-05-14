@@ -5,7 +5,7 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 interface SearchChatsProps {
   placeholder?: string
   styles?: {}
-  data: Array<{ [key: string]: string }>
+  data: any
   onFilter: (filteredUsers: any) => void
   searchProperty: string
 }

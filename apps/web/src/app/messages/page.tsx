@@ -1,20 +1,24 @@
 'use client'
 import React from 'react'
-import ChatInterface from '@/components/messages/ChatInterface'
-import StartChatModal from '@/components/messages/StartChatModal'
 import { useGetAllChatsQuery } from '@/redux/api/chatApi'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
+
+import StartChatModal from '@/components/chat/StartChatModal'
+import ChatInterface from '@/components/chat/chatInterface/ChatInterface'
+import { isEmpty } from 'lodash'
 
 const page = () => {
+  const { newChat } = useSelector((state: RootState) => state.chat)
   const { data, isLoading, isError } = useGetAllChatsQuery(
     '6567a2ad2127d4eac55bac56'
   )
-  console.log(data)
 
   const { t } = useTranslation()
   return (
     <div className='flex items-center justify-center w-full h-full bg-appColors-blueWhite dark:bg-appColors-secondaryDarkGray'>
-      {data?.data ? (
+      {data?.data || !isEmpty(newChat.participants.chatPartner) ? (
         <ChatInterface />
       ) : (
         <div className='flex flex-col items-center space-y-4'>

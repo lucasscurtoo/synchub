@@ -1,9 +1,9 @@
 import React from 'react'
 import Sidebar from './sidebar/Sidebar'
 import Header from './Header'
-import ChatOverview from './chatOverview/ChatOverview'
 import MyProfile from './user/MyProfile/MyProfile'
 import UserDetailsModal from './UserDetailsModal/UserDetailsModal'
+import ChatOverview from './chat/chatOverview/ChatOverview'
 
 const PagesLayout = ({ children }: { children: React.ReactNode }) => {
   return (

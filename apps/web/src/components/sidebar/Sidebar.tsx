@@ -45,13 +45,15 @@ const buttonConfig = [
 const Sidebar = () => {
   const pathname = usePathname()
   const { t } = useTranslation()
-  const { theme } = useTheme()
+  const { systemTheme, theme } = useTheme()
 
   return (
     <div className='flex flex-col w-1/6 h-full max-w-xs p-8 bg-appColors-blueWhite dark:bg-appColors-secondaryDarkGray'>
       <div className='flex flex-col space-y-10'>
         <Image
-          src={theme === 'light' ? LogoBlack : LogoWhite}
+          src={
+            systemTheme === 'dark' && theme != 'light' ? LogoWhite : LogoBlack
+          }
           width={218}
           height={35}
           className='max-w-[218px] max-h-[35px]'
