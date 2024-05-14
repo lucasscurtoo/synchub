@@ -1,9 +1,4 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
@@ -12,10 +7,10 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { ChatsModule } from './chats/chats.module';
 import { AppLoggerMiddleware } from './middlewares/AppLoggerMiddleware';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { HttpExceptionFilter } from './HttpExceptionFilter';
-import { JwtMiddleware } from './middlewares/JwtMiddleware';
 import { CloudinaryService } from './cloudinary/Config';
+import { JwtGuard } from './guards/JwtGuard';
 
 @Module({
   imports: [
@@ -32,6 +27,10 @@ import { CloudinaryService } from './cloudinary/Config';
     AppService,
     CloudinaryService,
     {
+      provide: APP_GUARD,
+      useClass: JwtGuard,
+    },
+    {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
     },
@@ -39,10 +38,6 @@ import { CloudinaryService } from './cloudinary/Config';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
-    consumer
-      .apply(JwtMiddleware)
-      .exclude({ path: 'auth', method: RequestMethod.POST }, 'auth/(.*)')
-      .forRoutes({ path: '*', method: RequestMethod.ALL });
     consumer.apply(AppLoggerMiddleware).forRoutes('*');
   }
 }
