@@ -6,7 +6,11 @@ import {
 } from '@heroicons/react/16/solid'
 import Image from 'next/image'
 
-const ChatHeader = ({ user }: { user: userType }) => {
+const ChatHeader = ({
+  user,
+}: {
+  user: { fullName: string; profilePicture: string }
+}) => {
   return (
     <div className='flex items-center justify-between p-4 max-h-20 border-b-05 border-appColors-fadedGray/50'>
       <div className='flex items-center gap-x-2'>
@@ -37,3 +41,4 @@ const ChatHeader = ({ user }: { user: userType }) => {
   )
 }
 export default ChatHeader
+

@@ -36,7 +36,6 @@ export const userService = apiService.injectEndpoints({
 export const {
   useLazyGetUserByIdQuery,
   useGetUserByIdQuery,
-  useLazyGetChatPartnerQuery,
   useGetAllUsersQuery,
   useUpdateUserMutation,
   useDeleteUserMutation,

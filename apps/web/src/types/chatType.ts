@@ -1,5 +1,10 @@
 export type chatType = {
-  chatId: string
-  participants: { chatPartner: string }
+  _id: string
+  participants: { _id: string }
+  partnerData: {
+    fullName: string
+    profilePicture: string
+  }
   messages: []
 }
+

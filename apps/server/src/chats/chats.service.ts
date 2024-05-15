@@ -7,14 +7,32 @@ import { InjectModel } from '@nestjs/mongoose';
 import { ErrorManager } from 'src/services/error.manager';
 import { User, UserDocument } from 'src/users/user.schema';
 
+interface Client {
+  id: string;
+  name: string;
+  token: string;
+}
+
 @Injectable()
 export class ChatsService {
   constructor(
     @InjectModel(Chat.name) private chatModel: Model<ChatDocument>,
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
-  // Injects the Mongoose model for Chat documents into the service using NestJS dependency injection.
-  // The model is used to perform operations on the Chat collection in the MongoDB database.
+
+  private clients: Record<string, Client> = {};
+
+  async onClientConnected(client: Client) {
+    this.clients[client.id] = client;
+  }
+
+  onClientDisconnected(id: string) {
+    delete this.clients[id];
+  }
+
+  getClients() {
+    return Object.values(this.clients); /* todos los online */
+  }
 
   async create(createChatDto: CreateChatDto) {
     try {
@@ -61,9 +79,10 @@ export class ChatsService {
   async findAllById(userId: string) {
     try {
       const existingChats = await this.chatModel
-        .exists({
+        .find({
           participants: { $in: userId },
         })
+        .lean()
         .exec();
 
       if (!existingChats) {
@@ -72,11 +91,41 @@ export class ChatsService {
           message: 'There is no existing chats for the user',
         });
       }
+      const chatPartner = existingChats
+        .map((chat) =>
+          chat.participants.find(
+            (participant) => participant.toString() !== userId,
+          ),
+        )
+        .join(', ');
+
+      const getChatPartnersData = await this.userModel
+        .find({
+          _id: chatPartner,
+        })
+        .lean();
+
+      const chatsWithPartnerData = existingChats.map((chat) => {
+        const partnerId = chat.participants.find(
+          (participant) => participant.toString() !== userId,
+        );
+        const partnerData = getChatPartnersData.find(
+          ({ _id }) => _id.toString() === partnerId.toString(),
+        );
+
+        return {
+          ...chat,
+          partnerData: {
+            fullName: partnerData.fullName,
+            profilePicture: partnerData.profilePicture,
+          },
+        };
+      });
 
       return {
         status: HttpStatus.OK,
         message: 'Chats returned',
-        data: existingChats,
+        data: chatsWithPartnerData,
       };
     } catch (error) {
       return ErrorManager.createSignatureError({
