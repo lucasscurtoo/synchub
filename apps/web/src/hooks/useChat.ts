@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { chatApi } from '@/socket.io/chat.api'
 import { setChats } from '@/redux/reducers/chatSlice'
 import { setAppNotification } from '@/redux/reducers/appSlice'
+import { RootState } from '@/redux/store'
+import { isEmpty } from 'lodash'
 
-const useChat = (userId: string, fullName: string) => {
+const useChat = () => {
   const [isConnected, setIsConnected] = useState(false)
   const dispatch = useDispatch()
+  const { _id, fullName } = useSelector((state: RootState) => state.user)
+  const { selectedChat } = useSelector((state: RootState) => state.chat)
 
   const connect = () => {
-    if (userId !== '' && fullName !== '') {
+    if (!isEmpty(_id) && !isEmpty(fullName)) {
       chatApi
-        .connect({ userId, fullName })
+        .connect({ _id, fullName })
         .then(() => setIsConnected(true))
         .catch((error) => {
           console.error('Error al establecer la conexión', error)
@@ -33,8 +37,10 @@ const useChat = (userId: string, fullName: string) => {
 
   const getChats = () => {
     return new Promise((resolve, reject) => {
-      if (userId !== '' && fullName !== '') {
+      if (!isEmpty(_id) && !isEmpty(fullName)) {
+        console.log(_id)
         chatApi.getChats((chats) => {
+          console.log(chats)
           resolve(chats)
           dispatch(setChats(chats.data))
         })
@@ -42,11 +48,20 @@ const useChat = (userId: string, fullName: string) => {
     })
   }
 
+  const sendMessage = (message: string) => {
+    chatApi.sendMessage({
+      senderId: _id,
+      receiverId: selectedChat.partnerData._id,
+      chatId: selectedChat._id,
+      message,
+    })
+  }
+
   useEffect(() => {
     connect()
-  }, [userId, fullName, dispatch])
+  }, [_id, fullName, dispatch])
 
-  return { getChats, isConnected }
+  return { getChats, isConnected, sendMessage }
 }
 
 export default useChat

@@ -30,14 +30,14 @@ const ChatOverview = () => {
         </h3>
         <MessagesSearcher />
       </div>
-      {!isEmpty(newChat?.participants._id) && (
+      {!isEmpty(newChat?._id) && selectedChat._id === newChat._id && (
         <ChatItem
           chat={newChat}
           isSelected={selectedChat._id === newChat._id}
           onClick={() => handleSelectChat(newChat)}
         />
       )}
-      {chats.map((chat: any) => (
+      {chats?.map((chat: any) => (
         <ChatItem
           chat={chat}
           isSelected={chat._id === selectedChat._id}

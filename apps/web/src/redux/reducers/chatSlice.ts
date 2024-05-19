@@ -12,13 +12,13 @@ const initialState: chatState = {
   selectedChat: {
     _id: '',
     participants: { _id: '' },
-    partnerData: { fullName: '', profilePicture: '' },
+    partnerData: { _id: '', fullName: '', profilePicture: '' },
     messages: [],
   },
   newChat: {
     _id: '',
     participants: { _id: '' },
-    partnerData: { fullName: '', profilePicture: '' },
+    partnerData: { _id: '', fullName: '', profilePicture: '' },
     messages: [],
   },
 }
@@ -29,9 +29,10 @@ export const chatSlice = createSlice({
   reducers: {
     createChat: (state, action) => {
       const newChat: chatType = {
-        _id: '0',
+        _id: 'NEW_CHAT',
         participants: { _id: action.payload._id },
         partnerData: {
+          _id: action.payload._id,
           fullName: action.payload.fullName,
           profilePicture: action.payload.profilePicture,
         },

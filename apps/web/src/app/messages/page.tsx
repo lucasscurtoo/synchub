@@ -6,15 +6,15 @@ import { RootState } from '@/redux/store'
 import StartChatModal from '@/components/chat/StartChatModal'
 import ChatInterface from '@/components/chat/chatInterface/ChatInterface'
 import { isEmpty } from 'lodash'
-import useChat from '@/hooks/useConnectToChats'
+import useChat from '@/hooks/useChat'
 
 const page = () => {
-  const { chats, newChat, selectedChat } = useSelector(
+  const { newChat, selectedChat } = useSelector(
     (state: RootState) => state.chat
   )
   const { _id, fullName } = useSelector((state: RootState) => state.user)
   const { t } = useTranslation()
-  const { isConnected, getChats } = useChat(_id, fullName)
+  const { isConnected, getChats } = useChat()
 
   useEffect(() => {
     if (isConnected) {

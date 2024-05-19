@@ -23,8 +23,8 @@ export class ChatGateway
     this.server.on('connection', (client: Socket) => {
       const { id, name, token } = client.handshake.auth;
 
-      console.log('Connected');
-      // if (!token) throw Error();
+      if (!token) throw Error();
+      // validar el token jaja!
 
       this.chatService.onClientConnected({ id, name, token });
       /* Call service connected socket */
@@ -57,7 +57,23 @@ export class ChatGateway
   }
 
   @SubscribeMessage('chatToServer')
-  handleMessage(client: Socket, payload: any): void {
-    this.server.emit('chatToClient', payload);
+  async handleMessage(
+    client: Socket,
+    payload: {
+      senderId: string;
+      receiverId: string;
+      chatId: string;
+      message: string;
+    },
+  ): Promise<void> {
+    const { senderId, receiverId, chatId, message } = payload;
+    await this.chatService.insertMessage({
+      senderId,
+      receiverId,
+      chatId,
+      message,
+    });
+
+    client.emit('chatToClient', payload);
   }
 }

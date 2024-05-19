@@ -1,4 +1,3 @@
-import { userType } from '@/types/userType'
 import { VideoCameraIcon } from '@heroicons/react/24/solid'
 import {
   MagnifyingGlassIcon,

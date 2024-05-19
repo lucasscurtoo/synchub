@@ -35,7 +35,7 @@ export class UsersService {
     }
   }
 
-  async findOne(id: string): Promise<ApiResponse> {
+  async findOne(id: string) {
     try {
       if (!id || !mongoose.Types.ObjectId.isValid(id)) {
         throw ErrorManager.createSignatureError({
@@ -43,9 +43,11 @@ export class UsersService {
           message: 'Invalid id',
         });
       }
-      const user = await this.userModel.findById({
-        _id: id,
-      });
+      const user = await this.userModel
+        .findById({
+          _id: id,
+        })
+        .lean();
 
       if (!user) {
         throw ErrorManager.createSignatureError({
