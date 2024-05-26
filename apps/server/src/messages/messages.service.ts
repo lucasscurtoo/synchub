@@ -27,7 +27,7 @@ export class MessagesService {
         });
       }
 
-      const updatedMessage = await this.messageModel
+      const createdOrUpdatedMessage = await this.messageModel
         .findOneAndUpdate(
           { chatId: chatId }, // search conditions
           {
@@ -43,14 +43,65 @@ export class MessagesService {
         )
         .lean();
 
-      if (!updatedMessage) {
+      if (!createdOrUpdatedMessage) {
         ErrorManager.createSignatureError({
           status: HttpStatus.INTERNAL_SERVER_ERROR,
           message: 'There was a problem saving the message',
         });
       }
 
-      return updatedMessage._id;
+      const lastMessage =
+        createdOrUpdatedMessage.messages[
+          createdOrUpdatedMessage.messages.length - 1
+        ];
+
+      return {
+        status: HttpStatus.OK,
+        message: 'Message inserted sucsessfull',
+        data: {
+          ...createdOrUpdatedMessage,
+          lastMessage,
+        },
+      };
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw ErrorManager.createSignatureError({
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: 'Internal server error',
+        });
+      }
+    }
+  }
+
+  async getMessagesByChatId(chatId: string) {
+    try {
+      if (!chatId) {
+        throw ErrorManager.createSignatureError({
+          status: HttpStatus.BAD_REQUEST,
+          message: 'No messages id provided',
+        });
+      }
+
+      const messages = await this.messageModel
+        .findOne({
+          chatId,
+        })
+        .lean();
+
+      if (!messages) {
+        throw ErrorManager.createSignatureError({
+          status: HttpStatus.NOT_FOUND,
+          message: 'No messages founded',
+        });
+      }
+
+      return {
+        status: HttpStatus.OK,
+        message: 'Message inserted sucsessfull',
+        data: messages,
+      };
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;

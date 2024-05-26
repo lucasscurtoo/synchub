@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { chatType } from '@/types/chatType'
+import { chatService } from '../api/chatApi'
 
 interface chatState {
   chats: chatType[]
@@ -48,7 +49,21 @@ export const chatSlice = createSlice({
       state.selectedChat = action.payload
     },
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      chatService.endpoints.getAllChats.matchFulfilled,
+      (state, action) => {
+        state.chats = action.payload.data
+      }
+    ),
+      builder.addMatcher(
+        chatService.endpoints.createChat.matchFulfilled,
+        (state, action) => {
+          state.chats.push(action.payload.data)
+          state.selectedChat = action.payload.data
+        }
+      )
+  },
 })
 
 export const { createChat, setChats, selectChat } = chatSlice.actions

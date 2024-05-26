@@ -7,7 +7,6 @@ import { selectChat } from '@/redux/reducers/chatSlice'
 import { isEmpty } from 'lodash'
 import ChatItem from './ChatItem'
 import MessagesSearcher from './searchers/MessagesSearcher'
-import SearchAndFilterChats from './searchers/SearchAndFilterChats'
 
 const ChatOverview = () => {
   const { section } = useSelector(

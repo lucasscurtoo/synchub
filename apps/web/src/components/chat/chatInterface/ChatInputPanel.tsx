@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { ChatInput } from '@/components/nextui/ChatInput'
-import useChat from '@/hooks/useChat'
 import { PlusIcon } from '@heroicons/react/24/outline'
 import {
   FaceSmileIcon,
@@ -9,17 +8,38 @@ import {
   PaperAirplaneIcon,
 } from '@heroicons/react/24/solid'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useSendChatMessageMutation } from '@/redux/api/messageApi'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
+import { useCreateChatMutation } from '@/redux/api/chatApi'
 
 const ChatInputPanel = () => {
   const [textMessage, setTextMessage] = useState('')
-  const { sendMessage } = useChat()
+  const { _id } = useSelector((state: RootState) => state.user)
+  const { selectedChat } = useSelector((state: RootState) => state.chat)
+  const [sendChatMessage] = useSendChatMessageMutation()
+  const [createChat] = useCreateChatMutation()
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTextMessage(event.target.value)
   }
 
   const handleSendMessage = () => {
-    sendMessage(textMessage)
+    if (selectedChat._id === 'NEW_CHAT') {
+      createChat({
+        senderId: _id,
+        receiverId: selectedChat.partnerData._id,
+        chatId: selectedChat._id,
+        message: textMessage,
+      })
+    } else {
+      sendChatMessage({
+        senderId: _id,
+        receiverId: selectedChat.partnerData._id,
+        chatId: selectedChat._id,
+        message: textMessage,
+      })
+    }
     setTextMessage('')
   }
 
@@ -30,7 +50,7 @@ const ChatInputPanel = () => {
   }
 
   return (
-    <div className='flex items-center w-full p-6 mt-auto bg-white gap-x-4'>
+    <div className='flex items-center flex-none w-full p-6 bg-white gap-x-4'>
       <div className='p-2 transition-all rounded-full shadow-sm cursor-pointer bg-appColors-blueWhite hover:bg-appColors-babyBlue '>
         <FaceSmileIcon className='w-7 text-appColors-primary' />
       </div>

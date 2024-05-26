@@ -6,6 +6,7 @@ import userSlice from './reducers/userSlice'
 import appSlice from './reducers/appSlice'
 import { apiService } from './api/api'
 import chatSlice from './reducers/chatSlice'
+import messagesSlice from './reducers/messagesSlice'
 
 const persistConfig = {
   key: 'app',
@@ -26,6 +27,7 @@ export const store = configureStore({
     apiService: apiService.reducer,
     user: userSlice,
     chat: chatSlice,
+    messages: messagesSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -1,13 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateChatDto } from './dto/create-chat.dto';
-import { UpdateChatDto } from './dto/update-chat.dto';
 import { Chat, ChatDocument } from './chat.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { ErrorManager } from 'src/services/error.manager';
 import { User, UserDocument } from 'src/users/user.schema';
 import { UsersService } from 'src/users/users.service';
-import { MessagesService } from 'src/messages/messages.service';
 
 interface Client {
   id: string;
@@ -21,7 +18,6 @@ export class ChatsService {
     @InjectModel(Chat.name) private chatModel: Model<ChatDocument>,
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
     private userService: UsersService,
-    private messageService: MessagesService,
   ) {}
 
   private clients: Record<string, Client> = {};
@@ -38,10 +34,10 @@ export class ChatsService {
     return Object.values(this.clients); /* todos los online */
   }
 
-  async create(createChatDto: CreateChatDto) {
+  async create({ participants }) {
     try {
       const chatExists = await this.chatModel
-        .exists({ participants: createChatDto.participants })
+        .exists({ participants: participants })
         .exec();
 
       if (chatExists) {
@@ -53,24 +49,25 @@ export class ChatsService {
       // checks if the property participants that we sent exists in users
       const userExists = await this.userModel
         .find({
-          _id: { $in: createChatDto.participants },
+          _id: { $in: participants },
         })
         .exec();
 
-      if (userExists.length !== createChatDto.participants.length) {
+      if (userExists.length !== participants.length) {
         ErrorManager.createSignatureError({
           status: HttpStatus.BAD_REQUEST,
           message: 'One or more users do not exist',
         });
       }
 
-      const chat = new this.chatModel(createChatDto);
-      chat.save();
+      const chat = await this.chatModel.create({
+        participants: participants,
+      });
 
       return {
         status: HttpStatus.OK,
         message: 'Chat created',
-        data: chat,
+        data: chat.toObject(),
       };
     } catch (error) {
       if (error instanceof HttpException) {
@@ -147,60 +144,40 @@ export class ChatsService {
     }
   }
 
-  async insertMessage({ chatId, senderId, receiverId, message }) {
+  async findAndReturnWithPartnerData({ chat, userId }) {
     try {
-      if (chatId === 'NEW_CHAT') {
-        // First we create a new chat to save the messages in
-        const { _id } = await this.chatModel.create({
-          participants: [senderId, receiverId],
+      if (!chat) {
+        ErrorManager.createSignatureError({
+          status: HttpStatus.NOT_FOUND,
+          message: 'There is no existing chats for the user',
         });
-
-        // Then we save the message with the ref to the chat (using chatId)
-        const updatedMessageId = await this.messageService.insertMessage({
-          chatId: _id,
-          message,
-          senderId,
-        });
-
-        // Then we update the property in the chat to link it with the document that has al the messages (messageId)
-        const updateChatWithMessageId = await this.chatModel.findOneAndUpdate(
-          { _id }, // search conditions
-          {
-            messageId: updatedMessageId,
-          }, // update
-          { new: true },
-        );
-
-        if (!updateChatWithMessageId) {
-          ErrorManager.createSignatureError({
-            status: HttpStatus.INTERNAL_SERVER_ERROR,
-            message: 'Internal server error',
-          });
-        }
-      } else {
-        const updatedMessageId = await this.messageService.insertMessage({
-          chatId,
-          message,
-          senderId,
-        });
-
-        const updatedChat = await this.chatModel
-          .findOneAndUpdate(
-            { _id: chatId }, // search conditions
-            {
-              messageId: updatedMessageId,
-            }, // update
-            { new: true }, // Upsert makes an create if the message doesnt exists, if exists it makes an update
-          )
-          .lean();
-
-        if (!updatedChat) {
-          ErrorManager.createSignatureError({
-            status: HttpStatus.INTERNAL_SERVER_ERROR,
-            message: 'Internal server error',
-          });
-        }
       }
+
+      const chatWithPartnerData = async () => {
+        const partnerId = chat.data.participants.find(
+          (participant) => participant.toString() !== userId,
+        );
+        const getPartnerData = await this.userService.findOne(partnerId);
+
+        const partnerData = getPartnerData.data;
+
+        if (partnerData._id.toString() === partnerId.toString()) {
+          return {
+            ...chat.data,
+            partnerData: {
+              _id: partnerData._id,
+              fullName: partnerData.fullName,
+              profilePicture: partnerData.profilePicture,
+            },
+          };
+        }
+      };
+      const withPartnerData = await chatWithPartnerData();
+      return {
+        status: HttpStatus.OK,
+        message: 'Chat with partner data',
+        data: withPartnerData,
+      };
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
@@ -217,8 +194,44 @@ export class ChatsService {
     return `This action returns a #${id} chat`;
   }
 
-  update(id: number, updateChatDto: UpdateChatDto) {
-    return `This action updates a #${id} chat`;
+  async update(id: string, toUpdate) {
+    try {
+      const chatExists = await this.chatModel.findById(id);
+
+      if (!chatExists) {
+        ErrorManager.createSignatureError({
+          status: HttpStatus.NOT_FOUND,
+          message: 'Chat not founded, invalid id',
+        });
+      }
+      const updatedChat = await this.chatModel
+        .findByIdAndUpdate(id, toUpdate, {
+          new: true,
+        })
+        .lean();
+
+      if (!updatedChat) {
+        throw ErrorManager.createSignatureError({
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: 'Internal server error',
+        });
+      }
+
+      return {
+        status: HttpStatus.OK,
+        message: 'Chat created',
+        data: updatedChat,
+      };
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw ErrorManager.createSignatureError({
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: 'Internal server error',
+        });
+      }
+    }
   }
 
   remove(id: number) {

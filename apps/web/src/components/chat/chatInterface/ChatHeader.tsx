@@ -11,7 +11,7 @@ const ChatHeader = ({
   user: { fullName: string; profilePicture: string }
 }) => {
   return (
-    <div className='flex items-center justify-between p-4 max-h-20 border-b-05 border-appColors-fadedGray/50'>
+    <div className='flex items-center justify-between flex-none p-4 max-h-20 border-b-05 border-appColors-fadedGray/50'>
       <div className='flex items-center gap-x-2'>
         <Image
           src={user?.profilePicture}

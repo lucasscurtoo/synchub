@@ -6,24 +6,24 @@ import { RootState } from '@/redux/store'
 import StartChatModal from '@/components/chat/StartChatModal'
 import ChatInterface from '@/components/chat/chatInterface/ChatInterface'
 import { isEmpty } from 'lodash'
-import useChat from '@/hooks/useChat'
+import { useGetAllChatsMutation } from '@/redux/api/chatApi'
 
 const page = () => {
   const { newChat, selectedChat } = useSelector(
     (state: RootState) => state.chat
   )
-  const { _id, fullName } = useSelector((state: RootState) => state.user)
+  const { _id } = useSelector((state: RootState) => state.user)
   const { t } = useTranslation()
-  const { isConnected, getChats } = useChat()
+  const [getAllChats] = useGetAllChatsMutation()
 
   useEffect(() => {
-    if (isConnected) {
-      getChats()
+    if (!isEmpty(_id)) {
+      getAllChats(_id)
     }
-  }, [isConnected, getChats])
+  }, [_id])
 
   return (
-    <div className='flex items-center justify-center w-full h-full bg-appColors-blueWhite dark:bg-appColors-secondaryDarkGray'>
+    <div className='flex items-center justify-center w-full h-full grow-0 bg-appColors-blueWhite dark:bg-appColors-secondaryDarkGray'>
       {!isEmpty(selectedChat._id) || !isEmpty(newChat._id) ? (
         <ChatInterface />
       ) : (

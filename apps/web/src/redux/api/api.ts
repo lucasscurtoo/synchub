@@ -26,7 +26,7 @@ export const apiService = createApi({
       return (action.payload as RootState)[reducerPath]
     }
   },
-  tagTypes: ['Messages', 'Users', 'Auth'],
+  tagTypes: ['Messages', 'Users', 'Auth', 'Chats'],
   endpoints: (builder) => ({}),
 })
 
