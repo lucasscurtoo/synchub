@@ -25,22 +25,26 @@ export class ChatGateway
     private readonly messagesService: MessagesService,
   ) {}
 
+  private clients: Record<string, any> = {};
+
   onModuleInit() {
     this.server.on('connection', (client: Socket) => {
-      const { id, name, token } = client.handshake.auth;
+      const { id, token } = client.handshake.auth;
 
       if (!token) throw Error();
       // validar el token!
 
-      this.chatService.onClientConnected({ id, name, token });
-      /* Call service connected socket */
+      if (this.clients[id]) {
+        client.disconnect();
+      }
 
-      this.server.emit('on-clients-change', this.chatService.getClients());
+      this.clients[id] = client.id;
+
+      this.server.emit('on-clients-change', Object.values(this.clients));
 
       client.on('disconnect', () => {
-        this.chatService.onClientDisconnected(client.id);
-        this.server.emit('on-clients-changed', this.chatService.getClients());
-        /* Call service disconnected socket */
+        delete this.clients[id];
+        this.server.emit('on-clients-changed', Object.values(this.clients));
       });
     });
   }
@@ -50,6 +54,8 @@ export class ChatGateway
   }
 
   handleConnection(client: Socket) {
+    const { id } = client.handshake.auth;
+    this.clients[client.id] = id;
     console.log(`Client connected: ${client.id}`);
   }
 
@@ -124,7 +130,7 @@ export class ChatGateway
       message: string;
     },
   ): Promise<void> {
-    const { senderId, chatId, message } = payload;
+    const { senderId, receiverId, chatId, message } = payload;
 
     try {
       const insertedMessage = await this.messagesService.insertMessage({
@@ -134,6 +140,13 @@ export class ChatGateway
       });
 
       client.emit('chatMessageToClient', insertedMessage);
+      // This gets the receiver user socketId and use it to send to the client, so the user can see the message
+      const receiverSocketId = this.clients[receiverId];
+      if (receiverSocketId) {
+        this.server
+          .to(receiverSocketId)
+          .emit('chatMessageToClient', insertedMessage);
+      }
     } catch (error) {
       throw new WsException(error.message);
     }

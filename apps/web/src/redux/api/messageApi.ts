@@ -1,37 +1,26 @@
-import { createConnectionWithToken } from '@/socket.io/sockets'
 import { apiService } from './api'
-import { Socket } from 'socket.io-client'
-
-let socket: Socket | null = null
-
-const getSocket = async () => {
-  if (!socket) {
-    socket = await createConnectionWithToken('chats')
-  }
-  return socket
-}
+import { addMessage } from '../reducers/messagesSlice'
+import { SocketSingleton } from '@/socket.io/SocketSingleton'
 
 export const messageService = apiService.injectEndpoints({
   endpoints: (builder) => ({
     getChatMessages: builder.mutation({
       async queryFn(chatId, _queryApi, _extraOptions, fetchWithBQ) {
-        const currentSocket = await getSocket()
+        const socket = await SocketSingleton.getInstance()
         return new Promise((resolve, reject) => {
-          currentSocket.emit('getMessagesToServer', { chatId })
-          currentSocket.on('getMessagesToClient', (response: any) => {
+          socket.emit('getMessagesToServer', { chatId })
+          socket.on('getMessagesToClient', (response: any) => {
+            console.log(response)
             if (response.error) {
               return reject({ error: response.error })
             }
             resolve({ data: response })
           })
 
-          currentSocket.on('error', (error: any) => {
+          socket.on('error', (error: any) => {
             reject({ error })
           })
         })
-      },
-      extraOptions: {
-        overrideExisting: true,
       },
     }),
     sendChatMessage: builder.mutation({
@@ -40,29 +29,42 @@ export const messageService = apiService.injectEndpoints({
         _queryApi,
         _extraOptions,
         fetchWithBQ
-      ) {
-        const currentSocket = await getSocket()
-        currentSocket.emit('chatMessageToServer', {
+      ): Promise<any> {
+        const socket = await SocketSingleton.getInstance()
+        socket.emit('chatMessageToServer', {
           senderId,
           receiverId,
           chatId,
           message,
         })
-        return new Promise((resolve, reject) => {
-          currentSocket.on('chatMessageToClient', (response: any) => {
-            resolve({ data: response })
-          })
-          currentSocket.on('error', (error: any) => {
-            reject({ error })
-          })
-        })
       },
-      extraOptions: {
-        overrideExisting: true,
+    }),
+    listenForMessages: builder.query<{ value: number }[], string>({
+      queryFn() {
+        return { data: [] }
+      },
+      async onCacheEntryAdded(
+        {},
+        { cacheEntryRemoved, cacheDataLoaded, dispatch }
+      ) {
+        await cacheDataLoaded
+
+        const socket = await SocketSingleton.getInstance()
+        const listener = (data: any) => {
+          console.log(data)
+          dispatch(addMessage(data.data.lastMessage))
+        }
+
+        socket.on('chatMessageToClient', listener)
+        await cacheEntryRemoved
+        socket.off('chatMessageToClient', listener)
       },
     }),
   }),
 })
 
-export const { useGetChatMessagesMutation, useSendChatMessageMutation } =
-  messageService
+export const {
+  useGetChatMessagesMutation,
+  useSendChatMessageMutation,
+  useListenForMessagesQuery,
+} = messageService

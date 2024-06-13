@@ -18,7 +18,9 @@ const ChatOverview = () => {
   const dispatch = useDispatch()
 
   const handleSelectChat = (chat: chatType) => {
-    dispatch(selectChat(chat))
+    if (selectedChat._id !== chat._id) {
+      dispatch(selectChat(chat))
+    }
   }
 
   return (

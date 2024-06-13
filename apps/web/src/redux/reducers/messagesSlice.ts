@@ -2,21 +2,32 @@ import { createSlice, current } from '@reduxjs/toolkit'
 import { messageService } from '../api/messageApi'
 
 interface messagesState {
+  id: ''
   messages: [{ message: string; sentTime: string; userOwner: string }]
 }
 
 const initialState: messagesState = {
+  id: '',
   messages: [{ message: '', sentTime: '', userOwner: '' }],
 }
 
 export const messagesSlice = createSlice({
   name: 'messages',
   initialState,
-  reducers: {},
+  reducers: {
+    addMessage: (state, action) => {
+      console.log(action)
+      state.messages.push(action.payload)
+
+      const messages = state.messages
+      console.log(messages)
+    },
+  },
   extraReducers: (builder) => {
     builder.addMatcher(
       messageService.endpoints.getChatMessages.matchFulfilled,
       (state, action) => {
+        state.id = action.payload.data._id
         state.messages = action.payload.data.messages
       }
     ),
@@ -25,21 +36,10 @@ export const messagesSlice = createSlice({
         (state, action) => {
           state.messages = initialState.messages
         }
-      ),
-      builder.addMatcher(
-        messageService.endpoints.sendChatMessage.matchFulfilled,
-        (state, action) => {
-          const currentState = current(state)
-          if (currentState.messages === initialState.messages) {
-            state.messages = action.payload.data.messages
-          } else {
-            state.messages.push(action.payload.data.lastMessage)
-          }
-        }
       )
   },
 })
 
-export const {} = messagesSlice.actions
+export const { addMessage } = messagesSlice.actions
 
 export default messagesSlice.reducer

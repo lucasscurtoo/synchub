@@ -2,6 +2,8 @@ import { formatDateForChatSections, formatDateYMD } from '@/lib/utils'
 import TextMessage from './SenderTextMessage'
 import { chatType } from '@/types/chatType'
 import { some } from 'lodash'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
 
 interface Message {
   message: string
@@ -10,22 +12,25 @@ interface Message {
 }
 
 const RenderMessagesSections = ({
-  messages,
   selectedChat,
 }: {
-  messages: Message[]
   selectedChat: chatType
 }) => {
+  const { messages } = useSelector((state: RootState) => state.messages)
   const groupMessagesByDate = (
     messages: Message[]
   ): Record<string, Message[]> => {
-    return messages.reduce(
+    const sortedMessages = [...messages].sort(
+      (a, b) => new Date(b.sentTime).getTime() - new Date(a.sentTime).getTime()
+    )
+
+    return sortedMessages.reduce(
       (groups, message) => {
         const formattedDate = formatDateYMD(message.sentTime)
         if (!groups[formattedDate]) {
           groups[formattedDate] = []
         }
-        groups[formattedDate].push(message)
+        groups[formattedDate].unshift(message)
         return groups
       },
       {} as Record<string, Message[]>

@@ -1,15 +1,5 @@
-import { createConnectionWithToken } from '@/socket.io/sockets'
+import { SocketSingleton } from '@/socket.io/SocketSingleton'
 import { apiService } from './api'
-import { Socket } from 'socket.io-client'
-
-let socket: Socket | null = null
-
-const getSocket = async () => {
-  if (!socket) {
-    socket = await createConnectionWithToken('chats')
-  }
-  return socket
-}
 
 export const chatService = apiService.injectEndpoints({
   endpoints: (builder) => ({
@@ -20,41 +10,35 @@ export const chatService = apiService.injectEndpoints({
         _extraOptions,
         fetchWithBQ
       ) {
-        const currentSocket = await getSocket()
+        const socket = await SocketSingleton.getInstance()
         return new Promise((resolve, reject) => {
-          currentSocket.emit('createChatToServer', {
+          socket.emit('createChatToServer', {
             senderId,
             receiverId,
             chatId,
             message,
           })
-          currentSocket.on('createChatToClient', (response: any) => {
+          socket.on('createChatToClient', (response: any) => {
             resolve({ data: response })
           })
-          currentSocket.on('error', (error: any) => {
+          socket.on('error', (error: any) => {
             reject({ error })
           })
         })
-      },
-      extraOptions: {
-        overrideExisting: true,
       },
     }),
     getAllChats: builder.mutation({
       async queryFn(userId, _queryApi, _extraOptions, fetchWithBQ) {
-        const currentSocket = await getSocket()
+        const socket = await SocketSingleton.getInstance()
         return new Promise((resolve, reject) => {
-          currentSocket.emit('getAllChats', userId)
-          currentSocket.on('chats', (response: any) => {
+          socket.emit('getAllChats', userId)
+          socket.on('chats', (response: any) => {
             resolve({ data: response })
           })
-          currentSocket.on('error', (error: any) => {
+          socket.on('error', (error: any) => {
             reject({ error })
           })
         })
-      },
-      extraOptions: {
-        overrideExisting: true,
       },
     }),
   }),

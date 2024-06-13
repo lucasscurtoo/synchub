@@ -6,12 +6,6 @@ import { ErrorManager } from 'src/services/error.manager';
 import { User, UserDocument } from 'src/users/user.schema';
 import { UsersService } from 'src/users/users.service';
 
-interface Client {
-  id: string;
-  name: string;
-  token: string;
-}
-
 @Injectable()
 export class ChatsService {
   constructor(
@@ -19,20 +13,6 @@ export class ChatsService {
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
     private userService: UsersService,
   ) {}
-
-  private clients: Record<string, Client> = {};
-
-  async onClientConnected(client: Client) {
-    this.clients[client.id] = client;
-  }
-
-  onClientDisconnected(id: string) {
-    delete this.clients[id];
-  }
-
-  getClients() {
-    return Object.values(this.clients); /* todos los online */
-  }
 
   async create({ participants }) {
     try {

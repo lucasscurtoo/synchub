@@ -55,11 +55,13 @@ export class MessagesService {
           createdOrUpdatedMessage.messages.length - 1
         ];
 
+      console.log(createdOrUpdatedMessage);
+
       return {
         status: HttpStatus.OK,
         message: 'Message inserted sucsessfull',
         data: {
-          ...createdOrUpdatedMessage,
+          _id: createdOrUpdatedMessage._id,
           lastMessage,
         },
       };
@@ -99,7 +101,7 @@ export class MessagesService {
 
       return {
         status: HttpStatus.OK,
-        message: 'Message inserted sucsessfull',
+        message: 'Message returned sucsessfully',
         data: messages,
       };
     } catch (error) {
