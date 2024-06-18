@@ -82,7 +82,7 @@ export class MessagesService {
       if (!chatId) {
         throw ErrorManager.createSignatureError({
           status: HttpStatus.BAD_REQUEST,
-          message: 'No messages id provided',
+          message: 'No chat id provided',
         });
       }
 
@@ -105,6 +105,57 @@ export class MessagesService {
         data: messages,
       };
     } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw ErrorManager.createSignatureError({
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: 'Internal server error',
+        });
+      }
+    }
+  }
+  async editMessage({
+    messageToEdit,
+    newMessage,
+    chatId,
+  }: {
+    messageToEdit: string;
+    newMessage: string;
+    chatId: string;
+  }) {
+    try {
+      if (!messageToEdit || !newMessage || !chatId) {
+        throw ErrorManager.createSignatureError({
+          status: HttpStatus.BAD_REQUEST,
+          message: 'No enough arguments provided',
+        });
+      }
+
+      const updatedMessage = await this.messageModel.findOneAndUpdate(
+        { chatId, 'messages.message': messageToEdit },
+        { $set: { 'messages.$.message': newMessage } },
+      );
+
+      if (!updatedMessage) {
+        throw ErrorManager.createSignatureError({
+          status: HttpStatus.NOT_FOUND,
+          message: 'No messages found',
+        });
+      }
+      const updatedDocument = await this.messageModel.findOne({ chatId });
+
+      const editedMessage = updatedDocument.messages.find(
+        (m) => m.message === newMessage,
+      );
+
+      return {
+        status: HttpStatus.OK,
+        message: 'Message edited successfully',
+        data: { ...editedMessage, oldMessage: messageToEdit },
+      };
+    } catch (error) {
+      console.log(error);
       if (error instanceof HttpException) {
         throw error;
       } else {

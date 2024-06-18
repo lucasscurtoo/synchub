@@ -25,7 +25,7 @@ export class ChatGateway
     private readonly messagesService: MessagesService,
   ) {}
 
-  private clients: Record<string, any> = {};
+  private clients: Record<string, any> = [];
 
   onModuleInit() {
     this.server.on('connection', (client: Socket) => {
@@ -150,5 +150,31 @@ export class ChatGateway
     } catch (error) {
       throw new WsException(error.message);
     }
+  }
+
+  @SubscribeMessage('chatEditMessageToServer')
+  async editMessage(
+    client: Socket,
+    payload: {
+      messageToEdit: string;
+      newMessage: string;
+      chatId: string;
+      participants: [];
+    },
+  ): Promise<void> {
+    const { messageToEdit, newMessage, chatId, participants } = payload;
+
+    const editedMessage = await this.messagesService.editMessage({
+      messageToEdit,
+      newMessage,
+      chatId,
+    });
+
+    participants.forEach((userId) => {
+      const socketId = this.clients[userId];
+      if (socketId) {
+        this.server.to(socketId).emit('chatEditMessageToClient', editedMessage);
+      }
+    });
   }
 }

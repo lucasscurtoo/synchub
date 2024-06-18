@@ -1,14 +1,16 @@
-import { createSlice, current } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import { messageService } from '../api/messageApi'
 
 interface messagesState {
   id: ''
-  messages: [{ message: string; sentTime: string; userOwner: string }]
+  messages: { message: string; sentTime: string; userOwner: string }[]
+  messageToEdit: ''
 }
 
 const initialState: messagesState = {
   id: '',
-  messages: [{ message: '', sentTime: '', userOwner: '' }],
+  messages: [],
+  messageToEdit: '',
 }
 
 export const messagesSlice = createSlice({
@@ -16,11 +18,22 @@ export const messagesSlice = createSlice({
   initialState,
   reducers: {
     addMessage: (state, action) => {
-      console.log(action)
       state.messages.push(action.payload)
-
-      const messages = state.messages
-      console.log(messages)
+    },
+    setMessageToEdit: (state, action) => {
+      state.messageToEdit = action.payload
+    },
+    updateMessage: (state, action) => {
+      state.messages = state.messages.map((elem) => {
+        if (elem.message === action.payload.oldMessage) {
+          return {
+            ...elem,
+            message: action.payload.message,
+          }
+        } else {
+          return elem
+        }
+      })
     },
   },
   extraReducers: (builder) => {
@@ -37,9 +50,16 @@ export const messagesSlice = createSlice({
           state.messages = initialState.messages
         }
       )
+    builder.addMatcher(
+      messageService.endpoints.editMessage.matchFulfilled,
+      (state, action) => {
+        state.messageToEdit = ''
+      }
+    )
   },
 })
 
-export const { addMessage } = messagesSlice.actions
+export const { addMessage, setMessageToEdit, updateMessage } =
+  messagesSlice.actions
 
 export default messagesSlice.reducer

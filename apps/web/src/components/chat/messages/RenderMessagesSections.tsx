@@ -1,5 +1,5 @@
 import { formatDateForChatSections, formatDateYMD } from '@/lib/utils'
-import TextMessage from './SenderTextMessage'
+import TextMessage from './TextMessage'
 import { chatType } from '@/types/chatType'
 import { some } from 'lodash'
 import { useSelector } from 'react-redux'
@@ -38,7 +38,7 @@ const RenderMessagesSections = ({
   }
 
   return (
-    <div className='flex flex-col-reverse flex-auto h-full overflow-y-auto scrollbar-none'>
+    <div className='flex flex-col-reverse flex-1 h-full overflow-y-auto scrollbar-none'>
       {messages && some(messages, (message) => message.message !== '') ? (
         Object.entries(groupMessagesByDate(messages)).map(
           ([date, messagesOfDay]) => {

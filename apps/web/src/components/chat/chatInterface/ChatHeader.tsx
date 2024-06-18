@@ -1,9 +1,7 @@
 import { VideoCameraIcon } from '@heroicons/react/24/solid'
-import {
-  MagnifyingGlassIcon,
-  EllipsisVerticalIcon,
-} from '@heroicons/react/16/solid'
+import { MagnifyingGlassIcon } from '@heroicons/react/16/solid'
 import Image from 'next/image'
+import ChatOptions from './ChatOptions'
 
 const ChatHeader = ({
   user,
@@ -32,9 +30,7 @@ const ChatHeader = ({
         <div className='p-2 bg-white shadow-md cursor-pointer rounded-xl group'>
           <MagnifyingGlassIcon className='transition-all w-7 text-appColors-black group-hover:text-appColors-primary' />
         </div>
-        <div className='p-2 bg-white shadow-md cursor-pointer rounded-xl group'>
-          <EllipsisVerticalIcon className='transition-all w-7 text-appColors-black group-hover:text-appColors-primary' />
-        </div>
+        <ChatOptions />
       </div>
     </div>
   )
