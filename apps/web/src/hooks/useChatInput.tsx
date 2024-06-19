@@ -20,10 +20,11 @@ const useChatInput = (handleAction: () => void) => {
   const [editMessage] = useEditMessageMutation()
 
   useEffect(() => {
-    if (messageToEdit !== '') {
-      setTextMessage(messageToEdit)
+    if (messageToEdit.message !== '') {
+      console.log(messageToEdit)
+      setTextMessage(messageToEdit.message)
     }
-  }, [messageToEdit])
+  }, [messageToEdit.message])
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTextMessage(event.target.value)
@@ -55,11 +56,11 @@ const useChatInput = (handleAction: () => void) => {
   }
 
   const handleEditMessage = () => {
-    if (textMessage === messageToEdit) {
+    if (textMessage === messageToEdit.message) {
       handleCancelEditMessage()
     } else {
       editMessage({
-        messageToEdit,
+        messageId: messageToEdit.messageId,
         newMessage: textMessage,
         chatId: selectedChat._id,
         participants: selectedChat.participants,
@@ -68,7 +69,7 @@ const useChatInput = (handleAction: () => void) => {
   }
 
   const handleCancelEditMessage = () => {
-    dispatch(setMessageToEdit(''))
+    dispatch(setMessageToEdit({ message: '', messageId: '' }))
   }
 
   return {

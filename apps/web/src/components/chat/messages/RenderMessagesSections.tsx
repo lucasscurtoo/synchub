@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 
 interface Message {
+  _id: string
   message: string
   sentTime: string
   userOwner: string
@@ -53,6 +54,7 @@ const RenderMessagesSections = ({
                     key={mess.sentTime}
                     sentTime={mess.sentTime}
                     message={mess.message}
+                    messageId={mess._id}
                     isSender={
                       selectedChat.partnerData._id === mess.userOwner
                         ? false

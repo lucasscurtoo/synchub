@@ -1,6 +1,11 @@
 import { apiService } from './api'
-import { addMessage, updateMessage } from '../reducers/messagesSlice'
+import {
+  addMessage,
+  deleteMessage,
+  updateMessage,
+} from '../reducers/messagesSlice'
 import { SocketSingleton } from '@/socket.io/SocketSingleton'
+import { store } from '../store'
 
 export const messageService = apiService.injectEndpoints({
   endpoints: (builder) => ({
@@ -23,6 +28,7 @@ export const messageService = apiService.injectEndpoints({
         })
       },
     }),
+
     sendChatMessage: builder.mutation({
       async queryFn(
         { senderId, receiverId, chatId, message },
@@ -39,6 +45,7 @@ export const messageService = apiService.injectEndpoints({
         })
       },
     }),
+
     listenForMessages: builder.query<{ value: number }[], string>({
       queryFn() {
         return { data: [] }
@@ -60,9 +67,10 @@ export const messageService = apiService.injectEndpoints({
         socket.off('chatMessageToClient', listener)
       },
     }),
+
     editMessage: builder.mutation({
       async queryFn(
-        { chatId, messageToEdit, newMessage, participants },
+        { chatId, messageId, newMessage, participants },
         _queryApi,
         _extraOptions,
         fetchWithBQ
@@ -71,7 +79,7 @@ export const messageService = apiService.injectEndpoints({
         return new Promise((resolve, reject) => {
           socket.emit('chatEditMessageToServer', {
             chatId,
-            messageToEdit,
+            messageId,
             newMessage,
             participants,
           })
@@ -83,6 +91,7 @@ export const messageService = apiService.injectEndpoints({
         })
       },
     }),
+
     listenForMessageEdit: builder.query({
       queryFn() {
         return { data: [] }
@@ -104,6 +113,53 @@ export const messageService = apiService.injectEndpoints({
         socket.off('chatEditMessageToClient', listener)
       },
     }),
+
+    deleteMessage: builder.mutation({
+      async queryFn(
+        { messageId },
+        _queryApi,
+        _extraOptions,
+        fetchWithBQ
+      ): Promise<any> {
+        const socket = await SocketSingleton.getInstance()
+        const { selectedChat } = store.getState().chat
+        return new Promise((resolve, reject) => {
+          socket.emit('chatDeleteMessageToServer', {
+            chatId: selectedChat._id,
+            messageId,
+            participants: selectedChat.participants,
+          })
+          resolve({})
+
+          socket.on('error', (error: any) => {
+            reject({ error })
+          })
+        })
+      },
+    }),
+
+    listenForMessagesDeletes: builder.query({
+      queryFn() {
+        return { data: [] }
+      },
+      async onCacheEntryAdded(
+        {},
+        { cacheEntryRemoved, cacheDataLoaded, dispatch }
+      ) {
+        await cacheDataLoaded
+
+        const socket = await SocketSingleton.getInstance()
+        const listener = (data: any) => {
+          console.log(data)
+          dispatch(deleteMessage(data.data))
+        }
+
+        socket.on('chatDeleteMessageToClient', listener)
+
+        await cacheEntryRemoved
+        socket.off('chatDeleteMessageToClient', listener)
+      },
+    }),
   }),
 })
 
@@ -113,4 +169,6 @@ export const {
   useEditMessageMutation,
   useListenForMessagesQuery,
   useListenForMessageEditQuery,
+  useDeleteMessageMutation,
+  useListenForMessagesDeletesQuery,
 } = messageService

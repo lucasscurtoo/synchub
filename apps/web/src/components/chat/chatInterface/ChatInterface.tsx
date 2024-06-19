@@ -7,6 +7,7 @@ import RenderMessagesSections from '../messages/RenderMessagesSections'
 import {
   useGetChatMessagesMutation,
   useListenForMessageEditQuery,
+  useListenForMessagesDeletesQuery,
   useListenForMessagesQuery,
 } from '@/redux/api/messageApi'
 import EditMessageInput from './chatInputs/EditMessageInput'
@@ -17,6 +18,7 @@ const ChatInterface = () => {
   const [getMessages] = useGetChatMessagesMutation()
   useListenForMessagesQuery('')
   useListenForMessageEditQuery('')
+  useListenForMessagesDeletesQuery('')
 
   useEffect(() => {
     if (selectedChat._id !== '') {
@@ -32,7 +34,11 @@ const ChatInterface = () => {
       >
         <RenderMessagesSections selectedChat={selectedChat} />
       </div>
-      {messageToEdit === '' ? <ChatInputPanel /> : <EditMessageInput />}
+      {messageToEdit.messageId === '' ? (
+        <ChatInputPanel />
+      ) : (
+        <EditMessageInput />
+      )}
     </div>
   )
 }

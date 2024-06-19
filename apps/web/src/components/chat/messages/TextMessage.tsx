@@ -4,12 +4,18 @@ import MessageOptions from './MessageOptions'
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 
 interface TextMessageProps {
+  messageId: string
   message: string
   sentTime: string
   isSender: boolean
 }
 
-const TextMessage = ({ message, sentTime, isSender }: TextMessageProps) => {
+const TextMessage = ({
+  messageId,
+  message,
+  sentTime,
+  isSender,
+}: TextMessageProps) => {
   const formattedSentTime = new Date(sentTime).toLocaleTimeString([], {
     hour: '2-digit',
     minute: '2-digit',
@@ -45,6 +51,7 @@ const TextMessage = ({ message, sentTime, isSender }: TextMessageProps) => {
         {isSender && showContextMenu && (
           <div className='absolute left-1/2'>
             <MessageOptions
+              messageId={messageId}
               message={message}
               open={showContextMenu}
               onClose={handleCloseMenu}

@@ -1,3 +1,4 @@
+import { useDeleteMessageMutation } from '@/redux/api/messageApi'
 import { setMessageToEdit } from '@/redux/reducers/messagesSlice'
 import { PencilIcon, TrashIcon } from '@heroicons/react/16/solid'
 import {
@@ -9,21 +10,28 @@ import {
 import { useDispatch } from 'react-redux'
 
 const MessageOptions = ({
+  messageId,
   message,
   open,
   onClose,
   isOnTime,
 }: {
+  messageId: string
   message: string
   open: boolean
   onClose: () => void
   isOnTime: boolean
 }) => {
+  const [deleteMessage] = useDeleteMessageMutation()
   const dispatch = useDispatch()
 
   const handleEditMessage = () => {
-    dispatch(setMessageToEdit(message))
+    dispatch(setMessageToEdit({ message, messageId }))
     onClose()
+  }
+
+  const handleDeleteMessage = () => {
+    deleteMessage({ messageId })
   }
 
   const disabledKeys = !isOnTime ? ['editMessage', 'deleteMessage'] : []
@@ -55,6 +63,7 @@ const MessageOptions = ({
         </DropdownItem>
 
         <DropdownItem
+          onClick={handleDeleteMessage}
           className='w-full p-2 transition-all bg-transparent rounded-lg hover:bg-appColors-blueWhite'
           key='deleteMessage'
           aria-label='Delete message'

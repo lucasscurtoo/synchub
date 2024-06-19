@@ -156,16 +156,16 @@ export class ChatGateway
   async editMessage(
     client: Socket,
     payload: {
-      messageToEdit: string;
+      messageId: string;
       newMessage: string;
       chatId: string;
       participants: [];
     },
   ): Promise<void> {
-    const { messageToEdit, newMessage, chatId, participants } = payload;
+    const { messageId, newMessage, chatId, participants } = payload;
 
     const editedMessage = await this.messagesService.editMessage({
-      messageToEdit,
+      messageId,
       newMessage,
       chatId,
     });
@@ -174,6 +174,31 @@ export class ChatGateway
       const socketId = this.clients[userId];
       if (socketId) {
         this.server.to(socketId).emit('chatEditMessageToClient', editedMessage);
+      }
+    });
+  }
+  @SubscribeMessage('chatDeleteMessageToServer')
+  async deleteMessage(
+    client: Socket,
+    payload: {
+      messageId: string;
+      chatId: string;
+      participants: [];
+    },
+  ): Promise<void> {
+    const { messageId, chatId, participants } = payload;
+
+    const deletedMessage = await this.messagesService.deleteMessage({
+      messageId,
+      chatId,
+    });
+
+    participants.forEach((userId) => {
+      const socketId = this.clients[userId];
+      if (socketId) {
+        this.server
+          .to(socketId)
+          .emit('chatDeleteMessageToClient', deletedMessage);
       }
     });
   }

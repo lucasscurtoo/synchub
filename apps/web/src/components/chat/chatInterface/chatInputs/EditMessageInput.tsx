@@ -26,7 +26,7 @@ const EditMessageInput = () => {
           <p className='text-xs font-semibold text-appColors-gray'>
             Edit message
           </p>
-          <p className='text-sm'>{messageToEdit}</p>
+          <p className='text-sm'>{messageToEdit.message}</p>
         </div>
       </div>
       <div className='flex items-center flex-none w-full p-4 pt-2 bg-white gap-x-4'>
