@@ -7,6 +7,14 @@ import {
 import { SocketSingleton } from '@/socket.io/SocketSingleton'
 import { store } from '../store'
 
+const handleError = (socket: any, reject: (reason?: any) => void) => {
+  const errorHandler = (error: any) => {
+    reject({ error })
+    socket.off('error', errorHandler)
+  }
+  socket.on('error', errorHandler)
+}
+
 export const messageService = apiService.injectEndpoints({
   endpoints: (builder) => ({
     getChatMessages: builder.mutation({
@@ -14,17 +22,17 @@ export const messageService = apiService.injectEndpoints({
         const socket = await SocketSingleton.getInstance()
         return new Promise((resolve, reject) => {
           socket.emit('getMessagesToServer', { chatId })
-          socket.on('getMessagesToClient', (response: any) => {
-            console.log(response)
+
+          const messageHandler = (response: any) => {
+            socket.off('getMessagesToClient', messageHandler)
             if (response.error) {
               return reject({ error: response.error })
             }
             resolve({ data: response })
-          })
+          }
 
-          socket.on('error', (error: any) => {
-            reject({ error })
-          })
+          socket.on('getMessagesToClient', messageHandler)
+          handleError(socket, reject)
         })
       },
     }),
