@@ -1,5 +1,4 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit'
-import { chatService } from '../api/chatApi'
 import { userService } from '../api/userApi'
 import { authService } from '../api/authApi'
 

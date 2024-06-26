@@ -1,24 +1,30 @@
 'use client'
-import React from 'react'
-import { useGetAllChatsQuery } from '@/redux/api/chatApi'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
-
 import StartChatModal from '@/components/chat/StartChatModal'
 import ChatInterface from '@/components/chat/chatInterface/ChatInterface'
 import { isEmpty } from 'lodash'
+import { useGetAllChatsMutation } from '@/redux/api/chatApi'
 
 const page = () => {
-  const { newChat } = useSelector((state: RootState) => state.chat)
-  const { data, isLoading, isError } = useGetAllChatsQuery(
-    '6567a2ad2127d4eac55bac56'
+  const { newChat, selectedChat } = useSelector(
+    (state: RootState) => state.chat
   )
-
+  const { _id } = useSelector((state: RootState) => state.user)
   const { t } = useTranslation()
+  const [getAllChats] = useGetAllChatsMutation()
+
+  useEffect(() => {
+    if (!isEmpty(_id)) {
+      getAllChats(_id)
+    }
+  }, [_id])
+
   return (
-    <div className='flex items-center justify-center w-full h-full bg-appColors-blueWhite dark:bg-appColors-secondaryDarkGray'>
-      {data?.data || !isEmpty(newChat.participants.chatPartner) ? (
+    <div className='flex items-center justify-center w-full h-full grow-0 bg-appColors-blueWhite dark:bg-appColors-secondaryDarkGray'>
+      {!isEmpty(selectedChat._id) || !isEmpty(newChat._id) ? (
         <ChatInterface />
       ) : (
         <div className='flex flex-col items-center space-y-4'>

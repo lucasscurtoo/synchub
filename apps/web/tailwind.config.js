@@ -22,6 +22,7 @@ const config = {
           secondaryDarkGray: '#292929',
           primary: '#3D64FD',
           disabledPrimary: 'rgba(61, 100, 253, 0.5)',
+          secondary: '#4AB0FF',
           danger: '#F25D5A',
           disabledDanger: 'rgba(242, 93, 90, 0.5)',
           highlighter: 'rgba(252, 191, 73, 0.8)',

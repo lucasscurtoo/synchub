@@ -9,7 +9,7 @@ const PagesLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className='flex w-full h-full'>
       <Sidebar />
-      <div className='flex flex-col w-full h-full'>
+      <div className='flex flex-col w-full h-full max-h-screen overflow-hidden'>
         <UserDetailsModal />
         <Header />
         <div className='flex items-start flex-grow h-fit'>

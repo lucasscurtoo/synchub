@@ -8,9 +8,11 @@ import { AuthModule } from './auth/auth.module';
 import { ChatsModule } from './chats/chats.module';
 import { AppLoggerMiddleware } from './middlewares/AppLoggerMiddleware';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
-import { HttpExceptionFilter } from './HttpExceptionFilter';
+import { HttpExceptionFilter } from './filters/HttpExceptionFilter';
 import { CloudinaryService } from './cloudinary/Config';
 import { JwtGuard } from './guards/JwtGuard';
+import { MessagesService } from './messages/messages.service';
+import { MessagesModule } from './messages/messages.module';
 
 @Module({
   imports: [
@@ -21,6 +23,7 @@ import { JwtGuard } from './guards/JwtGuard';
     UsersModule,
     AuthModule,
     ChatsModule,
+    MessagesModule,
   ],
   controllers: [AppController],
   providers: [
@@ -34,6 +37,7 @@ import { JwtGuard } from './guards/JwtGuard';
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
     },
+    MessagesService,
   ],
 })
 export class AppModule implements NestModule {
