@@ -7,6 +7,7 @@ import StartChatModal from '@/components/chat/StartChatModal'
 import ChatInterface from '@/components/chat/chatInterface/ChatInterface'
 import { isEmpty } from 'lodash'
 import { useGetAllChatsMutation } from '@/redux/api/chatApi'
+import dynamic from 'next/dynamic'
 
 const page = () => {
   const { newChat, selectedChat } = useSelector(
@@ -15,6 +16,13 @@ const page = () => {
   const { _id } = useSelector((state: RootState) => state.user)
   const { t } = useTranslation()
   const [getAllChats] = useGetAllChatsMutation()
+
+  const ChatInterface = dynamic(
+    () => import('../../components/chat/chatInterface/ChatInterface'),
+    {
+      ssr: false,
+    }
+  )
 
   useEffect(() => {
     if (!isEmpty(_id)) {
