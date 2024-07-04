@@ -7,6 +7,10 @@ export class SocketSingleton {
   private constructor() {}
 
   public static async getInstance(): Promise<Socket> {
+    if (typeof window === 'undefined') {
+      throw new Error('Sockets cannot be initialized on the server.')
+    }
+
     if (!SocketSingleton.instance) {
       SocketSingleton.instance = await createConnectionWithToken('chats')
     }
@@ -28,11 +32,14 @@ async function createConnectionWithToken(namespace: string): Promise<Socket> {
     })
 
     socket.on('connect', () => {
+      console.log('Socket connected')
       resolve(socket)
     })
 
     socket.on('connect_error', (error: any) => {
+      console.error('Socket connection error:', error)
       reject(error)
     })
   })
 }
+
