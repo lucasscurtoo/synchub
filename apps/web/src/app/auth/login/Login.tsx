@@ -1,8 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-// import Google from 'assets/images/icons/Google.png'
-// import Github from 'assets/images/icons/Github.png'
-// import Twitter from 'assets/images/icons/Twitter.png'
 import Google from '../../../../assets/images/icons/Google.png'
 import Github from '../../../../assets/images/icons/Github.png'
 import Twitter from '../../../../assets/images/icons/Twitter.png'
