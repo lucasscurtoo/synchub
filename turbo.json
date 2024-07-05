@@ -1,20 +1,17 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["./next/**", "!./next/cache/**", "./dist/**"]
+      "env": ["SOME_ENV_VAR", "API_KEY_VAR"],
+      "outputs": [".next/**", "!.next/cache/**"]
     },
-    "lint": {},
-    "dev": {
-      "cache": false,
-      "persistent": true
-    },
-    "start": {
-      "cache": true,
-      "persistent": true
+    "web#build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
     }
-  }
+  },
+
+  "globalDependencies": ["tsconfig.json"]
 }
 
