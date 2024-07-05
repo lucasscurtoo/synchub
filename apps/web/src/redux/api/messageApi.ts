@@ -19,24 +19,28 @@ export const messageService = apiService.injectEndpoints({
   endpoints: (builder) => ({
     getChatMessages: builder.mutation({
       async queryFn(chatId, _queryApi, _extraOptions, fetchWithBQ) {
-        const socket = await SocketSingleton.getInstance()
-        return new Promise((resolve, reject) => {
-          socket.emit('getMessagesToServer', { chatId })
-
-          const messageHandler = (response: any) => {
-            socket.off('getMessagesToClient', messageHandler)
-            if (response.error) {
-              return reject({ error: response.error })
+        try {
+          const socket = await SocketSingleton.getInstance()
+          return new Promise((resolve, reject) => {
+            socket.emit('getMessagesToServer', { chatId })
+            const messageHandler = (response: any) => {
+              socket.off('getMessagesToClient', messageHandler)
+              if (response.error) {
+                console.error('Error getting messages:', response.error)
+                return reject({ error: response.error })
+              }
+              console.log('Messages received:', response)
+              resolve({ data: response })
             }
-            resolve({ data: response })
-          }
-
-          socket.on('getMessagesToClient', messageHandler)
-          handleError(socket, reject)
-        })
+            socket.on('getMessagesToClient', messageHandler)
+            handleError(socket, reject)
+          })
+        } catch (error) {
+          console.error('Error in getChatMessages:', error)
+          throw error
+        }
       },
     }),
-
     sendChatMessage: builder.mutation({
       async queryFn(
         { senderId, receiverId, chatId, message },
@@ -154,18 +158,24 @@ export const messageService = apiService.injectEndpoints({
         {},
         { cacheEntryRemoved, cacheDataLoaded, dispatch }
       ) {
-        await cacheDataLoaded
+        if (typeof window !== 'undefined') {
+          try {
+            await cacheDataLoaded
 
-        const socket = await SocketSingleton.getInstance()
-        const listener = (data: any) => {
-          console.log(data)
-          dispatch(deleteMessage(data.data))
+            // const socket = await SocketSingleton.getInstance()
+            const listener = (data: any) => {
+              console.log(data)
+              dispatch(deleteMessage(data.data))
+            }
+
+            // socket.on('chatDeleteMessageToClient', listener)
+
+            await cacheEntryRemoved
+            // socket.off('chatDeleteMessageToClient', listener)
+          } catch (error) {
+            console.error('Error handling socket listeners:', error)
+          }
         }
-
-        socket.on('chatDeleteMessageToClient', listener)
-
-        await cacheEntryRemoved
-        socket.off('chatDeleteMessageToClient', listener)
       },
     }),
   }),
@@ -180,3 +190,4 @@ export const {
   useDeleteMessageMutation,
   useListenForMessagesDeletesQuery,
 } = messageService
+

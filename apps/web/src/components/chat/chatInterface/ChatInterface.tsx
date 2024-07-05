@@ -16,6 +16,7 @@ const ChatInterface = () => {
   const { selectedChat } = useSelector((state: RootState) => state.chat)
   const { messageToEdit } = useSelector((state: RootState) => state.messages)
   const [getMessages] = useGetChatMessagesMutation()
+
   useListenForMessagesQuery('')
   useListenForMessageEditQuery('')
   useListenForMessagesDeletesQuery('')
@@ -30,7 +31,7 @@ const ChatInterface = () => {
     <div className='relative flex flex-col w-full h-full'>
       <ChatHeader user={selectedChat.partnerData} />
       <div
-        className={`${messageToEdit ? 'max-h-[calc(100vh-340px)]' : 'max-h-[calc(100vh-289px)]'} flex-1 overflow-y-auto `}
+        className={`${messageToEdit.message ? 'max-h-[calc(100vh-340px)]' : 'max-h-[calc(100vh-289px)]'} flex-1 overflow-y-auto `}
       >
         <RenderMessagesSections selectedChat={selectedChat} />
       </div>

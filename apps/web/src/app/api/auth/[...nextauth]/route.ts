@@ -1,8 +1,9 @@
-import NextAuth, { AuthOptions } from 'next-auth'
+import NextAuth from 'next-auth/next'
 import Credentials from 'next-auth/providers/credentials'
 import { encode } from 'next-auth/jwt'
+import { AuthOptions } from 'next-auth'
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
   providers: [
     Credentials({
       id: 'credentials',

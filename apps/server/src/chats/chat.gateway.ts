@@ -86,13 +86,16 @@ export class ChatGateway
         participants: [payload.senderId, payload.receiverId],
       });
       const insertedMessage = await this.messagesService.insertMessage({
-        chatId: newChat.data._id,
+        chatId: newChat.data._id as string,
         message: payload.message,
         senderId: payload.senderId,
       });
-      const updatedChat = await this.chatService.update(newChat.data._id, {
-        messageId: insertedMessage.data._id,
-      });
+      const updatedChat = await this.chatService.update(
+        newChat.data._id as string,
+        {
+          messageId: insertedMessage.data._id as string,
+        },
+      );
       const withPartnerData =
         await this.chatService.findAndReturnWithPartnerData({
           chat: updatedChat,
