@@ -1,26 +1,26 @@
 import React from 'react'
 import RegisterForm from './RegisterForm'
 import Image from 'next/image'
-import Google from '../../../../assets/images/icons/Google.png'
-import Github from '../../../../assets/images/icons/Github.png'
-import Twitter from '../../../../assets/images/icons/Twitter.png'
+import google from '@assets/images/icons/Google.png'
+import github from '@assets/images/icons/Github.png'
+import twitter from '@assets/images/icons/Twitter.png'
 
 const socialMediaIcons = [
   {
     name: 'google',
-    imgSrc: Google,
+    imgSrc: google,
     provider: 'google',
     alt: 'Google icon',
   },
   {
     name: 'github',
-    imgSrc: Github,
+    imgSrc: github,
     provider: 'github',
     alt: 'GitHub icon',
   },
   {
     name: 'twitter',
-    imgSrc: Twitter,
+    imgSrc: twitter,
     provider: 'twitter',
     alt: 'Twitter icon',
   },
