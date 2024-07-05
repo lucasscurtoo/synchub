@@ -18,7 +18,7 @@
     "@types/next": "^9.0.0",
     "bufferutil": "^4.0.8",
     "dotenv": "^16.4.5",
-    "formik": "^2.4.5",
+    "formik": "^2.4.6",
     "framer-motion": "^10.18.0",
     "i18next": "^23.11.2",
     "jose": "^5.2.4",
@@ -58,4 +58,3 @@
     "typescript": "^5.5.3"
   }
 }
-
