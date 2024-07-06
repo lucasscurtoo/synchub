@@ -1,36 +1,33 @@
 import React from 'react'
 import Image from 'next/image'
-import google from '../../../../public/assets/images/icons/google.png'
-import github from '../../../../public/assets/images/icons/github.png'
-import twitter from '../../../../public/assets/images/icons/twitter.png'
 
 import LoginForm from './LoginForm'
 import { useAuthPageContext } from '../AuthContext'
 import { signIn } from 'next-auth/react'
 
-const socialMediaIcons = [
-  {
-    name: 'google',
-    imgSrc: google,
-    provider: 'google',
-    alt: 'Google icon',
-    auth: () => signIn(),
-  },
-  {
-    name: 'github',
-    imgSrc: github,
-    provider: 'github',
-    alt: 'GitHub icon',
-    auth: () => signIn(),
-  },
-  {
-    name: 'twitter',
-    imgSrc: twitter,
-    provider: 'twitter',
-    alt: 'Twitter icon',
-    auth: () => signIn(),
-  },
-]
+// const socialMediaIcons = [
+//   {
+//     name: 'google',
+//     imgSrc: '/assets/icons/google.png',
+//     provider: 'google',
+//     alt: 'Google icon',
+//     auth: () => signIn(),
+//   },
+//   {
+//     name: 'github',
+//     imgSrc: '/public/assets/icons/github.png',
+//     provider: 'github',
+//     alt: 'GitHub icon',
+//     auth: () => signIn(),
+//   },
+//   {
+//     name: 'twitter',
+//     imgSrc: '/assets/icons/twitter.png',
+//     provider: 'twitter',
+//     alt: 'Twitter icon',
+//     auth: () => signIn(),
+//   },
+// ]
 const Login = () => {
   //hacer un array de objetos que tengan los nombres de los iconos y las referencias a next-auth
   const { showLogin, setShowLogin } = useAuthPageContext()
@@ -44,7 +41,7 @@ const Login = () => {
         <div className='space-y-4'>
           <p className='text-sm font-medium text-gray-600'>Sign in with</p>
           <div className='flex space-x-4'>
-            {socialMediaIcons.map(({ name, imgSrc, alt, auth }) => (
+            {/* {socialMediaIcons.map(({ name, imgSrc, alt, auth }) => (
               <div
                 key={name}
                 className='flex items-center justify-center py-2 transition-all rounded-md shadow-md cursor-pointer px-11 hover:ring-1 ring-inset ring-gray-400'
@@ -52,7 +49,7 @@ const Login = () => {
               >
                 <Image src={imgSrc} width={18} height={18} alt={alt} />
               </div>
-            ))}
+            ))} */}
           </div>
         </div>
 

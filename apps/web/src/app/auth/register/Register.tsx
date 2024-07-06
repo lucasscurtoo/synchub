@@ -1,30 +1,30 @@
 import React from 'react'
 import RegisterForm from './RegisterForm'
 import Image from 'next/image'
-import google from '../../../../public/assets/images/icons/google.png'
-import github from '../../../../public/assets/images/icons/github.png'
-import twitter from '../../../../public/assets/images/icons/twitter.png'
+// import google from '../../../../public/assets/images/icons/google.png'
+// import github from '../../../../public/assets/images/icons/github.png'
+// import twitter from '../../../../public/assets/images/icons/twitter.png'
 
-const socialMediaIcons = [
-  {
-    name: 'google',
-    imgSrc: google,
-    provider: 'google',
-    alt: 'Google icon',
-  },
-  {
-    name: 'github',
-    imgSrc: github,
-    provider: 'github',
-    alt: 'GitHub icon',
-  },
-  {
-    name: 'twitter',
-    imgSrc: twitter,
-    provider: 'twitter',
-    alt: 'Twitter icon',
-  },
-]
+// const socialMediaIcons = [
+//   {
+//     name: 'google',
+//     imgSrc: google,
+//     provider: 'google',
+//     alt: 'Google icon',
+//   },
+//   {
+//     name: 'github',
+//     imgSrc: github,
+//     provider: 'github',
+//     alt: 'GitHub icon',
+//   },
+//   {
+//     name: 'twitter',
+//     imgSrc: twitter,
+//     provider: 'twitter',
+//     alt: 'Twitter icon',
+//   },
+// ]
 
 const Register = () => {
   return (
@@ -37,14 +37,14 @@ const Register = () => {
         <div className='space-y-4'>
           <p className='text-sm font-medium text-gray-600'>Sign up with</p>
           <div className='flex justify-between'>
-            {socialMediaIcons.map(({ name, imgSrc, alt }) => (
+            {/* {socialMediaIcons.map(({ name, imgSrc, alt }) => (
               <div
                 key={name}
                 className='flex items-center justify-center py-2 transition-all rounded-md shadow-md cursor-pointer px-11 hover:ring-1 ring-inset ring-gray-400'
               >
                 <Image src={imgSrc} width={18} height={18} alt={alt} />
               </div>
-            ))}
+            ))} */}
           </div>
           <p className='text-sm text-appColors-gray'>Or continue with</p>
         </div>
