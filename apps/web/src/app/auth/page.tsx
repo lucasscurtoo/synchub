@@ -1,10 +1,10 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import { Player } from '@lottiefiles/react-lottie-player'
 import { motion } from 'framer-motion'
-import chatAnimation from '../../../assets/gifs/chatAnimation.json'
-import Logo from '../../../assets/images/Logo.png'
+import chatAnimation from '@assets/gifs/chatAnimation.json'
+import logo from '@assets/images/logo.png'
 import Login from './login/Login'
 import Register from './register/Register'
 import { AuthPageContextProvider, useAuthPageContext } from './AuthContext'
@@ -16,7 +16,7 @@ const Page = () => {
         <div className='flex items-center overflow-hidden rounded-6xl shadow-appShadow w-fit'>
           <div className='h-full p-8 space-y-4 bg-white border-r-[0.1px] border-opacity-30 border-appColors-fadedGray rounded-l-6xl'>
             <div className='flex flex-col items-start justify-start'>
-              <Image width={240} height={40} src={Logo} alt='Synchub logo' />
+              <Image width={240} height={40} src={logo} alt='Synchub logo' />
             </div>
             <AuthContent />
           </div>

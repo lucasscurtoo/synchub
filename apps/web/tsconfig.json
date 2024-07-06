@@ -13,24 +13,24 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"],
-      "@assets/*": ["./assets/*"],
+      "@assets/*": ["./public/assets/*"]
     },
     "plugins": [
       {
-        "name": "next",
-      },
-    ],
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/api/auth/[...nextauth]/route.ts",
+    "src/app/api/auth/[...nextauth]/route.ts"
   ],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules"]
 }
 

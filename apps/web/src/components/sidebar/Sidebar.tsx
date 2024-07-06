@@ -1,8 +1,8 @@
 'use client'
 import Image from 'next/image'
 import React from 'react'
-import LogoBlack from '../../../assets/images/LogoBlack.svg'
-import LogoWhite from '../../../assets/images/LogoWhite.svg'
+import logoBlack from '@assets/images/logoBlack.svg'
+import logoWhite from '@assets/images/logoWhite.svg'
 import { ChatBubbleOvalLeftEllipsisIcon as MessageSolidIcon } from '@heroicons/react/24/solid'
 import { ChatBubbleOvalLeftEllipsisIcon as MessageOutlineIcon } from '@heroicons/react/24/outline'
 import { UsersIcon as GroupSolidIcon } from '@heroicons/react/24/solid'
@@ -52,7 +52,7 @@ const Sidebar = () => {
       <div className='flex flex-col space-y-10'>
         <Image
           src={
-            systemTheme === 'dark' && theme != 'light' ? LogoWhite : LogoBlack
+            systemTheme === 'dark' && theme != 'light' ? logoWhite : logoBlack
           }
           width={218}
           height={35}

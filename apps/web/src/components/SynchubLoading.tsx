@@ -1,12 +1,12 @@
 import Image from 'next/image'
 import React from 'react'
-import Logo from '../../assets/images/Logo.png'
+import logo from '@assets/images/logo.png'
 import Typewriter from 'typewriter-effect'
 
 const SynchubLoading = () => {
   return (
     <div className='absolute flex flex-col items-center justify-center w-full space-y-10 top-32 h-80'>
-      <Image width={360} height={200} src={Logo} alt='Synchub logo' />
+      <Image width={360} height={200} src={logo} alt='Synchub logo' />
       <Typewriter
         options={{
           strings: [
