@@ -1,9 +1,9 @@
 import React from 'react'
 import RegisterForm from './RegisterForm'
 import Image from 'next/image'
-import google from 'public/assets/images/icons/google.png'
-import github from 'public/assets/images/icons/github.png'
-import twitter from 'public/assets/images/icons/twitter.png'
+import google from '../../../../public/assets/images/icons/google.png'
+import github from '../../../../public/assets/images/icons/github.png'
+import twitter from '../../../../public/assets/images/icons/twitter.png'
 
 const socialMediaIcons = [
   {
