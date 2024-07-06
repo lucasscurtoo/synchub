@@ -1,8 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
-import google from '@assets/images/icons/google.png'
-import github from '@assets/images/icons/github.png'
-import twitter from '@assets/images/icons/twitter.png'
+import google from 'public/assets/images/icons/google.png'
+import github from 'public/assets/images/icons/github.png'
+import twitter from 'public/assets/images/icons/twitter.png'
 
 import LoginForm from './LoginForm'
 import { useAuthPageContext } from '../AuthContext'
