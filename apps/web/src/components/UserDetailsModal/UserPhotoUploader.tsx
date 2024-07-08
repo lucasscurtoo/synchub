@@ -7,7 +7,7 @@ import {
   DocumentArrowUpIcon,
   PhotoIcon,
 } from '@heroicons/react/24/solid'
-import { useField } from 'Formik'
+import { useField } from 'formik'
 import { useTranslation } from 'react-i18next'
 
 const UserPhotoUploader = () => {

@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import type { FieldMetaProps, FieldProps } from 'Formik'
+import type { FieldMetaProps, FieldProps } from 'formik'
 import { DefaultInputVariant } from '../nextui/DefaultInputVariant'
 
 interface InputProps {
@@ -49,3 +49,4 @@ const CustomInput = ({
   )
 }
 export default CustomInput
+

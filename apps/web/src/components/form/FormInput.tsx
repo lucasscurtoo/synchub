@@ -1,5 +1,5 @@
 import { Input } from '@nextui-org/react'
-import type { FieldMetaProps, FieldProps } from 'Formik'
+import type { FieldMetaProps, FieldProps } from 'formik'
 
 interface FormInputProps {
   type: string
@@ -55,3 +55,4 @@ export function FormInput({
     </div>
   )
 }
+

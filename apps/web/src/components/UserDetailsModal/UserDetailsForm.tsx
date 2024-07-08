@@ -1,4 +1,4 @@
-import { Formik, Field, Form } from 'Formik'
+import { Formik, Field, Form } from 'formik'
 import CustomInput from '../user/CustomInput'
 import { Tooltip } from '@nextui-org/react'
 import { InformationCircleIcon } from '@heroicons/react/24/solid'
