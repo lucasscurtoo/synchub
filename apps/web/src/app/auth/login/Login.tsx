@@ -1,31 +1,30 @@
 import React from 'react'
 import Image from 'next/image'
-import Google from '@assets/images/icons/Google.png'
-import Github from '@assets/images/icons/Github.png'
-import Twitter from '@assets/images/icons/Twitter.png'
-
 import LoginForm from './LoginForm'
 import { useAuthPageContext } from '../AuthContext'
 import { signIn } from 'next-auth/react'
+import google from '@assets/images/icons/googleIcon.png'
+import github from '@assets/images/icons/gitHubIcon.png'
+import twitter from '@assets/images/icons/twitterIcon.png'
 
 const socialMediaIcons = [
   {
     name: 'google',
-    imgSrc: Google,
+    imgSrc: google,
     provider: 'google',
     alt: 'Google icon',
     auth: () => signIn(),
   },
   {
     name: 'github',
-    imgSrc: Github,
+    imgSrc: github,
     provider: 'github',
     alt: 'GitHub icon',
     auth: () => signIn(),
   },
   {
     name: 'twitter',
-    imgSrc: Twitter,
+    imgSrc: twitter,
     provider: 'twitter',
     alt: 'Twitter icon',
     auth: () => signIn(),
